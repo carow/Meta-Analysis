@@ -1,0 +1,34 @@
+- Heterogeneity in effect sizes is important as well as presenting the results in forest plots.
+
+- Meta-analysis allows us to calculate the magnitude rather than the existence of an effect. Offers formal methods
+to explore and measure heterogeneity.
+
+- If heterogeneity is high, the pressentation of a summary effect might be inadequate. 
+
+- Forest plot should include: summary effect, individual effect sizes and their CI, weighting of each study.
+
+
+
+Seven steps of a meta-analysis:
+
+(1) generating an effect size metric based on
+continuous data, binary data or correla-
+tions
+
+(2) weighting effect sizes by sample size or precision
+
+(3) pooling of effect sizes into a summary, effect or reasoning against pooling (e.g.,due to high variation 
+between effect sizes)
+
+(4) calculating confidence intervals for each effect size and the summary effect
+
+(5) quantifying total heterogeneity/variability (i.e., not only between group heterogeneity) in effect sizes 
+by an index measure
+
+(6) if heterogeneity is existent: exploring heterogeneity/variability in effect sizes by considering explanatory
+variables (e.g., insubgroup analyses or meta-regressions) (With the sexpr. expression??)
+
+
+
+(7) presenting results in forest plots or providing respective data (effect sizes, corresponding confidence 
+intervals and weights for all included studies) elsewhere (e.g., in a table).
