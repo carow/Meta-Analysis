@@ -1,11 +1,34 @@
+
+
+Things to consider:
+
 - Heterogeneity in effect sizes is important as well as presenting the results in forest plots.
 
-- Meta-analysis allows us to calculate the magnitude rather than the existence of an effect. Offers formal methods
+- Meta-analysis allows us to calculate the magnitude rather than the existence of an effect. Plus, it offers formal methods
 to explore and measure heterogeneity.
 
 - If heterogeneity is high, the pressentation of a summary effect might be inadequate. 
 
 - Forest plot should include: summary effect, individual effect sizes and their CI, weighting of each study.
+
+
+- If we will only use the packages "meta" and "metafor", we could split it up and do for each package the same analysis. What are the differences? 
+
+- When doing the task, the outcome of each analysis has to be diagnosed. Which part is important information for the meta-analysis? And if the important information
+is significant, does another analysis have to follow?
+
+
+
+
+Things to ask:
+- How detailed should the diagnostic report be? There are so many different packages that can be used for a meta-analysis depending on the data. Shall we write the 
+report for every type of data? 
+
+- Is there a dataset they can give us? 
+
+- Turn what into a set of R functions?  
+
+
 
 
 
@@ -26,8 +49,9 @@ between effect sizes)
 by an index measure
 
 (6) if heterogeneity is existent: exploring heterogeneity/variability in effect sizes by considering explanatory
-variables (e.g., insubgroup analyses or meta-regressions) (With the sexpr. expression??)
+variables (e.g., insubgroup analyses or meta-regressions) 
 
+(With the sexpr. expression, when data is inputed and the heterogeneity is high--> heterogeneity is explored with a function, if not high, the analysis stops here??)
 
 
 (7) presenting results in forest plots or providing respective data (effect sizes, corresponding confidence 
