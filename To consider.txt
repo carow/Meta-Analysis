@@ -18,16 +18,16 @@ to explore and measure heterogeneity.
 is significant, does another analysis have to follow?
 
 
+- Baujat plot to explore the heterogeneity. 
 
 
-Things to ask:
-- How detailed should the diagnostic report be? There are so many different packages that can be used for a meta-analysis depending on the data. Shall we write the 
-report for every type of data? 
+To do:
 
-- Is there a dataset they can give us? 
+Actually do a meta-analysis with some data. First do a simple analysis, with all the steps and can mix and match from all packages. The outcome are then effect
+sizes. Forest plots for the summary and then funnel plot (...) to visualize
 
-- Turn what into a set of R functions?  
 
+Make a report for appendix of a paper. Only for the diagnostics and the plots part... 
 
 
 
