@@ -2,15 +2,18 @@
 
 --Uses and misuses of meta-analysis in plant ecology--
 
+
 By examining effects of covariates (i.e. explanatory factors) in a meta-regression model, the causes of variation in magnitude of effects can be explored. p.3
 
 The most commonly used metrics of effect size in plant ecology are: comparison of means (response rations and standardised mean differences (Hedge's and Cohen's d).
 This means the experimental data is comparing control and and treatment. P. 6
 
-Mostly use frequentist statistical approach and not the bayesian approach.  
+
+Mostly use frequentist statistical approach and not the bayesian approach. 
 
 
 checklist for meta-analysis in ecology p. 8 Table 2.
+
 
 If the effect size is heterogeneous --> explore the cause of it by meta-regression
 
@@ -18,34 +21,34 @@ Sensitivity analysis to the test the robustness of the meta-analysis.
 
 
 
-Weighting of effects:
+1) Weighting of effects:
 Effect sizes are normally weighted by study precision, most commonly by the inverse of study variance. Important because it increases the precision of the mean effect
 estimate and the power of the test. If estimates of variance in primary studies are not available, could use non-parametric weighting approaches, imputation methods
 and bayesian models. 
 
 
-Exploring the causes of heterogeneity (testing for several covariates):
+2) Exploring the causes of heterogeneity (testing for several covariates):
 Problems may arise if the covariates are tested separately as they might be linked. Therefore they can be tested in a heirarchical fashion so that effect of one 
 moderator is tested within each level of another moderator. Alternatively, effects of several moderators and interactions between them can be tested in the metafor 
 package in R. p. 10
 
 
-Test for publication bias:
+3) Test for publication bias:
 eg. using funnel plots (but an unaccurate method!!!)Better to use a modification of the funnel plot suggested by Nakagawa & Santos, or statistical calculations
 and tests of "saif-fail numbers". Methods are incorporated in any meta-analysis software. p. 10
 
 
-Sensititvity analysis:
+4) Sensititvity analysis:
 p.10 at the bottom
 Testing of temporal changes in effect size could be a sensitivity analysis. 
 
-Accounting for phylogeny:
+5) Accounting for phylogeny:
 Only important when phylogeny plays a role in the study. Metafor has a function for phylogenetic modelling
 
 
 
 
--- Performance of statisticalmethods for meta-analysis when true study effects are non-normally distributed: A simulation study -- Kontopantelis1 & bReeves 2010
+-- Performance of statisticalmethods for meta-analysis when true study effects are non-normally distributed: A simulation study -- Kontopantelis & Reeves 2010
 
 
 Recommended model to be used depending on heterogeneity and number of studies (fig. 4) p. 16.
@@ -79,11 +82,18 @@ Funnel plot
 Cummulative meta-analysis (publication bias test)
 
 
+
+
 -- Predicting biodiversity change and averting collapse in agricultural landscapes (Mendenhall et. al 2014)-- 
 
 Meta-analysis methodology:
 
 Calculated Hedge`s g
+
+
+-----
+
+Test of heterogeneity in R meta package. 
 
 
 
