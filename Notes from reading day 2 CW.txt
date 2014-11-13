@@ -45,6 +45,47 @@ Only important when phylogeny plays a role in the study. Metafor has a function 
 
 
 
+-- Performance of statisticalmethods for meta-analysis when true study effects are non-normally distributed: A simulation study -- Kontopantelis1 & bReeves 2010
+
+
+Recommended model to be used depending on heterogeneity and number of studies (fig. 4) p. 16.
+
+
+
+
+-- Gibson et. al --
+
+Meta-analysis methodology:
+
+Calculated Hedge's g for each comparison (the difference between primary and the disturbed groups mean, standardized using the pooled standard
+deviation of the two groups. 
+
+Hedge's g is a biased estimator of population size, therefore they corrected it by using a conversion factor Jg. 
+
+Average effect size calculated using random-effect model (heterogeneity in effect sizes). 
+
+Effect sizes were weighted by the inverse of within-study variance plus between-study variance.
+
+Did some robustness testing? (leaving out some comparisons)
+
+Tested for publication bias --> using a funnel plot (effect size plotted against SE) to assess the symmetry of study precision around effect size.
+                            --> sorted the data by precision (from comparisons with small SE to bigger ones and examined the change in cummulative effect size)
+
+
+Appendix:
+
+Effect sizes in a table
+Funnel plot
+Cummulative meta-analysis (publication bias test)
+
+
+-- Predicting biodiversity change and averting collapse in agricultural landscapes (Mendenhall et. al 2014)-- 
+
+Meta-analysis methodology:
+
+Calculated Hedge`s g
+
+
 
 
 
