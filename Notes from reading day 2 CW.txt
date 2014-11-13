@@ -35,7 +35,7 @@ package in R. p. 10
 
 3) Test for publication bias:
 eg. using funnel plots (but an unaccurate method!!!)Better to use a modification of the funnel plot suggested by Nakagawa & Santos, or statistical calculations
-and tests of "saif-fail numbers". Methods are incorporated in any meta-analysis software. p. 10
+and tests of "fail-safe numbers". Methods are incorporated in any meta-analysis software. p. 10
 
 
 4) Sensititvity analysis:
@@ -98,7 +98,10 @@ Test of heterogeneity in R meta package.
 
 
 
+In R:
 
+
+rma is the main modelling function in metafor. It will compute effective sizes before modelling. (random effects meta-analysis)
 
 
 
