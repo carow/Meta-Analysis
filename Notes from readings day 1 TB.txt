@@ -70,3 +70,15 @@ various methods for publication bias.
 sensitivity analysis with 
 - Trim-and-Fill - FailSafeN
 
+
+Carsten:
+need to understand better which type of meta analysis to use
+1. kind of data you analyze.  lead to effect size.  Hedges D is widely use as effect size.
+2. model: in principle only forest plot. 
+3. can have more/different predictors. 
+
+start with simple analysis: effect size, forest plot, perhaps funnel plot.
+
+read:
+«uses and misuses of meta-analysis in plant ecology». 2014. Koricheva, Gurewitch
+Vetter et al.
