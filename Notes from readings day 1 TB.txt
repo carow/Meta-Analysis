@@ -49,7 +49,7 @@ Maybe do an analysis (for fixed effects model) on study contributions (p67, Kova
 3. Use a barplot to show the percentages graphically.
 
 Between-Study Variance for the random effect model. Use of REML function and Plot 
-Of τ 2 Estimates (p.85)
+Of τ 2 Estimates (p.85)	
 
 Use forest plots and perhaps funnel plots to visualize. 
 
