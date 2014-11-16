@@ -15,7 +15,7 @@ Mostly use frequentist statistical approach and not the bayesian approach.
 checklist for meta-analysis in ecology p. 8 Table 2.
 
 
-If the effect size is heterogeneous --> explore the cause of it by meta-regression
+If the effect size is heterogeneous --> explore the cause of it by meta-regression (seems to be only work when having covariates)
 
 Sensitivity analysis to the test the robustness of the meta-analysis. 
 
