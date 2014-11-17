@@ -73,23 +73,26 @@ fsn(yi = rma.RE$yi, vi = rma.RE$vi)
 
 # -- Trim fill method
 attach(birdsnew)
-rma.TF <- rma( method ="DL", measure = "RD",m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) # Risk Differences
 
-trimfill(rma.RE) # Only applicable for FE or RE objects
-funnel(trimfill(rma.RE))
+#Higgins 'E model
+rma.TF <- rma(method="HE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) # Risk Differences
+trimfill(rma.TF) # Only applicable for FE or RE objects
+funnel(trimfill(rma.TF))
+
+#Fixed effects model
+rma.TF.FE <- rma(method="FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) # Risk Differences
+trimfill(rma.TF.FE) # Only applicable for FE or RE objects
+funnel(trimfill(rma.TF.FE))
 
 detach(birdsnew)
-
 
 #sensitivity analysis/robustness testing
 #-- with the leaveout function
 
-
-leave1out(rma.FE)
-
 sens.RE = leave1out(rma.RE)
-sens.RE
+which(sens.RE$I2 == min(sens.RE$I2))
+sum(sens.RE$I2 < 25)
+hist(sens.RE$I2)
+cbind(exp(sens.RE$estimate), sens.RE$pval < 0.05)
 
-
-
-
+sens.RE$I2
