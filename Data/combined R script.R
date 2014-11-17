@@ -14,6 +14,7 @@ attach(table1)
 birds=table1[taxon=="b",-c(5,6,7,8,9,10,11,12,13)]
 detach(table1)
 
+
 # To select randomly one row per study to narrow down the metaanalysis.
 library(devtools)
 source_gist("https://gist.github.com/mrdwab/6424112")
@@ -72,7 +73,7 @@ fsn(yi = rma.RE$yi, vi = rma.RE$vi)
 
 # -- Trim fill method
 attach(birdsnew)
-rma.TF <- rma( method="DL", measure = "RD",m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) # Risk Differences
+rma.TF <- rma( method ="DL", measure = "RD",m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) # Risk Differences
 
 trimfill(rma.RE) # Only applicable for FE or RE objects
 funnel(trimfill(rma.RE))
