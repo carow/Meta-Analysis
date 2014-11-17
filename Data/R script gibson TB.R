@@ -55,6 +55,8 @@ I2
 # Forest plot for our model:
 
 forest.rma(rma.he, showweight=T) # DEFAULT PLOT
+forest.rma(rma.he, showweight=T, cex=0.5) # DEFAULT PLOT
+
 
 #Funnel plots for our model
 funnel(rma.he)
