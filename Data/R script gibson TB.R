@@ -26,8 +26,10 @@ summary(birdsnew)
 
 
 attach(birdsnew)
-rma.he = rma(method="HE", m1i = d.mean, sd1i = d.sd, n1i = d.n, m2i = p.mean, sd2i = p.sd, n2i = p.n, measure = "SMD", data=birdsnew)
-print(rma.he)
+rma.he = rma(method="HE", m1i = p.mean, sd1i = p.sd, n1i = p.n, 
+             m2i = d.mean, sd2i = d.sd, n2i =d.n, measure = "SMD", 
+             data=birdsnew)
+rma.he
 detach(birdsnew)
 
 
@@ -43,6 +45,7 @@ rma.he$tau2 + 1.96 * c(-1, 1) * rma.he$se.tau2 #95% CI
 # Interpretation = Percentage of "unexplained" variance
 I2 <- with(rma.he, (QE - (k - 1))/QE * 100) 
 I2
+
 # Thresholds For I 2
 # 0% to 30% → Low
 # 30% to 60% → Moderate
@@ -51,25 +54,19 @@ I2
 
 # Forest plot for our model:
 
-forest.rma(rma.he, showweight=T, refline=0.29) # DEFAULT PLOT
+forest.rma(rma.he, showweight=T) # DEFAULT PLOT
 
 #Funnel plots for our model
 funnel(rma.he)
 
 attach(birds)
 
-library(compute.es)
-#mes2 from the package compute.es
-SDpooled = sqrt(((p.n-1)*p.sd^2+(d.n-1)*d.sd^2)/(p.n+d.n-2))
-
-str(SDpooled)
-effectsizes=mes2(m.1=p.mean, m.2= d.mean,s.pooled=SDpooled, n.1=p.n, n.2=d.n)
 
 detach(birds)
-attach(effectsizes)
+attach(birdsnew)
 res <- rma(yi=g, vi=var.g, method="DL")
 res
-detach(effectsizes)
+detach(birdsnew)
 
 attach(effectsizes)
 value <- fsn(y = g, v = var.g)
@@ -92,5 +89,14 @@ detach(effectsizes)
 #result.he
 #summary(result.he)
 #detach(es)
+
+
+
+#library(compute.es)
+#mes2 from the package compute.es
+#SDpooled = sqrt(((p.n-1)*p.sd^2+(d.n-1)*d.sd^2)/(p.n+d.n-2))
+
+#str(SDpooled)
+#effectsizes=mes2(m.1=p.mean, m.2= d.mean,s.pooled=SDpooled, n.1=p.n, n.2=d.n)
 
 
