@@ -27,9 +27,7 @@ attach(birdsnew)
 
 #Fixed Effect Model
 
-rma.FE = rma(method = "FE", measure = "SMD", m1i = p.mean, 
-             m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, 
-             n2i = d.n, vtype = "UB")
+rma.FE = rma(method = "FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB")
 rma.FE
 
 
