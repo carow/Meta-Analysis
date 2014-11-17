@@ -27,20 +27,22 @@ attach(birdsnew)
 
 #Fixed Effect Model
 
-rma.FE = rma(method = "FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB")
+rma.FE = rma(method = "FE", measure = "SMD", m1i = p.mean, 
+             m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, 
+             n2i = d.n, vtype = "UB")
 rma.FE
 
 
 #Random Effects Model
-rma.RE = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB")
+rma.RE = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB")# maybe change vtype and method
 rma.RE
 
 detach(birdsnew)
 
 
-forest.rma (rma.FE, annotate = TRUE, cex = 0.5) #FE model
+forest.rma (rma.FE, annotate = TRUE, cex = 0.5, showweight = TRUE) #FE model
 
-forest.rma(rma.RE, annotate = TRUE, cex = 0.5) #RE model
+forest.rma(rma.RE, annotate = TRUE, cex = 0.5, showweight = TRUE) #RE model
 
 
 #Causes of heterogeneity - Meta-regression
@@ -48,12 +50,12 @@ forest.rma(rma.RE, annotate = TRUE, cex = 0.5) #RE model
 
 attach(birdsnew)
 
-rma.FE = rma(method = "FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent)
-rma.FE
+rma.FE.meta = rma(method = "FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent)
+rma.FE.meta
 
 #Random Effects Model
-rma.RE = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ,continent)
-rma.RE
+rma.RE.meta = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent)
+rma.RE.meta
 
 detach(birdsnew)
 
