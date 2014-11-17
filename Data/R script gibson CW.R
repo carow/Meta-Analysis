@@ -37,12 +37,25 @@ rma.RE
 
 detach(birdsnew)
 
+
 forest.rma (rma.FE, annotate = TRUE, cex = 0.5) #FE model
 
 forest.rma(rma.RE, annotate = TRUE, cex = 0.5) #RE model
 
+
 #Causes of heterogeneity - Meta-regression
 #with the mods argument in the rma?? p. 141
+
+attach(birdsnew)
+
+rma.FE = rma(method = "FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent)
+rma.FE
+
+#Random Effects Model
+rma.RE = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ,continent)
+rma.RE
+
+detach(birdsnew)
 
 
 #publication bias testing
@@ -53,15 +66,21 @@ funnel(rma.RE)
 regtest(rma.RE, model = "rma", predictor = "sei")
 
 
+#Fail safe n method
+fsn(yi = rma.FE$yi, vi = rma.FE$vi)#"file drawer analysis"
 
-fsn(yi=g, vi=var.g, data=)# Needs to be changed.. Fail safe N "file drawer analysis"
+fsn(yi = rma.RE$yi, vi = rma.RE$vi)
+
 
 
 #sensitivity analysis/robustness testing
 #with the leaveout function
 
-sens.RE = leave1out(rma.RE)
 
+leave1out(rma.FE)
+
+sens.RE = leave1out(rma.RE)
+sens.RE
 
 
 
