@@ -73,7 +73,7 @@ fsn(yi = rma.RE$yi, vi = rma.RE$vi)
 
 # -- Trim fill method
 attach(birdsnew)
-<<<<<<< HEAD
+
 #Higgins 'E model
 rma.TF <- rma(method="HE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) # Risk Differences
 trimfill(rma.TF) # Only applicable for FE or RE objects
@@ -83,15 +83,8 @@ funnel(trimfill(rma.TF))
 rma.TF.FE <- rma(method="FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) # Risk Differences
 trimfill(rma.TF.FE) # Only applicable for FE or RE objects
 funnel(trimfill(rma.TF.FE))
-=======
-rma.TF <- rma( method ="DL", measure = "RD",m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) # Risk Differences
 
-trimfill(rma.RE) # Only applicable for FE or RE objects
-funnel(trimfill(rma.RE))
-
->>>>>>> FETCH_HEAD
 detach(birdsnew)
-
 
 #sensitivity analysis/robustness testing
 #-- with the leaveout function
