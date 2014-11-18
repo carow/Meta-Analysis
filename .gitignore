@@ -1,5 +1,2 @@
-
-/logfile
-/R script gibson CW.R
-/R script gibson TB.R
-
+R_script_gibson_CW/
+R_script_gibson_TB/
