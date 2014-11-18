@@ -1,3 +1,16 @@
-/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/R code meta analysis.R
-/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/R script gibson CW.R
-/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/R script gibson TB.R
+# History files
+.Rhistory
+
+# Example code in package build process
+*-Ex.R
+
+# R data files from past sessions
+.Rdata
+
+# RStudio files
+.Rproj.user/
+
+# Previous R files
+R script gibson CW.R
+R script gibson TB.R
+R code meta analysis.R
