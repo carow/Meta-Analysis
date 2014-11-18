@@ -1,7 +1,10 @@
 library(metafor)
+
+#setwd("C:/Users/ICI/Desktop/MetaAnalysisD")
+setwd("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/Data")
 table1 <- read.csv2("Gibson.csv")
 str(table1)
-summary(table1)
+summary(table1) 
 
 table1$d.mean=as.numeric(table1$d.mean)
 table1$p.mean=as.numeric(table1$p.mean)
