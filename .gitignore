@@ -1,2 +1,3 @@
-R script gibson CW.R/
-R script gibson TB.R/
+/logfile
+/R script gibson CW.R
+/R script gibson TB.R
