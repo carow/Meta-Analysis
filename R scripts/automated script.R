@@ -28,12 +28,11 @@ summary(data.sub)
 
 attach(data.sub)
 
-
+# Our rma analysis
 #Fixed Effect Model
 
 rma.FE = rma(method = "FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n)
 rma.FE
-
 
 #Random Effects Model
 rma.RE = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB")# maybe change vtype and method
@@ -51,7 +50,9 @@ detach(data.sub)
 #rma.RE.meta or rma.FE.meta respectively. 
 #The metafor package needs to be installed
 
-# Automatisation should start here! Depending on size of dataset, change cex = 
+# Automatisation should start here! Depending on size of dataset, change 
+# cex = 
+
 #if inherits class meta, if inherits class metafor.
 
 
