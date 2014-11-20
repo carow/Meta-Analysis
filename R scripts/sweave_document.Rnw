@@ -37,10 +37,6 @@
 
 \begin{document}
 \SweaveOpts{concordance=TRUE}
-<<<<<<< HEAD
-<<echo = FALSE, results = HIDE>>=
-library(metafor)
-@
 
 
 \title{Appendix}
@@ -55,15 +51,9 @@ We created an appendix of meta-analysis paper. To be able to visualize the outpu
 The dataset to be working with should be named ``data.sub''. The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' and an rma of a fixed effects model should be named ``rma.FE'' in order for the automatisation to work. IF a meta-regression has been conducted, it should be called ``rma.RE.meta'' or ``rma.FE.meta'' respectively. Other than that, the metafor package in R needs to be installed.  
 
 
-<<eval=FALSE>>=
 
-=======
-<<setup, include=FALSE, cache=FALSE, echo=F>>=
-library(knitr)
-# set global chunk options
-opts_chunk$set(fig.path='', fig.align='center', fig.show='hold')
-options(replace.assign=TRUE, width=90)
->>>>>>> origin/master
+<<echo=F>>=
+
 library(metafor)
 
 #setwd("C:\Users\ICI\Documents\Carolina\Uni\Freiburg\3_Semester\Best practice R\Meta Analysis\R scripts")
@@ -107,29 +97,28 @@ rma.RE
 detach(data.sub)
 @
 
-\title{Appendix}
-\author{Torfinn Belbo \& Carolina Wackerhagen}
 
-\date{\today}
-
-\maketitle
-
-We created an appendix of meta-analysis paper. To be able to visualize the output, we used an example dataset taken from Gibson et al. 2011.\\ 
-
-The dataset to be working with should be named ``data.sub''. The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' and an rma of a fixed effects model should be named ``rma.FE'' in order for the automatisation to work. IF a meta-regression has been conducted, it should be called ``rma.RE.meta'' or ``rma.FE.meta'' respectively. Other than that, the metafor package in R needs to be installed.  
-
-For creating an appendix with an unkown dataset... 
 
 \begin{figure}
 \captionsetup{width =0.6\textwidth
 \centering
 <<label = forest.re, echo = FALSE, fig = TRUE>>=
-attach(rma.RE)
+attach(data.sub)
+
+# Our rma analysis
+#Fixed Effect Model
+
+rma.FE = rma(method = "FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n)
+rma.FE
+
+#Random Effects Model
+rma.RE = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB")
+rma.RE
+
+detach(data.sub)
 par (mar = c(4,4,1,2))
 forest.rma (rma.RE, annotate = TRUE, cex = 0.5, showweight = TRUE)
 par (mar = c(5,4,4,2))
-detach(rma.RE)
-
 @
 \caption{forest plot}
 \label{forest.re}
@@ -189,15 +178,6 @@ fsn(yi = rma.RE$yi, vi = rma.RE$vi)
 
 This is how a table in sweave is created. Have to change it according to what we want to input
 
-\captionsetup{width=0.6\textwidth}
-<<label=tab:two,echo=FALSE,results=tex>>=
 
-mytable=summary(rma.RE)
-
-print(xtable(mytable, caption = "Parameter estimates of the regression fit to predict tree volume depending on girth in cherry trees. Note that a quadratic term has been added to the model structure", label = "tab:two",
-digits = c( 0, 2,2, 2, 2)),
-caption.placement = "top")
-
-@
 
 \end{document}
