@@ -1,0 +1,73 @@
+\documentclass[11pt, a4paper]{article} %or article has only section and below, book and report also have chapter: http://texblog.org/2007/07/09/documentclassbook-report-article-or-letter/
+
+\usepackage[utf8]{inputenc}  % use utf8 encoding of symbols such as umlaute for maximal compatibility across platforms
+
+\usepackage{caption}  			% provides commands for handling caption sizes etc.
+%\usepackage[a4paper, left=25mm, right=20mm, top=25mm, bottom=20mm]{geometry}		 % to easily change margin widths: https://www.sharelatex.com/learn/Page_size_and_margins
+
+\usepackage{etoolbox}    % for conditional evaluations!
+%\usepackage{fancyverb}   % for syntax highlighting of R code, together with the listings package
+\usepackage[bottom]{footmisc}  % I love footnotes! And they should be down at the bottom of the page!
+\usepackage{graphicx}        % when using figures and alike
+\usepackage[hidelinks]{hyperref}		% for hyperreferences (links within the document: references, figures, tables, citations)
+%\usepackage{listings}
+
+\usepackage{euler}     % a math font, only for equations and alike; call BEFORE changing the main font; alternatives: mathptmx, fourier, 
+\usepackage{gentium} % for a different font; you can also try: cantarell, charter, libertine, gentium, bera, ... http://tex.stackexchange.com/questions/59403/what-font-packages-are-installed-in-tex-live
+
+%------------------------------------------------------------------------------------------------------
+%------- text size settings --------------
+\setlength{\textwidth}{16cm}% 
+\setlength{\textheight}{25cm} %23 
+%(these values were used to fill the page more fully and thus reduce the number of pages!)
+\setlength{\topmargin}{-1.5cm} %0
+\setlength{\footskip}{1cm} %
+%\setlength{\hoffset}{0cm} %
+\setlength{\oddsidemargin}{1cm}%
+\setlength{\evensidemargin}{-.5cm}%
+\setlength{\parskip}{0cm} % Abstand zwischen Absätzen
+% ----------------------------------------------------------------
+\renewcommand{\textfraction}{0.1} % allows more space to graphics in float
+\renewcommand{\topfraction}{0.85}
+%\renewcommand{\bottomfraction}{0.65}
+\renewcommand{\floatpagefraction}{0.70}
+
+
+\frenchspacing %http://texwelt.de/wissen/fragen/1154/was-ist-french-spacing-was-macht-frenchspacing
+%------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------
+
+\begin{document}
+%%%%%%%%%%%%% this bit is new to Sweave: %%%%%%%%%%%%%%%%%%%%%  
+\SweaveOpts{concordance=TRUE}
+
+
+\title{Appendix}
+
+\author{Torfinn and Carolina}
+
+\maketitle
+
+%------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------
+
+
+\section{Introduction}%------------------------------------------------------------------------------------------------------
+
+We created an appendix of meta-analysis paper. To be able to visualize the output, we used an example dataset taken from Gibson et al. 2011.
+
+The dataset to be working with should be named ``data.sub''. The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' and an rma of a fixed effects model should be named ``rma.FE'' in order for the automatisation to work. IF a meta-regression has been conducted, it should be called ``rma.RE.meta'' or ``rma.FE.meta'' respectively. Other than that, the metafor package in R needs to be installed.  
+
+For creating an appendix with an unkown dataset... 
+
+\begin{figure}
+\centering
+<<label=fig2plot, echo=FALSE, fig=TRUE>>=
+library(metafor)
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/rma.RE")
+forest.rma(rma.RE, annotate = TRUE, cex = 0.5, showweight = TRUE) 
+@
+\caption{This is an example figure, computed and immediately returned.}
+\end{figure}
+
+\end{document}
