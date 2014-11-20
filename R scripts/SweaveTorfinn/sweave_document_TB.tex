@@ -13,7 +13,7 @@
 %\usepackage{listings}
 
 \usepackage{euler}     % a math font, only for equations and alike; call BEFORE changing the main font; alternatives: mathptmx, fourier, 
-\usepackage{gentium} % for a different font; you can also try: cantarell, charter, libertine, gentium, bera, ... http://tex.stackexchange.com/questions/59403/what-font-packages-are-installed-in-tex-live
+%\usepackage{gentium} % for a different font; you can also try: cantarell, charter, libertine, gentium, bera, ... http://tex.stackexchange.com/questions/59403/what-font-packages-are-installed-in-tex-live
 
 %------------------------------------------------------------------------------------------------------
 %------- text size settings --------------
@@ -59,28 +59,50 @@ We created an appendix of meta-analysis paper. To be able to visualize the outpu
 
 The dataset to be working with should be named ``data.sub''. The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' and an rma of a fixed effects model should be named ``rma.FE'' in order for the automatisation to work. IF a meta-regression has been conducted, it should be called ``rma.RE.meta'' or ``rma.FE.meta'' respectively. Other than that, the metafor package in R needs to be installed.  
 
-For creating an appendix with an unkown dataset... 
+For creating an appendix with an unkown dataset... \\
+
+
 
 \begin{figure}
+\captionsetup{width=0.6\textwidth}
 \centering
-<<<<<<< HEAD
-\includegraphics{sweave_document_TB-fig2plot}
-\caption{This is an example figure, computed and immediately returned.}
+\includegraphics{sweave_document_TB-forest_re}
+
+\caption{Forest plot of a random effects model. The column on the left represents the study. The weighted percentage is shown as well as the effect size (ES) [+- 95\% CI]}
 \end{figure}
 
-=======
-\includegraphics{sweave_document_TB-forestplot}
-\caption{Forestplot from the rma model}
-\end{figure}
 
-To assess possible publication bias, funnel plots can be used for visualization.
+To assess possible publication bias, funnel plots can be used for visualization purposes.
 
 \begin{figure}
+\captionsetup{width=0.6\textwidth}
 \centering
 \includegraphics{sweave_document_TB-funnelplot}
-\caption{Funnel plot that displays possible publication bias}
-
+\caption{Funnel plot of random effects model displaying possible publication bias. The true ES is displayed by the solid verical line.}
 \end{figure}
 
->>>>>>> origin/master
+
+%Should go into the table
+
+%should also go into the table
+
+
+%% Trying to create a table from rma.RE. Once created, can then specify which parts to keep and with parts not to
+
+%<<echo = FALSE, eval = FALSE>>=
+%matrix.RE = data.matrix(rma.RE, rownames.force = NA)
+%@
+
+%<<matrix.RE>>=
+%require(xtable)
+%mytable = matrix.RE
+%@
+
+%<<xtable1, results = tex>>=
+%xtab = xtable(mytable)
+%print(xtab, floating = FALSE)
+%@
+
+
+
 \end{document}

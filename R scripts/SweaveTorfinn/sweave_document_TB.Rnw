@@ -1,4 +1,4 @@
-﻿\documentclass[11pt, a4paper]{article} %or article has only section and below, book and report also have chapter: http://texblog.org/2007/07/09/documentclassbook-report-article-or-letter/
+\documentclass[11pt, a4paper]{article} %or article has only section and below, book and report also have chapter: http://texblog.org/2007/07/09/documentclassbook-report-article-or-letter/
 
 \usepackage[utf8]{inputenc}  % use utf8 encoding of symbols such as umlaute for maximal compatibility across platforms
 
@@ -58,44 +58,71 @@ We created an appendix of meta-analysis paper. To be able to visualize the outpu
 
 The dataset to be working with should be named ``data.sub''. The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' and an rma of a fixed effects model should be named ``rma.FE'' in order for the automatisation to work. IF a meta-regression has been conducted, it should be called ``rma.RE.meta'' or ``rma.FE.meta'' respectively. Other than that, the metafor package in R needs to be installed.  
 
-For creating an appendix with an unkown dataset... 
+For creating an appendix with an unkown dataset... \\
 
-\begin{figure}
-\centering
-<<label=forestplot, echo=FALSE, fig=TRUE>>=
-library(metafor)
-
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/rma.RE")
+<<echo = FALSE>>=
 load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn/rma.RE")
 
-load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-par (mar = c(4,4,1,2))
-<<<<<<< HEAD
-forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE) 
-=======
+#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+library(metafor)
+library(xtable)
+@
 
-forest.rma(rma.RE, annotate = TRUE, cex = 0.5, showweight = TRUE) 
->>>>>>> FETCH_HEAD
+
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+<<label=forest_re, echo=FALSE, fig=TRUE>>=
+par (mar = c(4,4,1,2))
+forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE) 
+
+#forest.rma(rma.RE, annotate = TRUE, cex = 0.5, showweight = TRUE) 
+
 par (mar = c(5,4,4,2))
 @
 
-\caption{Forest plot of a random effects model}
-
+\caption{Forest plot of a random effects model. The column on the left represents the study. The weighted percentage is shown as well as the effect size (ES) [+- 95\% CI]}
 \end{figure}
 
-To assess possible publication bias, funnel plots can be used for visualization.
+
+To assess possible publication bias, funnel plots can be used for visualization purposes.
 
 \begin{figure}
+\captionsetup{width=0.6\textwidth}
 \centering
 <<label=funnelplot, echo=FALSE, fig=TRUE>>=
-library(metafor)
-load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
 funnel(rma.RE)
 @
-\caption{Funnel plot that displays possible publication bias}
-
-
+\caption{Funnel plot of random effects model displaying possible publication bias. The true ES is displayed by the solid verical line.}
 \end{figure}
+
+
+%Should go into the table
+<<echo = FALSE, eval = FALSE>>=
+regtest(rma.RE, model = "rma", predictor = "sei")
+@
+
+%should also go into the table
+<<echo = FALSE, eval = FALSE>>=
+fsn(yi = rma.RE$yi, vi = rma.RE$vi)
+@
+
+
+%% Trying to create a table from rma.RE. Once created, can then specify which parts to keep and with parts not to
+
+%<<echo = FALSE, eval = FALSE>>=
+%matrix.RE = data.matrix(rma.RE, rownames.force = NA)
+%@
+
+%<<matrix.RE>>=
+%require(xtable)
+%mytable = matrix.RE
+%@
+
+%<<xtable1, results = tex>>=
+%xtab = xtable(mytable)
+%print(xtab, floating = FALSE)
+%@
 
 
 
