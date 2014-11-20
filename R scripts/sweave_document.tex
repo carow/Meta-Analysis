@@ -39,6 +39,7 @@
 \begin{document}
 \input{sweave_document-concordance}
 
+
 \title{Appendix}
 \author{Torfinn Belbo \& Carolina Wackerhagen}
 
@@ -51,24 +52,42 @@ We created an appendix of meta-analysis paper. To be able to visualize the outpu
 The dataset to be working with should be named ``data.sub''. The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' and an rma of a fixed effects model should be named ``rma.FE'' in order for the automatisation to work. IF a meta-regression has been conducted, it should be called ``rma.RE.meta'' or ``rma.FE.meta'' respectively. Other than that, the metafor package in R needs to be installed.  
 
 
+\begin{Schunk}
+\begin{Sinput}
+> library(metafor)
+> #setwd("C:\Users\ICI\Documents\Carolina\Uni\Freiburg\3_Semester\Best practice R\Meta Analysis\R scripts")
+> 
+> table1 <- read.csv2("Gibson.csv")
+> str(table1)
+> summary(table1) 
+> table1$d.mean=as.numeric(table1$d.mean)
+> table1$p.mean=as.numeric(table1$p.mean)
+> table1$p.sd=as.numeric(table1$p.sd)
+> table1$d.sd=as.numeric(table1$d.sd)
+> table1$hedges.g.=as.numeric(table1$hedges.g)
+> attach(table1)
+> birds=table1[taxon=="b",-c(5,6,7,8,9,10,11,12,13)]
+> detach(table1)
+> # To select randomly one row per study to narrow down the metaanalysis.
+> library(devtools)
+> source_gist("https://gist.github.com/mrdwab/6424112")
+> set.seed(100) 
+> data.sub = stratified(birds, "study.ID", 1)
+> summary(data.sub)
+> attach(data.sub)
+> # Our rma analysis
+> #Fixed Effect Model
+> 
+> rma.FE = rma(method = "FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n)
+> rma.FE
+> #Random Effects Model
+> rma.RE = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB")
+> rma.RE
+> detach(data.sub)
+\end{Sinput}
+\end{Schunk}
 
 For creating an appendix with an unkown dataset... 
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{anexamplehistogram}
-\caption{This is an example figure, exported as PDF and then, on loading, 
-  scaled to half the text's width.}
-\end{figure}
-\end{verbatim}
-\includegraphics{sweave_document-anexamplehistogram}
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{anexamplehistogram}
-\caption{This is an example figure, exported as PDF and then, on loading, scaled to half the text's width.}
-\end{figure}
-
-
-\medskip
 
 \begin{figure}
 \captionsetup{width =0.6\textwidth
