@@ -1,8 +1,9 @@
 library(metafor)
 library(meta)
+library
 
 #setwd("C:/Users/ICI/Desktop/MetaAnalysisD")
-setwd("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/Data")
+setwd("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts")
 table1 <- read.csv2("Gibson.csv")
 str(table1)
 summary(table1) 
@@ -15,7 +16,7 @@ table1$hedges.g.=as.numeric(table1$hedges.g)
 
 
 attach(table1)
-birds=table1[taxon=="b",-c(5,6,7,8,9,10,11,12,13)]
+birds=table1[taxon=="b",-c(6,7,8,10,12,13)]
 detach(table1)
 
 
@@ -55,6 +56,11 @@ rma.FE.meta = rma(method = "FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd
 rma.FE.meta
 
 #Random Effects Model
+
+# New tests! Adding more moderators to the model: metric of how the biodiversity is measured, type of disturbance.
+rma.RE.meta = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = cbind(continent, metric, disturbance))
+rma.RE.meta
+
 rma.RE.meta = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent)
 rma.RE.meta
 
@@ -79,12 +85,12 @@ fsn(yi = rma.RE$yi, vi = rma.RE$vi)
 attach(birdsnew)
 
 #Higgins 'E model
-rma.TF <- rma(method="HE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) # Risk Differences
+rma.TF <- rma(method="HE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) 
 trimfill(rma.TF) # Only applicable for FE or RE objects
 funnel(trimfill(rma.TF))
 
 #Fixed effects model
-rma.TF.FE <- rma(method="FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) # Risk Differences
+rma.TF.FE <- rma(method="FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) 
 trimfill(rma.TF.FE) # Only applicable for FE or RE objects
 funnel(trimfill(rma.TF.FE))
 
@@ -101,18 +107,20 @@ cbind(exp(sens.RE$estimate), sens.RE$pval < 0.05)
 
 sens.RE$I2
 
+#-------------------------------------------------
+
+# Exploring new plots not previously explored
 
 #radial plot
+
 radial(rma.RE)
 
 
-# Bubble plot to display the result of a meta-regression.
-bubble (rma.RE)
+# L'Abbe plot is not applicable to our analysis, as it is for binary outcomes
+# labbe(rma.RE) 
 
 
-labbe(rma.RE)
-
-qqnorm(rma.RE, ylab = "Effectsize biodiversity difference")
+qqnorm(rma.RE)
 
 # Baujat plot
 # The plot shows the contribution of each study to the overall 
@@ -121,3 +129,45 @@ qqnorm(rma.RE, ylab = "Effectsize biodiversity difference")
 # difference between the overall estimate based on a fixed-effects 
 # model with and without the study included in the model fitting) on the y-axis.
 baujat(rma.RE)
+
+# Doing meta analysis with meta package using the metacont function for continuous values.
+attach(birdsnew)
+metacont.REML = metacont(n.e = d.n, mean.e = d.mean, sd.e = d.sd, n.c = p.n, mean.c = p.mean, sd.c = p.sd, method.tau = "REML", label.e = "Disturbed sites", label.c = "Primary forests", sm = "SMD")
+metacont.REML.C = metacont(n.e = d.n, mean.e = d.mean, sd.e = d.sd, n.c = p.n, mean.c = p.mean, sd.c = p.sd, method.tau = "REML", label.e = "Disturbed sites", label.c = "Primary forests", sm = "SMD", )
+
+
+detach(birdsnew)
+
+funnel(metacont.REML)
+
+print.meta(metacont.REML)
+#metareg(metacont.REML)
+#bubble(metacont.REML)
+
+dev.copy2pdf(width = 15, height = 15,out.type = "pdf")
+forest(metacont.REML)
+
+tf1 = trimfill(metacont.REML)
+funnel(tf1)
+tf1
+
+save(birdsnew, file = "/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/birdsnew")
+save(birds, file = "/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/birds")
+
+
+
+
+# Bubble plot with use of the meta package. If more than two groups it produces one plot 
+# per extra group, so not necessarily very useful.
+
+attach(birds)
+metacont.REML = metacont(n.e = d.n, mean.e = d.mean, sd.e = d.sd, n.c = p.n, mean.c = p.mean, sd.c = p.sd, method.tau = "REML", label.e = "Disturbed sites", label.c = "Primary forests", sm = "SMD", data = birdsnew)
+metacont.upd = update(metacont.REML, byvar = continent)
+par(mfrow=c(1,3))
+bubble(metareg(metacont.upd))
+par(mfrow=c(1,1))
+
+detach(birds)
+
+
+
