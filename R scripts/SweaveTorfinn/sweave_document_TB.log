@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.21)  20 NOV 2014 16:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.21)  20 NOV 2014 17:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -524,7 +524,19 @@ LaTeX Font Info:    Redeclaring math symbol \sharp on input line 209.
 LaTeX Font Info:    Redeclaring math symbol \smile on input line 210.
 LaTeX Font Info:    Redeclaring math symbol \frown on input line 211.
 LaTeX Font Info:    Redeclaring math accent \hat on input line 254.
-) (/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Sweave.sty
+) (/usr/local/texlive/2014/texmf-dist/tex/latex/gentium-tug/gentium.sty
+Package: gentium 2012/01/13 Style file for gentium.
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2014/05/09 v2.6d package option processing (HA)
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+\XKV@toks=\toks18
+\XKV@tempa@toks=\toks19
+\XKV@depth=\count102
+File: xkeyval.tex 2014/05/09 v2.6d key=value parser (HA)
+)))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Sweave.sty
 Package: Sweave 
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/base/ifthen.sty
@@ -535,11 +547,11 @@ Package: fancyvrb 2008/02/07
 
 Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
 <2008/02/07> (tvz)
-\FV@CodeLineNo=\count102
+\FV@CodeLineNo=\count103
 \FV@InFile=\read1
 \FV@TabBox=\box26
-\c@FancyVerbLine=\count103
-\FV@StepNumber=\count104
+\c@FancyVerbLine=\count104
+\FV@StepNumber=\count105
 \FV@OutFile=\write3
 )
 (/usr/local/texlive/2014/texmf-dist/tex/latex/base/textcomp.sty
@@ -722,44 +734,44 @@ File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
 (./sweave_document_TB.aux)
 \openout1 = `sweave_document_TB.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 39.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 39.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 41.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 41.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    ... okay on input line 41.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 
 (/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count105
+\scratchcounter=\count106
 \scratchdimen=\dimen117
 \scratchbox=\box27
-\nofMPsegments=\count106
-\nofMParguments=\count107
-\everyMPshowfont=\toks18
-\MPscratchCnt=\count108
+\nofMPsegments=\count107
+\nofMParguments=\count108
+\everyMPshowfont=\toks20
+\MPscratchCnt=\count109
 \MPscratchDim=\dimen118
-\MPnumerator=\count109
-\makeMPintoPDFobject=\count110
-\everyMPtoPDFconversion=\toks19
+\MPnumerator=\count110
+\makeMPintoPDFobject=\count111
+\everyMPtoPDFconversion=\toks21
 ) (/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -776,7 +788,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \AtBeginShipoutBox=\box28
-Package hyperref Info: Link coloring OFF on input line 39.
+Package hyperref Info: Link coloring OFF on input line 41.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -784,127 +796,124 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count111
+\c@section@level=\count112
 )
-LaTeX Info: Redefining \ref on input line 39.
-LaTeX Info: Redefining \pageref on input line 39.
-LaTeX Info: Redefining \nameref on input line 39.
+LaTeX Info: Redefining \ref on input line 41.
+LaTeX Info: Redefining \pageref on input line 41.
+LaTeX Info: Redefining \nameref on input line 41.
 
 (./sweave_document_TB.out) (./sweave_document_TB.out)
 \@outlinefile=\write4
 \openout4 = `sweave_document_TB.out'.
 
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 39.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 41.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/aer/m/n on input line 39.
+(Font)                  OT1/cmr/m/n --> OT1/aer/m/n on input line 41.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/aer/m/n on input line 39.
+(Font)                  OT1/cmr/bx/n --> OT1/aer/m/n on input line 41.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/aer/m/n --> OT1/aer/bx/n on input line 39.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 39.
+(Font)                  OT1/aer/m/n --> OT1/aer/bx/n on input line 41.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 41.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/aer/bx/n on input line 39.
+(Font)                  OT1/cmr/bx/n --> OT1/aer/bx/n on input line 41.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/aer/bx/n on input line 39.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 39.
+(Font)                  OT1/cmr/bx/n --> OT1/aer/bx/n on input line 41.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 41.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/aess/m/n on input line 39.
+(Font)                  OT1/cmss/m/n --> OT1/aess/m/n on input line 41.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/aess/m/n on input line 39.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 39.
+(Font)                  OT1/cmss/bx/n --> OT1/aess/m/n on input line 41.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 41.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/aer/m/it on input line 39.
+(Font)                  OT1/cmr/m/it --> OT1/aer/m/it on input line 41.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/aer/m/it on input line 39.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 39.
+(Font)                  OT1/cmr/bx/it --> OT1/aer/m/it on input line 41.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 41.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/aett/m/n on input line 39.
+(Font)                  OT1/cmtt/m/n --> OT1/aett/m/n on input line 41.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/aett/m/n on input line 39.
+(Font)                  OT1/cmtt/m/n --> OT1/aett/m/n on input line 41.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/aess/m/n --> OT1/aess/bx/n on input line 39.
+(Font)                  OT1/aess/m/n --> OT1/aess/bx/n on input line 41.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/aer/m/it --> OT1/aer/bx/it on input line 39.
+(Font)                  OT1/aer/m/it --> OT1/aer/bx/it on input line 41.
 
 (./sweave_document_TB-concordance.tex)
-LaTeX Font Info:    Try loading font information for T1+aett on input line 42.
-
-(/usr/local/texlive/2014/texmf-dist/tex/latex/ae/t1aett.fd
-File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-)
-LaTeX Font Info:    Try loading font information for TS1+aett on input line 43.
-
-
-(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/ts1aett.fd
-File: ts1aett.fd 
-)
-LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 43.
-
-
-(/usr/local/texlive/2014/texmf-dist/tex/latex/base/ts1cmtt.fd
-File: ts1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `TS1/aett/m/n' in size <10.95> not available
-(Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 43.
- [1
-
-{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-LaTeX Font Info:    Try loading font information for OT1+aer on input line 184.
-
+LaTeX Font Info:    Try loading font information for OT1+aer on input line 51.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/ae/ot1aer.fd
 File: ot1aer.fd 1997/11/16 Font definitions for OT1/aer.
 )
-LaTeX Font Info:    Try loading font information for U+eur on input line 184.
+LaTeX Font Info:    Try loading font information for U+eur on input line 51.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/ueur.fd
 File: ueur.fd 2013/01/14 v3.01 Euler Roman
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 184.
+(Font)              <12> on input line 51.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 184.
+(Font)              <8> on input line 51.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 184.
-LaTeX Font Info:    Try loading font information for U+euf on input line 184.
+(Font)              <6> on input line 51.
+LaTeX Font Info:    Try loading font information for U+euf on input line 51.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 )
-LaTeX Font Info:    Try loading font information for U+eus on input line 184.
+LaTeX Font Info:    Try loading font information for U+eus on input line 51.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/ueus.fd
 File: ueus.fd 2013/01/14 v3.01 Euler Script
 )
-LaTeX Font Info:    Try loading font information for U+euex on input line 184.
+LaTeX Font Info:    Try loading font information for U+euex on input line 51.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/ueuex.fd
 File: ueuex.fd 2013/01/14 v3.01 Euler extra symbols
-))
-Runaway argument?
-{width =0.6\textwidth \centering \begin {Schunk} \begin {Soutput} fun\ETC.
-! File ended while scanning use of \caption@@setkeys.
-<inserted text> 
-                \par 
-<*> sweave_document_TB.tex
-                          
-I suspect you have forgotten a `}', causing me
-to read past where you wanted me to stop.
-I'll try to recover; but if the error is serious,
-you'd better type `E' or `X' now and fix your file.
+)
+<sweave_document_TB-forestplot.pdf, id=9, 433.62pt x 433.62pt>
+File: sweave_document_TB-forestplot.pdf Graphic file (type pdf)
 
-! Emergency stop.
-<*> sweave_document_TB.tex
-                          
-*** (job aborted, no legal \end found)
+<use sweave_document_TB-forestplot.pdf>
+Package pdftex.def Info: sweave_document_TB-forestplot.pdf used on input line 6
+6.
+(pdftex.def)             Requested size: 364.19664pt x 364.21185pt.
 
- 
+<sweave_document_TB-funnelplot.pdf, id=10, 433.62pt x 433.62pt>
+File: sweave_document_TB-funnelplot.pdf Graphic file (type pdf)
+
+<use sweave_document_TB-funnelplot.pdf>
+Package pdftex.def Info: sweave_document_TB-funnelplot.pdf used on input line 7
+4.
+(pdftex.def)             Requested size: 364.19664pt x 364.21185pt.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 79.
+ [1
+
+{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2 <./s
+weave_document_TB-forestplot.pdf>]
+[3 <./sweave_document_TB-funnelplot.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 79.
+ (./sweave_document_TB.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 79.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 79.
+Package rerunfilecheck Info: File `sweave_document_TB.out' has not changed.
+(rerunfilecheck)             Checksum: A02D95553E30B97FF125B1AA17CF9044;47.
+ ) 
 Here is how much of TeX's memory you used:
- 8071 strings out of 493117
- 121988 string characters out of 6135432
- 203489 words of memory out of 5000000
- 11399 multiletter control sequences out of 15000+600000
- 17045 words of font info for 48 fonts, out of 8000000 for 9000
+ 8269 strings out of 493117
+ 124531 string characters out of 6135432
+ 200323 words of memory out of 5000000
+ 11577 multiletter control sequences out of 15000+600000
+ 23062 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,6n,38p,884b,455s stack positions out of 5000i,500n,10000p,200000b,80000s
-!  ==> Fatal error occurred, no output PDF file produced!
+ 36i,6n,75p,884b,356s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
+/usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
+sr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+Output written on sweave_document_TB.pdf (3 pages, 77377 bytes).
+PDF statistics:
+ 59 PDF objects out of 1000 (max. 8388607)
+ 44 compressed objects within 1 object stream
+ 7 named destinations out of 1000 (max. 500000)
+ 23 words of extra memory for PDF output out of 10000 (max. 10000000)
+
