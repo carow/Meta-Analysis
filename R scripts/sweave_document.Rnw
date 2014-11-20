@@ -103,15 +103,81 @@ detach(data.sub)
 
 For creating an appendix with an unkown dataset... 
 
-<<echo = FALSE>>=
-#Forest plot for the RE model
-par(mar=c(4,4,1,2))
-#forest.rma(rma.RE, annotate = TRUE, cex = 0.5, showweight = TRUE) #RE model
-par(mar=c(5,4,4,2))
+\begin{figure}
+\captionsetup{width =0.6\textwidth
+\centering
+<<label = forest.re, echo = FALSE, fig = TRUE>>=
+par (mar = c(4,4,1,2))
+forest.rma (rma.RE, annotate = TRUE, cex = 0.5, showweight = TRUE)
+forest.rma
+par (mar = c(5,4,4,2))
 @
+\caption{forest plot}
+\label{forest.re}
+\end{figure}
+
+%\begin{figure}
+%\begin{center}
+%<<label = forest.rme, fig = TRUE, echo = FALSE, fig = TRUE, dev = "pdf">>=
+%#Forest plot for the RE model
+%par(mar=c(4,4,1,2))
+%forest.rma(rma.RE, annotate = TRUE, cex = 0.5, showweight = TRUE) #RE model
+%forest.rma
+%par(mar=c(5,4,4,2))
+%@
+%\end{center}
+%\caption{This is an example figure, exported as PDF and then, on loading, %scaled to half the text's width.}
+%\end{figure}
+
 
 %use  an if expression. If rma.FE = TRUE, then do the plots for FE, if not, do the plots with RE in the code. 
 
+Forest plot of the fixed effects model...
 
+%Causes of heterogeneity - Meta-regression p. 141
+% If they did their own meta-regression, create a table with the values  obtained by the meta-regression. Include the intercept and the other moderators
+
+<<echo = FALSE, eval = FALSE>>=
+attach(data.sub)
+
+rma.FE.meta = rma(method = "FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent)
+rma.FE.meta
+
+
+#Random Effects Model
+rma.RE.meta = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent)
+rma.RE.meta
+
+detach(data.sub)
+@
+
+%publication bias testing
+<<echo = FALSE, eval = FALSE>>=
+funnel(rma.FE)
+regtest(rma.FE)#analysing the asymmetry of the funnel plot. Egger's test
+
+funnel(rma.RE)
+regtest(rma.RE, model = "rma", predictor = "sei")
+@
+
+%-- Fail safe n method
+<<echo= FALSE, eval = FALSE>>=
+fsn(yi = rma.FE$yi, vi = rma.FE$vi) #"file drawer analysis"
+
+fsn(yi = rma.RE$yi, vi = rma.RE$vi)
+@
+
+
+A table is created so...
+\captionsetup{width=0.6\textwidth}
+<<label=tab:two,echo=FALSE,results=tex>>=
+
+mytable=summary(bestmodel)
+
+print(xtable(mytable, caption = "Parameter estimates of the regression fit to predict tree volume depending on girth in cherry trees. Note that a quadratic term has been added to the model structure", label = "tab:two",
+digits = c( 0, 2,2, 2, 2)),
+caption.placement = "top")
+
+@
 
 \end{document}
