@@ -13,7 +13,7 @@
 %\usepackage{listings}
 
 \usepackage{euler}     % a math font, only for equations and alike; call BEFORE changing the main font; alternatives: mathptmx, fourier, 
-\usepackage{gentium} % for a different font; you can also try: cantarell, charter, libertine, gentium, bera, ... http://tex.stackexchange.com/questions/59403/what-font-packages-are-installed-in-tex-live
+%\usepackage{gentium} % for a different font; you can also try: cantarell, charter, libertine, gentium, bera, ... http://tex.stackexchange.com/questions/59403/what-font-packages-are-installed-in-tex-live
 
 %------------------------------------------------------------------------------------------------------
 %------- text size settings --------------
@@ -64,10 +64,13 @@ For creating an appendix with an unkown dataset...
 \centering
 <<label=fig2plot, echo=FALSE, fig=TRUE>>=
 library(metafor)
-load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/rma.RE")
+#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/rma.RE")
+load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn/rma.RE")
 forest.rma(rma.RE, annotate = TRUE, cex = 0.5, showweight = TRUE) 
 @
-\caption{This is an example figure, computed and immediately returned.}
+\caption{Forest plot of a random effects model}
 \end{figure}
+
+
 
 \end{document}
