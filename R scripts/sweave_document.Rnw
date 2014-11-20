@@ -42,22 +42,6 @@ library(knitr)
 # set global chunk options
 opts_chunk$set(fig.path='', fig.align='center', fig.show='hold')
 options(replace.assign=TRUE, width=90)
-@
-
-\title{Appendix}
-\author{Torfinn Belbo \& Carolina Wackerhagen}
-
-\date{\today}
-
-\maketitle
-
-We created an appendix of meta-analysis paper. To be able to visualize the output, we used an example dataset taken from Gibson et al. 2011.\\ 
-
-The dataset to be working with should be named ``data.sub''. The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' and an rma of a fixed effects model should be named ``rma.FE'' in order for the automatisation to work. IF a meta-regression has been conducted, it should be called ``rma.RE.meta'' or ``rma.FE.meta'' respectively. Other than that, the metafor package in R needs to be installed.  
-
-
-<<echo=FALSE,eval=FALSE>>=
-
 library(metafor)
 
 #setwd("C:\Users\ICI\Documents\Carolina\Uni\Freiburg\3_Semester\Best practice R\Meta Analysis\R scripts")
@@ -100,6 +84,17 @@ rma.RE
 
 detach(data.sub)
 @
+
+\title{Appendix}
+\author{Torfinn Belbo \& Carolina Wackerhagen}
+
+\date{\today}
+
+\maketitle
+
+We created an appendix of meta-analysis paper. To be able to visualize the output, we used an example dataset taken from Gibson et al. 2011.\\ 
+
+The dataset to be working with should be named ``data.sub''. The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' and an rma of a fixed effects model should be named ``rma.FE'' in order for the automatisation to work. IF a meta-regression has been conducted, it should be called ``rma.RE.meta'' or ``rma.FE.meta'' respectively. Other than that, the metafor package in R needs to be installed.  
 
 For creating an appendix with an unkown dataset... 
 
