@@ -66,7 +66,7 @@ For creating an appendix with an unkown dataset...
 library(metafor)
 load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
 par (mar = c(4,4,1,2))
-forest.rma(rma.RE, annotate = TRUE, cex = 0.5, showweight = TRUE) 
+forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE) 
 par (mar = c(5,4,4,2))
 @
 \caption{Forestplot from the rma model}
