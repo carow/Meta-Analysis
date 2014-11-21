@@ -63,6 +63,7 @@ For creating an appendix with an unkown dataset... \\
 <<echo = FALSE>>=
 load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn/rma.RE")
 
+
 #load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
 library(metafor)
 library(xtable)
