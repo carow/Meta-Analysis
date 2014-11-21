@@ -11,7 +11,7 @@
 \usepackage{graphicx}        % when using figures and alike
 \usepackage[hidelinks]{hyperref}		% for hyperreferences (links within the document: references, figures, tables, citations)
 %\usepackage{listings}
-
+\usepackage{lscape}
 \usepackage{euler}     % a math font, only for equations and alike; call BEFORE changing the main font; alternatives: mathptmx, fourier, 
 %\usepackage{gentium} % for a different font; you can also try: cantarell, charter, libertine, gentium, bera, ... http://tex.stackexchange.com/questions/59403/what-font-packages-are-installed-in-tex-live
 
@@ -74,7 +74,7 @@ library(xtable)
 \centering
 <<label=forest_re, echo=FALSE, fig=TRUE>>=
 par (mar = c(4,4,1,2))
-forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE) 
+forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, ) 
 par (mar = c(5,4,4,2))
 @
 
@@ -93,32 +93,30 @@ funnel(rma.RE)
 \caption{Funnel plot of random effects model displaying possible publication bias. The true ES is displayed by the solid verical line.}
 \end{figure}
 
-
-%Should go into the table
-<<echo = FALSE, eval = FALSE>>=
-regtest(rma.RE, model = "rma", predictor = "sei")
+\begin{landscape}
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+<<label=Diagnostics, echo=FALSE, fig=TRUE>>=
+par(mfrow=c(2,2), mar=c(5,5,4,1))
+z = rstandard(rma.RE)$z
+k <- length(z)
+plot(NA, NA, xlim = c(1, k), ylim = c(min(z, -2, 
+                na.rm = TRUE), max(z, 2, na.rm = TRUE)), xaxt = "n", 
+                xlab = "Study", ylab = "", bty = "l", main="Standardized residuals")
+            lines(seq_len(k), z, col = "lightgray")
+            lines(seq_len(k), z)
+            points(seq_len(k), z, pch = 21, bg = "black")
+            axis(side = 1, at = seq_len(k), labels = rma.RE$ids)
+            abline(h = 0, lty = "dashed")
+            abline(h = c(qnorm(0.025), qnorm(0.975)), lty = "dotted")
+baujat(rma.RE, main = "Baujat heterogenity diagnostic plot")
+qqnorm(rma.RE)
+radial(rma.RE,  main = "Galbraith's radial plot")
 @
+\caption{Four diagnostic plots for meta analysis.}
+\end{figure}
+\end{landscape}
 
-%should also go into the table
-<<echo = FALSE, eval = FALSE>>=
-fsn(yi = rma.RE$yi, vi = rma.RE$vi)
-@
-
-
-%% Trying to create a table from rma.RE. Once created, can then specify which parts to keep and with parts not to
-
-<<echo = FALSE, eval = FALSE>>=
-matrix.RE = data.matrix(rma.RE, rownames.force = NA)
-@
-
-<<matrix.RE>>=
-require(xtable)
-mytable = matrix.RE
-@
-
-<<xtable1, results = tex>>=
-xtab = xtable(mytable)
-print(xtab, floating = FALSE)
-@
 
 \end{document}

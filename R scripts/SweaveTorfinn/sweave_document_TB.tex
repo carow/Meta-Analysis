@@ -11,7 +11,7 @@
 \usepackage{graphicx}        % when using figures and alike
 \usepackage[hidelinks]{hyperref}		% for hyperreferences (links within the document: references, figures, tables, citations)
 %\usepackage{listings}
-
+\usepackage{lscape}
 \usepackage{euler}     % a math font, only for equations and alike; call BEFORE changing the main font; alternatives: mathptmx, fourier, 
 %\usepackage{gentium} % for a different font; you can also try: cantarell, charter, libertine, gentium, bera, ... http://tex.stackexchange.com/questions/59403/what-font-packages-are-installed-in-tex-live
 
@@ -81,16 +81,14 @@ To assess possible publication bias, funnel plots can be used for visualization 
 \caption{Funnel plot of random effects model displaying possible publication bias. The true ES is displayed by the solid verical line.}
 \end{figure}
 
+\begin{landscape}
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+\includegraphics{sweave_document_TB-Diagnostics}
+\caption{Four diagnostic plots for meta analysis.}
+\end{figure}
+\end{landscape}
 
-%Should go into the table
 
-%should also go into the table
-
-
-%% Trying to create a table from rma.RE. Once created, can then specify which parts to keep and with parts not to
-
-
-\begin{Schunk}
-\begin{Sinput}
-> require(xtable)
-> mytable = matrix.RE
+\end{document}

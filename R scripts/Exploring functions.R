@@ -99,12 +99,13 @@ detach(birdsnew)
 #sensitivity analysis/robustness testing
 #-- with the leaveout function
 
+rma.RE$I2
+sens.RE$I2
 sens.RE = leave1out(rma.RE)
 which(sens.RE$I2 == min(sens.RE$I2))
 sum(sens.RE$I2 < 25)
 hist(sens.RE$I2)
-cbind(exp(sens.RE$estimate), sens.RE$pval < 0.05)
-
+cbind(exp(sens.RE$estimate), sens.RE$pval, sens.RE$pval < 0.05)
 sens.RE$I2
 
 #-------------------------------------------------
@@ -131,6 +132,18 @@ qqnorm(rma.RE)
 baujat(rma.RE)
 
 # Doing meta analysis with meta package using the metacont function for continuous values.
+
+z = rstandard(rma.RE)$z
+plot(NA, NA, xlim = c(1, k), ylim = c(min(z, -2, 
+                                          na.rm = TRUE), max(z, 2, na.rm = TRUE)), xaxt = "n", 
+     xlab = "Study", ylab = "", bty = "l")
+lines(seq_len(k)[not.na], z[not.na], col = "lightgray")
+lines(seq_len(k), z)
+points(seq_len(k), z, pch = 21, bg = "black")
+axis(side = 1, at = seq_len(k), labels = ids)
+abline(h = 0, lty = "dashed")
+abline(h = c(qnorm(0.025), qnorm(0.975)), lty = "dotted")
+
 attach(birdsnew)
 metacont.REML = metacont(n.e = d.n, mean.e = d.mean, sd.e = d.sd, n.c = p.n, mean.c = p.mean, sd.c = p.sd, method.tau = "REML", label.e = "Disturbed sites", label.c = "Primary forests", sm = "SMD")
 metacont.REML.C = metacont(n.e = d.n, mean.e = d.mean, sd.e = d.sd, n.c = p.n, mean.c = p.mean, sd.c = p.sd, method.tau = "REML", label.e = "Disturbed sites", label.c = "Primary forests", sm = "SMD", )
