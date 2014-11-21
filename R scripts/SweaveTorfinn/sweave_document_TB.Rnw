@@ -65,6 +65,7 @@ load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Me
 
 #load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
 library(metafor)
+<<<<<<< Updated upstream
 library(xtable)
 @
 
@@ -82,6 +83,15 @@ par (mar = c(5,4,4,2))
 @
 
 \caption{Forest plot of a random effects model. The column on the left represents the study. The weighted percentage is shown as well as the effect size (ES) [+- 95\% CI]}
+=======
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn/rma.RE")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+par (mar = c(4,4,1,2))
+forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE) 
+par (mar = c(5,4,4,2))
+@
+\caption{Forest plot of a random effects model}
+>>>>>>> Stashed changes
 \end{figure}
 
 
@@ -93,6 +103,7 @@ To assess possible publication bias, funnel plots can be used for visualization 
 <<label=funnelplot, echo=FALSE, fig=TRUE>>=
 funnel(rma.RE)
 @
+<<<<<<< Updated upstream
 \caption{Funnel plot of random effects model displaying possible publication bias. The true ES is displayed by the solid verical line.}
 \end{figure}
 
@@ -123,7 +134,9 @@ fsn(yi = rma.RE$yi, vi = rma.RE$vi)
 %xtab = xtable(mytable)
 %print(xtab, floating = FALSE)
 %@
-
-
+=======
+\caption{Funnel plot that displays possible publication bias}
+\end{figure}
+>>>>>>> Stashed changes
 
 \end{document}
