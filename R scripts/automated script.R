@@ -83,7 +83,7 @@ par(mar=c(5,4,4,2)) # back to default
 #Causes of heterogeneity - Meta-regression p. 141
 # If they did their own meta-regression, create a table with the values 
 # obtained by the meta-regression. Include the intercept and the other moderators
-save(rma.RE.meta, file = "C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn")
+
 
 attach(data.sub)
 
@@ -95,7 +95,7 @@ rma.FE.meta
 rma.RE.meta = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent)
 rma.RE.meta
 
-save(rma.RE.meta, file = "C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn")
+save(rma.RE.meta, file = "SweaveTorfinn")
 
 
 detach(data.sub)
