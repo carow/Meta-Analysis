@@ -58,8 +58,6 @@ We created an appendix of meta-analysis paper. To be able to visualize the outpu
 
 The dataset to be working with should be named ``data.sub''. The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' and an rma of a fixed effects model should be named ``rma.FE'' in order for the automatisation to work. IF a meta-regression has been conducted, it should be called ``rma.RE.meta'' or ``rma.FE.meta'' respectively. Other than that, the metafor package in R needs to be installed.  
 
-For creating an appendix with an unkown dataset... \\
-
 <<echo = FALSE>>=
 #load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn/rma.RE")
 
@@ -93,30 +91,54 @@ funnel(rma.RE)
 \caption{Funnel plot of random effects model displaying possible publication bias. The true ES is displayed by the solid verical line.}
 \end{figure}
 
-\begin{landscape}
 \begin{figure}
 \captionsetup{width=0.6\textwidth}
 \centering
-<<label=Diagnostics, echo=FALSE, fig=TRUE>>=
-par(mfrow=c(2,2), mar=c(5,5,4,1))
+<<label=baujat, echo=FALSE, fig=TRUE>>=
+#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
+baujat(rma.RE, main = "Baujat heterogenity diagnostic plot")
+@
+\caption{Baujat heterogenity plot for diagnostics of meta analysis}
+\end{figure}
+
+
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+<<label=Galbraith, echo=FALSE, fig=TRUE>>=
+#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
+radial(rma.RE, zlab = "Standardized residuals", xlab = "Inverse standard deviation", main = "Galbraith's radial plot", cex=1)
+@
+\caption{Galbraith's radial plot for diagnostics of meta analysis}
+\end{figure}
+
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+<<label=stdresplot, echo=FALSE, fig=TRUE>>=
+#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
 z = rstandard(rma.RE)$z
 k <- length(z)
 plot(NA, NA, xlim = c(1, k), ylim = c(min(z, -2, 
-                na.rm = TRUE), max(z, 2, na.rm = TRUE)), xaxt = "n", 
-                xlab = "Study", ylab = "", bty = "l", main="Standardized residuals")
-            lines(seq_len(k), z, col = "lightgray")
-            lines(seq_len(k), z)
-            points(seq_len(k), z, pch = 21, bg = "black")
-            axis(side = 1, at = seq_len(k), labels = rma.RE$ids)
-            abline(h = 0, lty = "dashed")
-            abline(h = c(qnorm(0.025), qnorm(0.975)), lty = "dotted")
-baujat(rma.RE, main = "Baujat heterogenity diagnostic plot")
-qqnorm(rma.RE)
-radial(rma.RE,  main = "Galbraith's radial plot")
+                                          na.rm = TRUE), max(z, 2, na.rm = TRUE)), xaxt = "n", 
+     xlab = "Study", ylab = "", bty = "l", main="Standardized residuals")
+lines(seq_len(k), z, col = "lightgray")
+lines(seq_len(k), z)
+points(seq_len(k), z, pch = 21, bg = "black")
+axis(side = 1, at = seq_len(k), labels = rma.RE$ids)
+abline(h = 0, lty = "dashed")
+abline(h = c(qnorm(0.025), qnorm(0.975)), lty = "dotted")
 @
-\caption{Four diagnostic plots for meta analysis.}
+\caption{Standardized residuals plot for diagnostics of meta analysis}
 \end{figure}
-\end{landscape}
 
-
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+<<label=qqnorm, echo=FALSE, fig=TRUE>>=
+#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
+qqnorm(rma.RE, label = "all", pch = NA_integer_)
+@
+\caption{Quantile-Quantile plot for diagnostics of meta analysis}
+\end{figure}
 \end{document}

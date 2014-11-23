@@ -99,15 +99,26 @@ detach(birdsnew)
 #sensitivity analysis/robustness testing
 #-- with the leaveout function
 
-rma.RE$I2
-sens.RE$I2
+
 sens.RE = leave1out(rma.RE)
 which(sens.RE$I2 == min(sens.RE$I2))
 sum(sens.RE$I2 < 25)
+which(sens.RE$I2 < 25)
 hist(sens.RE$I2)
 cbind(exp(sens.RE$estimate), sens.RE$pval, sens.RE$pval < 0.05)
 sens.RE$I2
+rma
+which((rma.RE$I2 - sens.RE$I2) > 4)
+if ((which(sens.RE$I2 < 25)) > 0) 
+{
+  return(which(sens.RE$I2 < 25))
+}
+  else 
+    {
+      return((rma.RE$I2 - sens.RE$I2) > 4)
+    }
 
+hist(sens.RE.str)
 #-------------------------------------------------
 
 # Exploring new plots not previously explored
@@ -183,4 +194,26 @@ par(mfrow=c(1,1))
 detach(birds)
 
 
+
+
+\begin{figure}
+\centering
+<<label=Diagnostics2, echo=FALSE, fig=TRUE>>=
+  
+  op2 <- par(mfrow = c(2, 1), 
+             pty = "s", mar=c(5,5,4,1))       # square plotting region,
+# independent of device size
+
+## At end of plotting, reset to previous settings:
+par(op2)
+#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
+qqnorm(rma.RE, label = "all", pch = NA_integer_)
+
+@
+  \caption{Two diagnostic plots for meta analysis asdlfkmasd;lfk.}
+\end{figure}
+
+par (mfrow = c(2, 1), mar=c(5,5,1,1)) #mar=c(5,5,4,1)
+
+?lscape
 
