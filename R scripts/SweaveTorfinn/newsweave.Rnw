@@ -99,7 +99,8 @@ funnel(rma.RE)
 
 
 %Table with values for ES, SE (ES),pES, CI, I2, Egger value and fasil-sage number. If various rma analysis are run, they can be loaded into this table as well. 
-?? How can a an automised table be created for rows from e.g. different rma objects? In our case, we just have one rma object so one row is produced. If the people conduct different rmas for different data subsets, it would be nice to have this in the same table as well!  
+?? How can a an automised table be created for rows from e.g. different rma objects? In our case, we just have one rma object so one row is produced. If the people conduct different rmas for different data subsets, it would be nice to have this in the same table as well!\\
+\bigskip
 
 <<echo = FALSE>>=
 egger.RE = regtest(rma.RE, model = "rma", predictor = "sei")
@@ -115,8 +116,10 @@ mytable = matrix.RE
 @
 
 <<xtable1, results = tex, echo=FALSE>>=
-print(xtable(mytable, caption = paste("Results of the meta-analysis. Includes the the egger's test and the fails-safe number for publication bias testing"),caption.placement = "top"), size ="footnotesize")
+print(xtable(mytable, caption = paste("Results of the meta-analysis. Includes the the egger's test and the fails-safe number for publication bias testing.")),caption.placement = "top", size ="footnotesize", scalebox = 0.9)
 @
+\bigskip
+
 
 
 This table should work once you have saved the rma.RE.meta and loaded it at the top of the document!!! Take it out of the \% \\
@@ -129,7 +132,7 @@ This table should work once you have saved the rma.RE.meta and loaded it at the 
 %@
 
 %<<xtable2, results = tex, echo=FALSE>>=
-%print(xtable(mytable2, caption = paste("Results of the meta-regression. Test for heterogeneity taking all four continents into account"),caption.placement = "top"), size ="footnotesize")
+%print(xtable(mytable2, caption = paste("Results of the meta-regression. Test for heterogeneity taking all four continents into account")),caption.placement = "top", size ="footnotesize", scalebox = 0.9)
 %@
 
 To do:
