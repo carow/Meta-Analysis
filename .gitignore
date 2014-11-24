@@ -1,3 +1,17 @@
 Ignored
 .RData
 .Rhistory
+
+R scripts/.Rhistory
+
+*.log
+
+*.log
+
+R scripts/SweaveTorfinn/newsweave.log
+
+*.log
+
+*.pdf
+
+*.gz
