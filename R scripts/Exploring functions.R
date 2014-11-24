@@ -99,14 +99,26 @@ detach(birdsnew)
 #sensitivity analysis/robustness testing
 #-- with the leaveout function
 
+
 sens.RE = leave1out(rma.RE)
 which(sens.RE$I2 == min(sens.RE$I2))
 sum(sens.RE$I2 < 25)
+which(sens.RE$I2 < 25)
 hist(sens.RE$I2)
-cbind(exp(sens.RE$estimate), sens.RE$pval < 0.05)
-
+cbind(exp(sens.RE$estimate), sens.RE$pval, sens.RE$pval < 0.05)
 sens.RE$I2
+rma
+which((rma.RE$I2 - sens.RE$I2) > 4)
+if ((which(sens.RE$I2 < 25)) > 0) 
+{
+  return(which(sens.RE$I2 < 25))
+}
+  else 
+    {
+      return((rma.RE$I2 - sens.RE$I2) > 4)
+    }
 
+hist(sens.RE.str)
 #-------------------------------------------------
 
 # Exploring new plots not previously explored
@@ -131,6 +143,18 @@ qqnorm(rma.RE)
 baujat(rma.RE)
 
 # Doing meta analysis with meta package using the metacont function for continuous values.
+
+z = rstandard(rma.RE)$z
+plot(NA, NA, xlim = c(1, k), ylim = c(min(z, -2, 
+                                          na.rm = TRUE), max(z, 2, na.rm = TRUE)), xaxt = "n", 
+     xlab = "Study", ylab = "", bty = "l")
+lines(seq_len(k)[not.na], z[not.na], col = "lightgray")
+lines(seq_len(k), z)
+points(seq_len(k), z, pch = 21, bg = "black")
+axis(side = 1, at = seq_len(k), labels = ids)
+abline(h = 0, lty = "dashed")
+abline(h = c(qnorm(0.025), qnorm(0.975)), lty = "dotted")
+
 attach(birdsnew)
 metacont.REML = metacont(n.e = d.n, mean.e = d.mean, sd.e = d.sd, n.c = p.n, mean.c = p.mean, sd.c = p.sd, method.tau = "REML", label.e = "Disturbed sites", label.c = "Primary forests", sm = "SMD")
 metacont.REML.C = metacont(n.e = d.n, mean.e = d.mean, sd.e = d.sd, n.c = p.n, mean.c = p.mean, sd.c = p.sd, method.tau = "REML", label.e = "Disturbed sites", label.c = "Primary forests", sm = "SMD", )
@@ -170,4 +194,26 @@ par(mfrow=c(1,1))
 detach(birds)
 
 
+
+
+\begin{figure}
+\centering
+<<label=Diagnostics2, echo=FALSE, fig=TRUE>>=
+  
+  op2 <- par(mfrow = c(2, 1), 
+             pty = "s", mar=c(5,5,4,1))       # square plotting region,
+# independent of device size
+
+## At end of plotting, reset to previous settings:
+par(op2)
+#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
+qqnorm(rma.RE, label = "all", pch = NA_integer_)
+
+@
+  \caption{Two diagnostic plots for meta analysis asdlfkmasd;lfk.}
+\end{figure}
+
+par (mfrow = c(2, 1), mar=c(5,5,1,1)) #mar=c(5,5,4,1)
+
+?lscape
 

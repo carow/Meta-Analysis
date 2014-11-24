@@ -11,26 +11,27 @@
 \usepackage{graphicx}        % when using figures and alike
 \usepackage[hidelinks]{hyperref}		% for hyperreferences (links within the document: references, figures, tables, citations)
 %\usepackage{listings}
-
+\usepackage{lscape}
 \usepackage{euler}     % a math font, only for equations and alike; call BEFORE changing the main font; alternatives: mathptmx, fourier, 
 %\usepackage{gentium} % for a different font; you can also try: cantarell, charter, libertine, gentium, bera, ... http://tex.stackexchange.com/questions/59403/what-font-packages-are-installed-in-tex-live
+\usepackage[margin=1in]{geometry}
 
 %------------------------------------------------------------------------------------------------------
 %------- text size settings --------------
-\setlength{\textwidth}{16cm}% 
-\setlength{\textheight}{25cm} %23 
+%\setlength{\textwidth}{16cm}% 
+%\setlength{\textheight}{25cm} %23 
 %(these values were used to fill the page more fully and thus reduce the number of pages!)
-\setlength{\topmargin}{-1.5cm} %0
-\setlength{\footskip}{1cm} %
+%\setlength{\topmargin}{-1.5cm} %0
+%\setlength{\footskip}{1cm} %
 %\setlength{\hoffset}{0cm} %
-\setlength{\oddsidemargin}{1cm}%
-\setlength{\evensidemargin}{-.5cm}%
-\setlength{\parskip}{0cm} % Abstand zwischen Absätzen
+%\setlength{\oddsidemargin}{1cm}%
+%\setlength{\evensidemargin}{-.5cm}%
+%\setlength{\parskip}{0cm} % Abstand zwischen Absätzen
 % ----------------------------------------------------------------
-\renewcommand{\textfraction}{0.1} % allows more space to graphics in float
-\renewcommand{\topfraction}{0.85}
+%\renewcommand{\textfraction}{0.1} % allows more space to graphics in float
+%\renewcommand{\topfraction}{0.85}
 %\renewcommand{\bottomfraction}{0.65}
-\renewcommand{\floatpagefraction}{0.70}
+%\renewcommand{\floatpagefraction}{0.70}
 
 
 \frenchspacing %http://texwelt.de/wissen/fragen/1154/was-ist-french-spacing-was-macht-frenchspacing
@@ -58,12 +59,11 @@ We created an appendix of meta-analysis paper. To be able to visualize the outpu
 
 The dataset to be working with should be named ``data.sub''. The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' and an rma of a fixed effects model should be named ``rma.FE'' in order for the automatisation to work. IF a meta-regression has been conducted, it should be called ``rma.RE.meta'' or ``rma.FE.meta'' respectively. Other than that, the metafor package in R needs to be installed.  
 
-For creating an appendix with an unkown dataset... \\
-
 <<echo = FALSE>>=
-load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn/rma.RE")
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn/rma.RE")
 
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 library(metafor)
 library(xtable)
 @
@@ -74,15 +74,63 @@ library(xtable)
 \centering
 <<label=forest_re, echo=FALSE, fig=TRUE>>=
 par (mar = c(4,4,1,2))
-forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE) 
-
-#forest.rma(rma.RE, annotate = TRUE, cex = 0.5, showweight = TRUE) 
-
+forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE) ### set positions) 
 par (mar = c(5,4,4,2))
 @
 
 \caption{Forest plot of a random effects model. The column on the left represents the study. The weighted percentage is shown as well as the effect size (ES) [+- 95\% CI]}
 \end{figure}
+
+%Table with values for ES, SE (ES),pES, CI, I2, Egger value and fasil-sage number. If various rma analysis are run, they can be loaded into this table as well. 
+?? How can a an automised table be created for rows from e.g. different rma objects? In our case, we just have one rma object so one row is produced. If the people conduct different rmas for different data subsets, it would be nice to have this in the same table as well!\\
+\bigskip
+
+<<echo = FALSE>>=
+egger.RE = regtest(rma.RE, model = "rma", predictor = "sei")
+fsn.RE = fsn(yi = rma.RE$yi, vi = rma.RE$vi)
+@
+
+
+<<echo = FALSE, eval = TRUE>>=
+matrix.RE = data.frame(t(c("Effect Size"=rma.RE$b, "SE of Effect Size"=rma.RE$se, "CI (lb)"= rma.RE$ci.lb, "CI(ub)" = rma.RE$ci.ub, "P(ES)" = rma.RE$pval, "Q" = rma.RE$QE, "P(Q)" = rma.RE$QEp, "I^2" = rma.RE$I2, "Egger" = egger.RE$zval, "P(Egger)" = egger.RE$pval, "FSN" = fsn.RE$fsnum)))
+rownames(matrix.RE) <- "Value"
+require(xtable)
+mytable = matrix.RE
+@
+
+<<xtable1, results = tex, echo=FALSE>>=
+print(xtable(mytable, caption = paste("Results of the meta-analysis. Includes the the egger's test and the fails-safe number for publication bias testing.")),caption.placement = "top", size ="footnotesize", scalebox = 0.9)
+@
+\bigskip
+
+
+
+This table should work once you have saved the rma.RE.meta and loaded it at the top of the document!!! Take it out of the \%.
+
+<<echo = FALSE, eval = TRUE>>=
+matrix.RE.meta = data.frame(t(c("Effect Size"=rma.RE.meta$b, "SE of Effect Size"=rma.RE.meta$se, "CI (lb)"= rma.RE.meta$ci.lb, "CI(ub)" = rma.RE.meta$ci.ub, "P(ES)" = rma.RE.meta$pval, "Q" = rma.RE.meta$QE, "P(Q)" = rma.RE.meta$QEp, "I^2" = rma.RE.meta$I2, "Test of Moderators" = rma.RE.meta$QM, "P(Moderator Test)" = rma.RE.meta$QMp)))
+rownames(matrix.RE.meta) <- "Africa"
+require(xtable)
+mytable2 = matrix.RE.meta
+@
+
+<<xtable2, results = tex, echo=FALSE>>=
+print(xtable(mytable2, caption = paste("Results of the meta-regression. Test for heterogeneity taking all four continents into account")),caption.placement = "top", size ="footnotesize", scalebox = 0.9)
+@
+
+To do:
+
+Add a table with the results from the meta regression + add a bubble plot. Add the 4 figures as well and a table for the sensitivity analysis. 
+
+!!! I tried saving the rma.meta.RE as an object but I encountered problems with saving it, as it said it cannot open the compressed file. Haven't found a solution till now. Maybe you can save the object? :)
+
+Do the same for the meta package or use the forest plot from the meta package\\
+
+Notes:
+
+Are we going to make two scripts? One for meta and one for metafor or are we going to do a combination? Plus write a function for this script? 
+Don't know if this such a good idea as the appendix is not that good. Especially the table. Till now it would only work with one rma.RE object with one row and not many. Is is possible to combine specific single values of various rma objects? Can we do this?
+
 
 
 To assess possible publication bias, funnel plots can be used for visualization purposes.
@@ -96,34 +144,80 @@ funnel(rma.RE)
 \caption{Funnel plot of random effects model displaying possible publication bias. The true ES is displayed by the solid verical line.}
 \end{figure}
 
-
-%Should go into the table
-<<echo = FALSE, eval = FALSE>>=
-regtest(rma.RE, model = "rma", predictor = "sei")
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+<<label=baujat, echo=FALSE, fig=TRUE>>=
+#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
+baujat(rma.RE, main = "Baujat heterogenity diagnostic plot")
 @
+\caption{Baujat heterogenity plot for diagnostics of meta analysis}
+\end{figure}
 
-%should also go into the table
-<<echo = FALSE, eval = FALSE>>=
-fsn(yi = rma.RE$yi, vi = rma.RE$vi)
+
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+<<label=Galbraith, echo=FALSE, fig=TRUE>>=
+#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
+radial(rma.RE, zlab = "Standardized residuals", xlab = "Inverse standard deviation", main = "Galbraith's radial plot", cex=1)
 @
+\caption{Galbraith's radial plot for diagnostics of meta analysis}
+\end{figure}
 
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+<<label=stdresplot, echo=FALSE, fig=TRUE>>=
+#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
+z = rstandard(rma.RE)$z
+k <- length(z)
+plot(NA, NA, xlim = c(1, k), ylim = c(min(z, -2, 
+                                          na.rm = TRUE), max(z, 2, na.rm = TRUE)), xaxt = "n", 
+     xlab = "Study", ylab = "", bty = "l", main="Standardized residuals")
+lines(seq_len(k), z, col = "lightgray")
+lines(seq_len(k), z)
+points(seq_len(k), z, pch = 21, bg = "black")
+axis(side = 1, at = seq_len(k), labels = rma.RE$ids)
+abline(h = 0, lty = "dashed")
+abline(h = c(qnorm(0.025), qnorm(0.975)), lty = "dotted")
+@
+\caption{Standardized residuals plot for diagnostics of meta analysis}
+\end{figure}
 
-%% Trying to create a table from rma.RE. Once created, can then specify which parts to keep and with parts not to
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+<<label=qqnorm, echo=FALSE, fig=TRUE>>=
+#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
+qqnorm(rma.RE, label = "all", pch = NA_integer_)
+@
+\caption{Quantile-Quantile plot for diagnostics of meta analysis}
+\end{figure}
 
-%<<echo = FALSE, eval = FALSE>>=
-%matrix.RE = data.matrix(rma.RE, rownames.force = NA)
-%@
-
-%<<matrix.RE>>=
-%require(xtable)
-%mytable = matrix.RE
-%@
-
-%<<xtable1, results = tex>>=
-%xtab = xtable(mytable)
-%print(xtab, floating = FALSE)
-%@
-
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+<<label=diagnostics, echo=FALSE, fig=TRUE>>=
+#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
+par (mfrow= c(2,2), mar = c(4,4,1,2))
+z = rstandard(rma.RE)$z
+k <- length(z)
+plot(NA, NA, xlim = c(1, k), ylim = c(min(z, -2, 
+                                          na.rm = TRUE), max(z, 2, na.rm = TRUE)), xaxt = "n", 
+     xlab = "Study", ylab = "", bty = "l", main="Standardized residuals")
+lines(seq_len(k), z, col = "lightgray")
+lines(seq_len(k), z)
+points(seq_len(k), z, pch = 21, bg = "black")
+axis(side = 1, at = seq_len(k), labels = rma.RE$ids)
+abline(h = 0, lty = "dashed")
+abline(h = c(qnorm(0.025), qnorm(0.975)), lty = "dotted")
+qqnorm(rma.RE, label = "all", pch = NA_integer_)
+baujat(rma.RE, main = "Baujat heterogenity diagnostic plot")
+radial(rma.RE, zlab = "Standardized residuals", xlab = "Inverse standard deviation", main = "Galbraith's radial plot", cex=1)
+@
+\caption{Quantile-Quantile plot for diagnostics of meta analysis}
+\end{figure}
 
 
 \end{document}

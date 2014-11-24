@@ -1,5 +1,8 @@
 library(metafor)
 
+
+#setwd("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts")
+setwd("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts")
 setwd("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts")
 
 table1 <- read.csv2("Gibson.csv")
