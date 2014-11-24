@@ -1,6 +1,6 @@
 library(metafor)
 
-#setwd("C:\Users\ICI\Documents\Carolina\Uni\Freiburg\3_Semester\Best practice R\Meta Analysis\R scripts")
+setwd("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts")
 
 table1 <- read.csv2("Gibson.csv")
 str(table1)
@@ -94,6 +94,9 @@ rma.FE.meta
 #Random Effects Model
 rma.RE.meta = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent)
 rma.RE.meta
+
+save(rma.RE.meta, file = "SweaveTorfinn")
+
 
 detach(data.sub)
 
