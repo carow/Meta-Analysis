@@ -69,10 +69,7 @@ library(xtable)
 @
 
 
-\begin{figure}
-\captionsetup{width=0.6\textwidth}
-\centering
-<<label=forest_re, echo=FALSE, fig=TRUE>>=
+<<forest, echo=FALSE, fig=TRUE, include=FALSE, pdf=TRUE>>=
 par(mar = c(3,4,1,2))
 forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim=c(-10, 14))
 text(-10, rma.RE$k+2, "Study",    pos=4, cex=.68, font=2)
@@ -81,7 +78,13 @@ text(14, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos=2, cex=.68, font=2)
 par (mar = c(5,4,4,2))
 @
 
+
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{sweave_document_TB-forest}
 \caption{Forest plot of a random effects model. The column on the left represents the study. The weighted percentage is shown as well as the effect size (ES) [+- 95\% CI]}
+\label{fig:forestplot}
 \end{figure}
 
 %Table with values for ES, SE (ES),pES, CI, I2, Egger value and fasil-sage number. If various rma analysis are run, they can be loaded into this table as well. 
@@ -138,81 +141,22 @@ Don't know if this such a good idea as the appendix is not that good. Especially
 
 To assess possible publication bias, funnel plots can be used for visualization purposes.
 
+<<label=funnelplot, echo=FALSE, fig=TRUE, pdf=TRUE, include=FALSE>>=
+funnel(rma.RE)
+@
+
 \begin{figure}
 \captionsetup{width=0.6\textwidth}
 \centering
-<<label=funnelplot, echo=FALSE, fig=TRUE>>=
-funnel(rma.RE)
-@
+\includegraphics[width=0.7\textwidth]{funnelplot}
 \caption{Funnel plot of random effects model displaying possible publication bias. The true ES is displayed by the solid verical line.}
 \end{figure}
 
-\begin{figure}
-\captionsetup{width=0.6\textwidth}
-\centering
-<<label=baujat, echo=FALSE, fig=TRUE>>=
-#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
 
-baujat(rma.RE, main = "Baujat heterogenity diagnostic plot")
-
-@
-\caption{Baujat heterogenity plot for diagnostics of meta analysis}
-\end{figure}
-
-
-\begin{figure}
-\captionsetup{width=0.6\textwidth}
-\centering
-<<label=Galbraith, echo=FALSE, fig=TRUE>>=
-#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
-gp = par(mar = c(4,3,1,0))
-radial(rma.RE, zlab = "Standardized residuals", xlab = "Inverse standard deviation", main = "Galbraith's radial plot", cex=1)
-par(gp)
-@
-\caption{Galbraith's radial plot for diagnostics of meta analysis}
-\end{figure}
-
-\begin{figure}
-\captionsetup{width=0.6\textwidth}
-\centering
-<<label=stdresplot, echo=FALSE, fig=TRUE>>=
-#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
-z = rstandard(rma.RE)$z
-k <- length(z)
-plot(NA, NA, xlim = c(1, k), ylim = c(min(z, -2, 
-                                          na.rm = TRUE), max(z, 2, na.rm = TRUE)), xaxt = "n", 
-     xlab = "Study", ylab = "", bty = "l", main="Standardized residuals")
-lines(seq_len(k), z, col = "lightgray")
-lines(seq_len(k), z)
-points(seq_len(k), z, pch = 21, bg = "black")
-axis(side = 1, at = seq_len(k), labels = rma.RE$ids)
-abline(h = 0, lty = "dashed")
-abline(h = c(qnorm(0.025), qnorm(0.975)), lty = "dotted")
-@
-\caption{Standardized residuals plot for diagnostics of meta analysis}
-\end{figure}
-
-\begin{figure}
-\captionsetup{width=0.6\textwidth}
-\centering
-<<label=qqnorm, echo=FALSE, fig=TRUE>>=
-#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
-qqnorm(rma.RE, label = "all", pch = NA_integer_)
-@
-\caption{Quantile-Quantile plot for diagnostics of meta analysis}
-\end{figure}
-
-
-
-
-
-\begin{figure}
-\captionsetup{width=0.6\textwidth}
-\centering
-<<label=diagnostics, echo=FALSE, fig=TRUE>>=
+<<label=diagnostics, eval=TRUE, pdf=TRUE, fig=TRUE, echo=FALSE, include=FALSE>>=
 #Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
 par (mfrow= c(2,2), mar = c(4,4,1,2))
-par(mar = c(4,4,1,1))
+par(mar = c(4,4,2,1))
 z = rstandard(rma.RE)$z
 k <- length(z)
 plot(NA, NA, xlim = c(1, k), ylim = c(min(z, -2, na.rm = TRUE), max(z, 2, na.rm = TRUE)), xaxt = "n", xlab = "Study", ylab = "Standardized residuals", bty = "l", main="Standardized residuals plot", mgp=c(2,1,0))
@@ -224,41 +168,9 @@ abline(h = 0, lty = "dashed")
 abline(h = c(qnorm(0.025), qnorm(0.975)), lty = "dotted")
 
 
-qqnorm(rma.RE, label = "all", mgp=c(2,1,0), pch = NA_integer_) #how to get study names color red?
+qqnorm(rma.RE, label = "all", mgp=c(2,1,0)) #how to get study names color red?
 
-par(mar = c(4,3,1,1))
-baujat(rma.RE, main = "Baujat heterogenity plot", mgp=c(2,1,0))
-
-
-par(mar = c(0,0,0,0))
-radial(rma.RE, zlab="", xlab = "Inverse standard deviation", cex=1, mgp=c(2,1,0), main = "Galbraith's radial plot")
-#title("Galbraith's radial plot", line = -6)
-mtext("Standardized residuals", side = 2, line = -1, at = 0, cex=0.8)
-
-par(mfrow=c(1,1), mar = c(4,4,1,2))
-@
-\caption{Quantile-Quantile plot for diagnostics of meta analysis}
-\end{figure}
-
-
-<<Diagnostics, echo=FALSE, dev="pdf">>=
-#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
-par (mfrow= c(2,2), mar = c(4,4,1,2))
-par(mar = c(4,4,1,1))
-z = rstandard(rma.RE)$z
-k <- length(z)
-plot(NA, NA, xlim = c(1, k), ylim = c(min(z, -2, na.rm = TRUE), max(z, 2, na.rm = TRUE)), xaxt = "n", xlab = "Study", ylab = "Standardized residuals", bty = "l", main="Standardized residuals plot", mgp=c(2,1,0))
-lines(seq_len(k), z, col = "lightgray")
-lines(seq_len(k), z)
-points(seq_len(k), z, pch = 21, bg = "black")
-axis(side = 1, at = seq_len(k), labels = rma.RE$ids)
-abline(h = 0, lty = "dashed")
-abline(h = c(qnorm(0.025), qnorm(0.975)), lty = "dotted")
-
-
-qqnorm(rma.RE, label = "all", mgp=c(2,1,0), pch = NA_integer_) #how to get study names color red?
-
-par(mar = c(4,3,1,1))
+par(mar = c(4,3,2,1))
 baujat(rma.RE, main = "Baujat heterogenity plot", mgp=c(2,1,0))
 
 
@@ -273,7 +185,7 @@ par(mfrow=c(1,1), mar = c(4,4,1,2))
 \begin{figure}
 \captionsetup{width=0.6\textwidth}
 \centering
-\includegraphics[width=1\textwidth]{sweave_document_TB-Diagnostics}
+\includegraphics[width=1\textwidth]{sweave_document_TB-diagnostics}
 \caption{diagnostic plots for diagnostics of meta analysis}
 \label{fig:diagnostics}
 \end{figure}

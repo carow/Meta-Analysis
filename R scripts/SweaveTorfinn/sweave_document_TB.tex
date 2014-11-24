@@ -62,12 +62,14 @@ The dataset to be working with should be named ``data.sub''. The conducted analy
 
 
 
+
+
 \begin{figure}
 \captionsetup{width=0.6\textwidth}
 \centering
-\includegraphics{sweave_document_TB-forest_re}
-
+\includegraphics[width=1\textwidth]{sweave_document_TB-forest}
 \caption{Forest plot of a random effects model. The column on the left represents the study. The weighted percentage is shown as well as the effect size (ES) [+- 95\% CI]}
+\label{fig:forestplot}
 \end{figure}
 
 %Table with values for ES, SE (ES),pES, CI, I2, Egger value and fasil-sage number. If various rma analysis are run, they can be loaded into this table as well. 
@@ -78,7 +80,7 @@ The dataset to be working with should be named ``data.sub''. The conducted analy
 
 
 % latex table generated in R 3.1.1 by xtable 1.7-4 package
-% Mon Nov 24 15:45:00 2014
+% Mon Nov 24 16:28:57 2014
 \begin{table}[ht]
 \centering
 \caption{Results of the meta-analysis. Includes the the egger's test and the fails-safe number for publication bias testing.} 
@@ -101,7 +103,7 @@ This table should work once you have saved the rma.RE.meta and loaded it at the 
 
 
 % latex table generated in R 3.1.1 by xtable 1.7-4 package
-% Mon Nov 24 15:45:00 2014
+% Mon Nov 24 16:28:57 2014
 \begin{table}[ht]
 \centering
 \caption{Results of the meta-regression. Test for heterogeneity taking all four continents into account} 
@@ -134,59 +136,20 @@ Don't know if this such a good idea as the appendix is not that good. Especially
 
 To assess possible publication bias, funnel plots can be used for visualization purposes.
 
+
 \begin{figure}
 \captionsetup{width=0.6\textwidth}
 \centering
-\includegraphics{sweave_document_TB-funnelplot}
+\includegraphics[width=0.7\textwidth]{funnelplot}
 \caption{Funnel plot of random effects model displaying possible publication bias. The true ES is displayed by the solid verical line.}
 \end{figure}
 
-\begin{figure}
-\captionsetup{width=0.6\textwidth}
-\centering
-\includegraphics{sweave_document_TB-baujat}
-\caption{Baujat heterogenity plot for diagnostics of meta analysis}
-\end{figure}
 
 
 \begin{figure}
 \captionsetup{width=0.6\textwidth}
 \centering
-\includegraphics{sweave_document_TB-Galbraith}
-\caption{Galbraith's radial plot for diagnostics of meta analysis}
-\end{figure}
-
-\begin{figure}
-\captionsetup{width=0.6\textwidth}
-\centering
-\includegraphics{sweave_document_TB-stdresplot}
-\caption{Standardized residuals plot for diagnostics of meta analysis}
-\end{figure}
-
-\begin{figure}
-\captionsetup{width=0.6\textwidth}
-\centering
-\includegraphics{sweave_document_TB-qqnorm}
-\caption{Quantile-Quantile plot for diagnostics of meta analysis}
-\end{figure}
-
-
-
-
-
-\begin{figure}
-\captionsetup{width=0.6\textwidth}
-\centering
-\includegraphics{sweave_document_TB-diagnostics}
-\caption{Quantile-Quantile plot for diagnostics of meta analysis}
-\end{figure}
-
-
-
-\begin{figure}
-\captionsetup{width=0.6\textwidth}
-\centering
-\includegraphics[width=1\textwidth]{sweave_document_TB-Diagnostics}
+\includegraphics[width=1\textwidth]{sweave_document_TB-diagnostics}
 \caption{diagnostic plots for diagnostics of meta analysis}
 \label{fig:diagnostics}
 \end{figure}
