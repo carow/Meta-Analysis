@@ -99,8 +99,14 @@ detach(birdsnew)
 #sensitivity analysis/robustness testing
 #-- with the leaveout function
 
+ordered = sort(sens.RE)
+ordered[1:3]
+
+sens.RE$I2
+
 
 sens.RE = leave1out(rma.RE)
+ordersens.RE$I2
 which(sens.RE$I2 == min(sens.RE$I2))
 sum(sens.RE$I2 < 25)
 which(sens.RE$I2 < 25)
@@ -109,16 +115,20 @@ cbind(exp(sens.RE$estimate), sens.RE$pval, sens.RE$pval < 0.05)
 sens.RE$I2
 rma
 which((rma.RE$I2 - sens.RE$I2) > 4)
-if ((which(sens.RE$I2 < 25)) > 0) 
-{
-  return(which(sens.RE$I2 < 25))
-}
-  else 
-    {
-      return((rma.RE$I2 - sens.RE$I2) > 4)
-    }
+
+
+if ((length(which(sens.RE$I2 < 25))) > 0) {
+  (which(sens.RE$I2 < 25))
+} else {
+      (which((rma.RE$I2 - sens.RE$I2) > 4))}
 
 hist(sens.RE.str)
+
+if(AIC(m2) < AIC(m1)){
+  bestmodel = m2
+} else {
+  bestmodel = m1
+}
 #-------------------------------------------------
 
 # Exploring new plots not previously explored
