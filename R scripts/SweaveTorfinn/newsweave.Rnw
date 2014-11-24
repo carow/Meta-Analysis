@@ -15,6 +15,8 @@
 \usepackage{euler}     % a math font, only for equations and alike; call BEFORE changing the main font; alternatives: mathptmx, fourier, 
 %\usepackage{gentium} % for a different font; you can also try: cantarell, charter, libertine, gentium, bera, ... http://tex.stackexchange.com/questions/59403/what-font-packages-are-installed-in-tex-live
 
+\usepackage{pbox}
+
 %------------------------------------------------------------------------------------------------------
 %------- text size settings --------------
 \setlength{\textwidth}{16cm}% 
@@ -39,6 +41,7 @@
 
 \begin{document}
 \SweaveOpts{concordance=TRUE}
+\newcommand{\multilineC}[1]{\begin{tabular}[b]{@{}c@{}}#1\end{tabular}}
 
 
 \title{Appendix}
@@ -62,6 +65,7 @@ We created an appendix of meta-analysis paper. To be able to visualize the outpu
 <<echo = FALSE>>=
 load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn/rma.RE")
 
+load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
 #load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
 library(metafor)
@@ -109,39 +113,60 @@ fsn.RE = fsn(yi = rma.RE$yi, vi = rma.RE$vi)
 
 
 <<echo = FALSE, eval = TRUE>>=
-matrix.RE = data.frame(t(c("Effect Size"=rma.RE$b, "SE of Effect Size"=rma.RE$se, "CI (lb)"= rma.RE$ci.lb, "CI(ub)" = rma.RE$ci.ub, "P(ES)" = rma.RE$pval, "Q" = rma.RE$QE, "P(Q)" = rma.RE$QEp, "I^2" = rma.RE$I2, "Egger" = egger.RE$zval, "P(Egger)" = egger.RE$pval, "FSN" = fsn.RE$fsnum)))
-rownames(matrix.RE) <- "Value"
+matrix.RE = data.frame(t(c("Effect Size"=rma.RE$b, "SE of Effect Size"=rma.RE$se, "CI1"= rma.RE$ci.lb, "CI2" = rma.RE$ci.ub, "P(ES)" = rma.RE$pval, "Q" = rma.RE$QE, "P(Q)" = rma.RE$QEp, "I^2" = rma.RE$I2, "Egger" = egger.RE$zval, "P(Egger)" = egger.RE$pval, "FSN" = fsn.RE$fsnum)))
+
+rownames(matrix.RE) <- c("Meta-Analysis")
+
+colnames(matrix.RE) <- c("{ES}","\\parbox{1cm}{SE of ES}", "CI (lb)", "CI (ub)", "P(ES)", "Q", "P(Q)", "I^2", "Egger", "P(Egger)","FSN")
+
 require(xtable)
 mytable = matrix.RE
 @
 
 <<xtable1, results = tex, echo=FALSE>>=
-print(xtable(mytable, caption = paste("Results of the meta-analysis. Includes the the egger's test and the fails-safe number for publication bias testing.")),caption.placement = "top", size ="footnotesize", scalebox = 0.9)
+print(xtable(mytable, caption = paste("Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing."),align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
 @
+
+
 \bigskip
 
 
 
-This table should work once you have saved the rma.RE.meta and loaded it at the top of the document!!! Take it out of the \% \\
 
-%<<echo = FALSE, eval = TRUE>>=
-%matrix.RE.meta = data.frame(t(c("Effect Size"=rma.RE.meta$b, "SE of Effect Size"=rma.RE.meta$se, "CI (lb)"= rma.RE.meta$ci.lb, "CI(ub)" = rma.RE.meta$ci.ub, "P(ES)" = rma.RE.meta$pval, "Q" = rma.RE.meta$QE, "P(Q)" = rma.RE.meta$QEp, "I^2" = rma.RE.meta$I2, "Test of Moderators" = rma.RE.meta$QM, "P(Moderator Test)" = rma.RE.meta$QMp)))
-%rownames(matrix.RE) <- "Africa", "Asia", "Central America", "South America"
-%require(xtable)
-%mytable2 = matrix.RE.meta
-%@
 
-%<<xtable2, results = tex, echo=FALSE>>=
-%print(xtable(mytable2, caption = paste("Results of the meta-regression. Test for heterogeneity taking all four continents into account")),caption.placement = "top", size ="footnotesize", scalebox = 0.9)
-%@
+<<echo = FALSE, eval = TRUE>>=
+matrix.RE.meta = data.frame("ES" = c(rma.RE.meta$b[1],rma.RE.meta$b[2], rma.RE.meta$b[3],rma.RE.meta$b[4]),
+                            "SEES"=c(rma.RE.meta$se[1],rma.RE.meta$se[2],rma.RE.meta$se[3],rma.RE.meta$se[4]),
+                            "CI1"= c(rma.RE.meta$ci.lb[1],rma.RE.meta$ci.lb[2],rma.RE.meta$ci.lb[3],rma.RE.meta$ci.lb[4]), 
+                            "CI2" = c(rma.RE.meta$ci.ub[1],rma.RE.meta$ci.ub[2],rma.RE.meta$ci.ub[3],rma.RE.meta$ci.ub[4]), 
+                            "pES" = c(rma.RE.meta$pval[1],rma.RE.meta$pval[2],rma.RE.meta$pval[3],rma.RE.meta$pval[4]),
+                            "Q" = c(rma.RE.meta$QE[1],rma.RE.meta$QE[2],rma.RE.meta$QE[3],rma.RE.meta$QE[4]), 
+                            "P(Q)" = c(rma.RE.meta$QEp[1],rma.RE.meta$QEp[2],rma.RE.meta$QEp[3],rma.RE.meta$QEp[4]),
+                            "I^2" = c(rma.RE.meta$I2[1],rma.RE.meta$I2[2],rma.RE.meta$I2[3],rma.RE.meta$I2[4]),
+                            "Mods" = c(rma.RE.meta$QM[1],rma.RE.meta$QM[2],rma.RE.meta$QM[3],rma.RE.meta$QM[4]),
+                            "P(Mods)" = c(rma.RE.meta$QMp[1],rma.RE.meta$QMp[2],rma.RE.meta$QMp[3],rma.RE.meta$QMp[4]))
+                            
+rownames(matrix.RE.meta) <- c("Intercept (Africa)","Asia", "Central America", "South America")
+
+colnames(matrix.RE.meta) <- c("{ES}","\\parbox{1cm}{SE of ES}","CI (lb)", "CI (ub)", "P(ES)", "Q", "P(Q)", "I^2", "QM", "P(QM)")
+
+require(xtable)
+mytable2 = matrix.RE.meta
+
+@
+
+<<xtable2, results = tex, echo=FALSE>>=
+print(xtable(mytable2, caption = paste("Results of the meta-regression (mixed-effects model). The model results are shown taking a moderator into account and displaying the coefficients. Results for the whole model are displayed as Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity and QM = Test of Moderators."), align = "rccccc|ccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
+@
+
+
+
+
 
 To do:
 
-Add a table with the results from the meta regression + add a bubble plot. Add the 4 figures as well and a table for the sensitivity analysis. 
+ A table for the sensitivity analysis. 
 
-!!! I tried saving the rma.meta.RE as an object but I encountered problems with saving it, as it said it cannot open the compressed file. Haven't found a solution till now. Maybe you can save the object? :)
-
-Do the same for the meta package or use the forest plot from the meta package\\
 
 Notes:
 
