@@ -202,6 +202,10 @@ qqnorm(rma.RE, label = "all", pch = NA_integer_)
 \caption{Quantile-Quantile plot for diagnostics of meta analysis}
 \end{figure}
 
+
+
+
+
 \begin{figure}
 \captionsetup{width=0.6\textwidth}
 \centering
@@ -220,19 +224,58 @@ abline(h = 0, lty = "dashed")
 abline(h = c(qnorm(0.025), qnorm(0.975)), lty = "dotted")
 
 
-qqnorm(rma.RE, label = "all", mgp=c(2,1,0))
+qqnorm(rma.RE, label = "all", mgp=c(2,1,0), pch = NA_integer_) #how to get study names color red?
+
+par(mar = c(4,3,1,1))
+baujat(rma.RE, main = "Baujat heterogenity plot", mgp=c(2,1,0))
 
 
-baujat(rma.RE, main = "Baujat heterogenity diagnostic plot", mgp=c(2,1,0))
-par(mar = c(4,3,1,0))
-
-
-radial(rma.RE, zlab = "Standardized residuals", xlab = "Inverse standard deviation", main = "Galbraith's radial plot", cex=1, mgp=c(2,1,0))
-
+par(mar = c(0,0,0,0))
+radial(rma.RE, zlab="", xlab = "Inverse standard deviation", cex=1, mgp=c(2,1,0), main = "Galbraith's radial plot")
+#title("Galbraith's radial plot", line = -6)
+mtext("Standardized residuals", side = 2, line = -1, at = 0, cex=0.8)
 
 par(mfrow=c(1,1), mar = c(4,4,1,2))
 @
 \caption{Quantile-Quantile plot for diagnostics of meta analysis}
+\end{figure}
+
+
+<<Diagnostics, echo=FALSE, dev="pdf">>=
+#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
+par (mfrow= c(2,2), mar = c(4,4,1,2))
+par(mar = c(4,4,1,1))
+z = rstandard(rma.RE)$z
+k <- length(z)
+plot(NA, NA, xlim = c(1, k), ylim = c(min(z, -2, na.rm = TRUE), max(z, 2, na.rm = TRUE)), xaxt = "n", xlab = "Study", ylab = "Standardized residuals", bty = "l", main="Standardized residuals plot", mgp=c(2,1,0))
+lines(seq_len(k), z, col = "lightgray")
+lines(seq_len(k), z)
+points(seq_len(k), z, pch = 21, bg = "black")
+axis(side = 1, at = seq_len(k), labels = rma.RE$ids)
+abline(h = 0, lty = "dashed")
+abline(h = c(qnorm(0.025), qnorm(0.975)), lty = "dotted")
+
+
+qqnorm(rma.RE, label = "all", mgp=c(2,1,0), pch = NA_integer_) #how to get study names color red?
+
+par(mar = c(4,3,1,1))
+baujat(rma.RE, main = "Baujat heterogenity plot", mgp=c(2,1,0))
+
+
+par(mar = c(0,0,0,0))
+radial(rma.RE, zlab="", xlab = "Inverse standard deviation", cex=1, mgp=c(2,1,0), main = "Galbraith's radial plot")
+#title("Galbraith's radial plot", line = -6)
+mtext("Standardized residuals", side = 2, line = -1, at = 0, cex=0.8)
+
+par(mfrow=c(1,1), mar = c(4,4,1,2))
+@
+
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{sweave_document_TB-Diagnostics}
+\caption{diagnostic plots for diagnostics of meta analysis}
+\label{fig:diagnostics}
 \end{figure}
 
 
