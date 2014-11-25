@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.10.29)  24 NOV 2014 19:30
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.10.29)  25 NOV 2014 09:25
 entering extended mode
 **sweave_document_TB.tex
 
@@ -1059,7 +1059,7 @@ ogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Progr
 am Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program F
 iles (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/euler/eurm10.pfb><C:/Program 
 Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/euler/eurm7.pfb>
-Output written on sweave_document_TB.pdf (4 pages, 129336 bytes).
+Output written on sweave_document_TB.pdf (4 pages, 129542 bytes).
 PDF statistics:
  84 PDF objects out of 1000 (max. 8388607)
  11 named destinations out of 1000 (max. 500000)
