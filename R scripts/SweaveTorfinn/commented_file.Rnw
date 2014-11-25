@@ -1,0 +1,233 @@
+\documentclass[11pt, a4paper]{article} 
+
+\usepackage[utf8]{inputenc} 
+
+\usepackage{caption}      
+
+\usepackage{etoolbox}    
+
+\usepackage[bottom]{footmisc}  
+\usepackage{graphicx}        
+\usepackage[hidelinks]{hyperref}		
+\usepackage{lscape}
+\usepackage{euler}     
+\usepackage[margin=1in]{geometry}
+
+%------------------------------------------------------------------------------------------------------
+%------- text size settings --------------
+%\setlength{\textwidth}{16cm}% 
+%\setlength{\textheight}{25cm} %23 
+%(these values were used to fill the page more fully and thus reduce the number of pages!)
+%\setlength{\topmargin}{-1.5cm} %0
+%\setlength{\footskip}{1cm} %
+%\setlength{\hoffset}{0cm} %
+%\setlength{\oddsidemargin}{1cm}%
+%\setlength{\evensidemargin}{-.5cm}%
+%\setlength{\parskip}{0cm} % Abstand zwischen Absätzen
+% ----------------------------------------------------------------
+%\renewcommand{\textfraction}{0.1} % allows more space to graphics in float
+%\renewcommand{\topfraction}{0.85}
+%\renewcommand{\bottomfraction}{0.65}
+%\renewcommand{\floatpagefraction}{0.70}
+
+
+\frenchspacing 
+%------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------
+
+\begin{document}
+
+\SweaveOpts{concordance=TRUE}
+
+
+\title{Appendix}
+
+\author{Torfinn and Carolina}
+
+\maketitle
+
+%------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------
+
+
+
+We created an appendix of meta-analysis paper. To be able to visualize the output, we used an example dataset taken from Gibson et al. 2011.
+
+%The dataset to be working with should be named ``data.sub''. The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' and an rma of a fixed effects model should be named ``rma.FE'' in order for the automatisation to work. IF a meta-regression has been conducted, it should be called ``rma.RE.meta'' or ``rma.FE.meta'' respectively. Other than that, the metafor package in R needs to be installed.  
+
+<<echo = FALSE>>=
+load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn/rma.RE")
+
+load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+
+#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+library(metafor)
+library(xtable)
+@
+
+
+<<forest, echo=FALSE, fig=TRUE, include=FALSE, pdf=TRUE>>=
+par(mar = c(3,4,1,2))
+forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim=c(-10, 14))
+text(-10, rma.RE$k+2, "Study",    pos=4, cex=.68, font=2)
+text(0, rma.RE$k+2, "Standardized Mean Difference", cex=.68, font=2)
+text(14, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos=2, cex=.68, font=2)
+par (mar = c(5,4,4,2))
+@
+
+
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{sweave_document_TB-forest}
+\caption{Forest plot of a random effects model. The column on the left represents the study. The weighted percentage is shown as well as the effect size (ES) [+- 95\% CI]}
+\label{fig:forestplot}
+\end{figure}
+
+
+
+%Table with values for ES, SE (ES),pES, CI, I2, Egger value and fasil-sage number. If various rma analysis are run, they can be loaded into this table as well. 
+?? How can a an automised table be created for rows from e.g. different rma objects? In our case, we just have one rma object so one row is produced. If the people conduct different rmas for different data subsets, it would be nice to have this in the same table as well!\\
+\bigskip
+
+<<echo = FALSE>>=
+egger.RE = regtest(rma.RE, model = "rma", predictor = "sei")
+fsn.RE = fsn(yi = rma.RE$yi, vi = rma.RE$vi)
+@
+
+
+<<echo = FALSE, eval = TRUE>>=
+matrix.RE = data.frame(t(c("Effect Size"=rma.RE$b, "SE of Effect Size"=rma.RE$se, "CI1"= rma.RE$ci.lb, "CI2" = rma.RE$ci.ub, "P(ES)" = rma.RE$pval, "Q" = rma.RE$QE, "P(Q)" = rma.RE$QEp, "I^2" = rma.RE$I2, "Egger" = egger.RE$zval, "P(Egger)" = egger.RE$pval, "FSN" = fsn.RE$fsnum)))
+
+rownames(matrix.RE) <- c("Meta-Analysis")
+
+colnames(matrix.RE) <- c("{ES}","\\parbox{1cm}{SE of ES}", "CI (lb)", "CI (ub)", "P(ES)", "Q", "P(Q)", "I^2", "Egger", "P(Egger)","FSN")
+
+require(xtable)
+mytable = matrix.RE
+@
+
+<<xtable1, results = tex, echo=FALSE>>=
+print(xtable(mytable, caption = paste("Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing."),align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
+@
+
+
+\bigskip
+
+%Table of the meta-regression. In this case only for one moderator. 
+
+<<echo = FALSE, eval = TRUE>>=
+matrix.RE.meta = data.frame("ES" = c(rma.RE.meta$b[1],rma.RE.meta$b[2], rma.RE.meta$b[3],rma.RE.meta$b[4]),
+                            "SEES"=c(rma.RE.meta$se[1],rma.RE.meta$se[2],rma.RE.meta$se[3],rma.RE.meta$se[4]),
+                            "CI1"= c(rma.RE.meta$ci.lb[1],rma.RE.meta$ci.lb[2],rma.RE.meta$ci.lb[3],rma.RE.meta$ci.lb[4]), 
+                            "CI2" = c(rma.RE.meta$ci.ub[1],rma.RE.meta$ci.ub[2],rma.RE.meta$ci.ub[3],rma.RE.meta$ci.ub[4]), 
+                            "pES" = c(rma.RE.meta$pval[1],rma.RE.meta$pval[2],rma.RE.meta$pval[3],rma.RE.meta$pval[4]),
+                            "Q" = c(rma.RE.meta$QE[1],rma.RE.meta$QE[2],rma.RE.meta$QE[3],rma.RE.meta$QE[4]), 
+                            "P(Q)" = c(rma.RE.meta$QEp[1],rma.RE.meta$QEp[2],rma.RE.meta$QEp[3],rma.RE.meta$QEp[4]),
+                            "I^2" = c(rma.RE.meta$I2[1],rma.RE.meta$I2[2],rma.RE.meta$I2[3],rma.RE.meta$I2[4]),
+                            "Mods" = c(rma.RE.meta$QM[1],rma.RE.meta$QM[2],rma.RE.meta$QM[3],rma.RE.meta$QM[4]),
+                            "P(Mods)" = c(rma.RE.meta$QMp[1],rma.RE.meta$QMp[2],rma.RE.meta$QMp[3],rma.RE.meta$QMp[4]))
+                            
+rownames(matrix.RE.meta) <- c("Intercept (Africa)","Asia", "Central America", "South America")
+
+colnames(matrix.RE.meta) <- c("{ES}","\\parbox{1cm}{SE of ES}","CI (lb)", "CI (ub)", "P(ES)", "Q", "P(Q)", "I^2", "QM", "P(QM)")
+
+require(xtable)
+mytable2 = matrix.RE.meta
+
+@
+
+<<xtable2, results = tex, echo=FALSE>>=
+print(xtable(mytable2, caption = paste("Results of the meta-regression (mixed-effects model). The model results are shown taking a moderator into account and displaying the coefficients. Results for the whole model are displayed as Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity and QM = Test of Moderators."), align = "rccccc|ccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
+@
+
+
+
+
+
+To do:
+
+
+%<< echo=FALSE, eval=TRUE >>=
+sens.RE = leave1out(rma.RE)
+if ((length(which(sens.RE$I2 < 25))) > 0) {
+  (which(sens.RE$I2 < 25))
+} else {
+      (which((rma.RE$I2 - sens.RE$I2) > 4))}
+%@
+
+
+
+
+
+
+To assess possible publication bias, funnel plots can be used for visualization purposes.When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size, should increase with sample size (smaller standard error). 
+
+<<label=funnelplot, echo=FALSE, fig=TRUE, pdf=TRUE, include=FALSE>>=
+funnel(rma.RE)
+@
+
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+\includegraphics[width=0.7\textwidth]{sweave_document_TB-funnelplot}
+\caption{Funnel plot of random effects model displaying possible publication bias. The standardized mean difference (SMD) is in our case the effect size (ES).  The true ES is displayed by the solid verical line.}
+\end{figure}
+
+
+<<label=diagnostics, eval=TRUE, pdf=TRUE, fig=TRUE, echo=FALSE, include=FALSE>>=
+#Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
+par (mfrow= c(2,2), mar = c(4,4,1,2))
+par(mar = c(4,4,2,1))
+z = rstandard(rma.RE)$z
+k <- length(z)
+plot(NA, NA, xlim = c(1, k), ylim = c(min(z, -2, na.rm = TRUE), max(z, 2, na.rm = TRUE)), xaxt = "n", xlab = "Study", ylab = "Standardized residuals", bty = "l", main="Standardized Residuals Plot", mgp=c(2,1,0))
+lines(seq_len(k), z, col = "lightgray")
+lines(seq_len(k), z)
+points(seq_len(k), z, pch = 21, bg = "black")
+axis(side = 1, at = seq_len(k), labels = rma.RE$ids)
+abline(h = 0, lty = "dashed")
+abline(h = c(qnorm(0.025), qnorm(0.975)), lty = "dotted")
+
+
+qqnorm(rma.RE, label = "all", mgp=c(2,1,0)) #how to get study names color red?
+
+par(mar = c(4,3,2,1))
+baujat(rma.RE, main = "Baujat Heterogenity Plot", mgp=c(2,1,0))
+
+
+par(mar = c(0,0,0,0))
+radial(rma.RE, zlab="", xlab = "Inverse standard deviation", cex=1, mgp=c(2,1,0), main = "Galbraith's Radial Plot")
+#title("Galbraith's adial plot", line = -6)
+mtext("Standardized residuals", side = 2, line = -1, at = 0, cex=0.8)
+
+par(mfrow=c(1,1), mar = c(4,4,1,2))
+@
+
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{sweave_document_TB-diagnostics}
+\caption{Diagnostic plots for diagnostics of meta analysis. Standardized residual plot, normal Q-Q plot, Baujat heterogeneity plot and Galbrath's radial plot are shown.}
+\label{fig:diagnostics}
+\end{figure}
+
+<<forestreg, echo=FALSE, fig=TRUE, include=FALSE, pdf=TRUE>>=
+par(mar = c(3,4,1,2))
+forest.rma(rma.RE.meta, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim=c(-10, 14))
+text(-10, rma.RE$k+2, "Study",    pos=4, cex=.68, font=2)
+text(0, rma.RE$k+2, "Standardized Mean Difference", cex=.68, font=2)
+text(14, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos=2, cex=.68, font=2)
+par (mar = c(5,4,4,2))
+@
+
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{sweave_document_TB-forestreg}
+\caption{Forest plot of a random effects regression model. The column on the left represents the study. The weighted percentage is shown as well as the effect size (ES) [+- 95\% CI]}
+\label{fig:forestplotreg}
+\end{figure}
+
+\end{document}
