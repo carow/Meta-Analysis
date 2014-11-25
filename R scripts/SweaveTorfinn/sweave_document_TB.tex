@@ -1,19 +1,16 @@
 \documentclass[11pt, a4paper]{article} %or article has only section and below, book and report also have chapter: http://texblog.org/2007/07/09/documentclassbook-report-article-or-letter/
 
-\usepackage[utf8]{inputenc}  % use utf8 encoding of symbols such as umlaute for maximal compatibility across platforms
+\usepackage[utf8]{inputenc}  
 
-\usepackage{caption}    		% provides commands for handling caption sizes etc.
-%\usepackage[a4paper, left=25mm, right=20mm, top=25mm, bottom=20mm]{geometry}		 % to easily change margin widths: https://www.sharelatex.com/learn/Page_size_and_margins
+\usepackage{caption}    		
 
-\usepackage{etoolbox}    % for conditional evaluations!
-%\usepackage{fancyverb}   % for syntax highlighting of R code, together with the listings package
-\usepackage[bottom]{footmisc}  % I love footnotes! And they should be down at the bottom of the page!
-\usepackage{graphicx}        % when using figures and alike
-\usepackage[hidelinks]{hyperref}		% for hyperreferences (links within the document: references, figures, tables, citations)
+\usepackage{etoolbox}    
+\usepackage[bottom]{footmisc}  
+\usepackage{graphicx}       
+\usepackage[hidelinks]{hyperref}		
 %\usepackage{listings}
 \usepackage{lscape}
-\usepackage{euler}     % a math font, only for equations and alike; call BEFORE changing the main font; alternatives: mathptmx, fourier, 
-%\usepackage{gentium} % for a different font; you can also try: cantarell, charter, libertine, gentium, bera, ... http://tex.stackexchange.com/questions/59403/what-font-packages-are-installed-in-tex-live
+\usepackage{euler}     
 \usepackage[margin=1in]{geometry}
 
 %------------------------------------------------------------------------------------------------------
@@ -40,7 +37,6 @@
 
 \usepackage{Sweave}
 \begin{document}
-%%%%%%%%%%%%% this bit is new to Sweave: %%%%%%%%%%%%%%%%%%%%%  
 \input{sweave_document_TB-concordance}
 
 
@@ -57,8 +53,12 @@
 \section{Introduction}%------------------------------------------------------------------------------------------------------
 
 We created an appendix of meta-analysis paper. To be able to visualize the output, we used an example dataset taken from Gibson et al. 2011.
+The appendix includes forest plots, funnel plots and tables visualizing the results created in the meta-analysis.
+\bigskip
+
 
 %The dataset to be working with should be named ``data.sub''. The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' and an rma of a fixed effects model should be named ``rma.FE'' in order for the automatisation to work. IF a meta-regression has been conducted, it should be called ``rma.RE.meta'' or ``rma.FE.meta'' respectively. Other than that, the metafor package in R needs to be installed.  
+
 
 
 
@@ -68,34 +68,22 @@ We created an appendix of meta-analysis paper. To be able to visualize the outpu
 \captionsetup{width=0.6\textwidth}
 \centering
 \includegraphics[width=1\textwidth]{sweave_document_TB-forest}
-\caption{Forest plot of a random effects model. The column on the left represents the study. The weighted percentage is shown as well as the effect size (ES) [+- 95\% CI]}
+\caption{Forest plot of a random effects model. The study and its respectice effect size (ES) is shown. The weight given to the study (\%) as well as the effect size (ES) [+- 95\% CI] are shown.}
 \label{fig:forestplot}
 \end{figure}
 
+The forest plot shows 
+
+%Table with values for ES, SE (ES),pES, CI, I2, Egger value and fasil-sage number. An rma with various moderators can be loaded into this table as well. 
 
 
-%Table with values for ES, SE (ES),pES, CI, I2, Egger value and fasil-sage number. If various rma analysis are run, they can be loaded into this table as well. 
-?? How can a an automised table be created for rows from e.g. different rma objects? In our case, we just have one rma object so one row is produced. If the people conduct different rmas for different data subsets, it would be nice to have this in the same table as well!\\
 \bigskip
 
 
 
 
-<<<<<<< HEAD
 % latex table generated in R 3.1.2 by xtable 1.7-4 package
-% Tue Nov 25 11:26:56 2014
-=======
-% latex table generated in R 3.1.1 by xtable 1.7-4 package
-<<<<<<< HEAD
-<<<<<<< HEAD
-% Tue Nov 25 11:36:19 2014
->>>>>>> origin/master
-=======
-% Tue Nov 25 12:13:41 2014
->>>>>>> origin/master
-=======
-% Tue Nov 25 12:22:47 2014
->>>>>>> origin/master
+% Tue Nov 25 12:55:54 2014
 \begin{table}[ht]
 \centering
 \caption{Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing.} 
@@ -117,21 +105,8 @@ Meta-Analysis & -0.28 & 0.12 & -0.52 & -0.04 & 0.02 & 47.05 & 0.12 & 27.22 & -0.
 %Table of the meta-regression. In this case only for one moderator. 
 
 
-<<<<<<< HEAD
 % latex table generated in R 3.1.2 by xtable 1.7-4 package
-% Tue Nov 25 11:26:56 2014
-=======
-% latex table generated in R 3.1.1 by xtable 1.7-4 package
-<<<<<<< HEAD
-<<<<<<< HEAD
-% Tue Nov 25 11:36:19 2014
->>>>>>> origin/master
-=======
-% Tue Nov 25 12:13:41 2014
->>>>>>> origin/master
-=======
-% Tue Nov 25 12:22:47 2014
->>>>>>> origin/master
+% Tue Nov 25 12:55:54 2014
 \begin{table}[ht]
 \centering
 \caption{Results of the meta-regression (mixed-effects model). The model results are shown taking a moderator into account and displaying the coefficients. Results for the whole model are displayed as Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity and QM = Test of Moderators.} 
@@ -164,8 +139,7 @@ intrcpt & -0.353 & 0.766 & -1.85 & 1.15 & 0.645 & 22.7 & 0.54 & 0.000493 & 24.4 
 
 
 
-To do:
-<<<<<<< HEAD
+
 
 %<< echo=FALSE, eval=TRUE >>=
 sens.RE = leave1out(rma.RE)
@@ -177,24 +151,16 @@ if ((length(which(sens.RE$I2 < 25))) > 0) {
 
 
 
-=======
+
 % 
 % <<xtable2, results = tex, echo=FALSE>>=
 % 
 % print(xtable(mytable, caption = paste("Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing."),align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
 % @
 % 
-A table for the sensitivity analysis. \\
->>>>>>> origin/master
-
-Notes:
 
 
-Till now it would only work with one rma.RE object with one row and not many. Is is possible to combine specific single values of various rma objects? Can we do this?
-
-
-
-To assess possible publication bias, funnel plots can be used for visualization purposes.
+To assess possible publication bias, funnel plots can be used for visualization purposes.When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size, should increase with sample size (smaller standard error). 
 
 
 \begin{figure}
