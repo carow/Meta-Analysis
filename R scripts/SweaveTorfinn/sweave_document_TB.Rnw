@@ -23,20 +23,14 @@
 \begin{document}
 \SweaveOpts{concordance=TRUE}
 
-
+\date{}
 \title{Appendix}
-
-\author{Torfinn and Carolina}
 
 \maketitle
 
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
 
-
-\section{Introduction}%------------------------------------------------------------------------------------------------------
-
-We created an appendix of meta-analysis paper. To be able to visualize the output, we used an example dataset taken from Gibson et al. 2011.
 The appendix includes forest plots, funnel plots and tables visualizing the results created in the meta-analysis.
 \bigskip
 
@@ -45,15 +39,14 @@ The appendix includes forest plots, funnel plots and tables visualizing the resu
 
 
 <<echo = FALSE>>=
-#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
 
-#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
-load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
 # Number of studies that should be reported in the sensitivity analysis:
-
 n.sens = as.integer(rma.RE$k*0.1+1)
 
 library(metafor)
@@ -61,56 +54,12 @@ library(xtable)
 @
 
 
-<<forest, echo=FALSE, fig=TRUE, include=FALSE, pdf=TRUE>>=
-par(mar = c(3,4,1,2))
-forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim=c(-10, 14))
-text(-10, rma.RE$k+2, "Study",    pos=4, cex=.68, font=2)
-text(0, rma.RE$k+2, "Standardized Mean Difference", cex=.68, font=2)
-text(14, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos=2, cex=.68, font=2)
-par (mar = c(5,4,4,2))
-@
-
-
-\begin{figure}[htbp]
-\captionsetup{width=0.6\textwidth}
-\centering
-\includegraphics[width=1\textwidth]{sweave_document_TB-forest}
-\caption{Forest plot of a random effects model. The study and its respectice effect size (ES) is shown. The weight given to the study (\%) as well as the effect size (ES) [+- 95\% CI] are shown.}
-\label{fig:forestplot}
-\end{figure}
-
-If the effect sizes in the forest plot vary too  much, then heterogeneity should be explored in more depth. This is done by taking the explanatory variabales into account in a meta-regression. When taking various explanatory variables (moderators) into account, the resulting forest plot shows the way in which the effect size varies when looking at the particular moderator. 
-
-
-<<forestreg, echo=FALSE, fig=TRUE, include=FALSE, pdf=TRUE>>=
-par(mar = c(3,4,1,2))
-forest.rma(rma.RE.meta, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim=c(-10, 14))
-text(-10, rma.RE$k+2, "Study",    pos=4, cex=.68, font=2)
-text(0, rma.RE$k+2, "Standardized Mean Difference", cex=.68, font=2)
-text(14, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos=2, cex=.68, font=2)
-par (mar = c(5,4,4,2))
-@
-
-\begin{figure}[htbp]
-\captionsetup{width=0.6\textwidth}
-\centering
-\includegraphics[width=1\textwidth]{sweave_document_TB-forestreg}
-\caption{Forest plot of a random effects meta regression model. The column on the left represents the study. The weight given to the study (\%) as well as the effect size (ES) [+- 95\% CI] are shown.}
-\label{fig:forestplotreg}
-\end{figure}
-
-
-
-%Table with values for ES, SE (ES),pES, CI, I2, Egger value and fasil-sage number. An rma object with various moderators can be loaded into this table as well. 
-
-
-\bigskip
+%Creates a table for the results of the meta-analysis.Values for ES, SE (ES),pES, CI, I2, Egger value and fasil-sage number. 
 
 <<echo = FALSE>>=
 egger.RE = regtest(rma.RE, model = "rma", predictor = "sei")
 fsn.RE = fsn(yi = rma.RE$yi, vi = rma.RE$vi)
 @
-
 
 <<echo = FALSE, eval = TRUE>>=
 matrix.RE = data.frame(t(c("Effect Size"=rma.RE$b, "SE of Effect Size"=rma.RE$se, "CI1"= rma.RE$ci.lb, "CI2" = rma.RE$ci.ub, "P(ES)" = rma.RE$pval, "Q" = rma.RE$QE, "P(Q)" = rma.RE$QEp, "I^2" = rma.RE$I2, "Egger" = egger.RE$zval, "P(Egger)" = egger.RE$pval, "FSN" = fsn.RE$fsnum)))
@@ -123,11 +72,35 @@ require(xtable)
 mytable = matrix.RE
 @
 
-<<xtable1, results = tex, echo=FALSE>>=
-print(xtable(mytable, caption = paste("Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test (SE used as the predictor) and the fails-safe number for publication bias testing."), align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force, display="fg")
+<<label = xtable1, results = tex, echo=FALSE>>=
+print(xtable(mytable, caption = paste("Results of the meta-analysis. ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = Residual heterogeneity, Egger's test (SE used as the predictor) and the fails-safe number (FSN) for publication bias testing."), align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force, display="fg")
 @
 
 
+
+%Creates a forest plot of the meta-analysis.
+<<forest, echo=FALSE, fig=TRUE, include=FALSE, pdf=TRUE>>=
+par(mar = c(3,4,1,2))
+forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim=c(-10, 14))
+text(-10, rma.RE$k+2, "Study",    pos=4, cex=.68, font=2)
+text(0, rma.RE$k+2, "Standardized Mean Difference", cex=.68, font=2)
+text(14, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos=2, cex=.68, font=2)
+par (mar = c(5,4,4,2))
+@
+
+
+\begin{figure}[!h]
+\captionsetup{width=0.6\textwidth}
+\centering
+\includegraphics[width=0.7\textwidth]{sweave_document_TB-forest}
+\caption{Forest plot of a random effects model. The study and its respectice effect size (ES) [+- 95\% CI] are shown. The weight given to the study (\%) (the inverse to the study variance) is depicted as well.}
+\label{fig:forestplot}
+\end{figure}
+
+If the effect sizes in the forest plot vary too  much, then heterogeneity should be explored in more depth. This is done by taking \emph{explanatory variabales} into account in a meta-regression. When taking various explanatory variables (moderators) into account, the resulting forest plot shows the way in which the effect size varies when looking at the particular moderator. 
+
+
+\bigskip
 \bigskip
 
 %Table of the meta-regression, in this case with various moderators. 
@@ -155,53 +128,47 @@ mytable2 = matrix.RE.meta
 
 @
 
-<<xtable2, results = tex, echo=FALSE>>=
-print(xtable(mytable2, caption = paste("Results of the meta-regression (mixed-effects model). The model results are shown taking a moderator into account and displaying the coefficients. Results for the whole model are displayed as Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity and QM = Test of Moderators."), align = "rccccc|ccccc",  digits=3, display=c("s", rep("fg", 10))), caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
+<<label = xtable2, results = tex, echo=FALSE>>=
+print(xtable(mytable2, caption = paste("Results of the meta-regression (mixed-effects model). The model results are shown taking a moderator or various moderators into account and displaying their coefficients. Results for the whole model are displayed as Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity and QM = Test of Moderators."), align = "rccccc|ccccc",  digits=3, display=c("s", rep("fg", 10))), caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
+@
+\bigskip
+
+%Forest plot of the meta-regression model
+<<forestreg, echo=FALSE, fig=TRUE, include=FALSE, pdf=TRUE>>=
+par(mar = c(3,4,1,2))
+forest.rma(rma.RE.meta, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim=c(-10, 14))
+text(-10, rma.RE$k+2, "Study",    pos=4, cex=.68, font=2)
+text(0, rma.RE$k+2, "Standardized Mean Difference", cex=.68, font=2)
+text(14, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos=2, cex=.68, font=2)
+par (mar = c(5,4,4,2))
 @
 
-
-
-<< eval=TRUE, echo=FALSE>>=
-sens.RE = leave1out(rma.RE)
-@
-
-
-%<< echo=FALSE, eval=TRUE >>=
-%sens.RE = leave1out(rma.RE)
-%if ((length(which(sens.RE$I2 < 25))) > 0) {
-%  (which(sens.RE$I2 < 25))
-%} else {
-%      (which((rma.RE$I2 - sens.RE$I2) > 4))}
-%@
+\begin{figure}[h!]
+\captionsetup{width=0.6\textwidth}
+\centering
+\includegraphics[width=0.65\textwidth]{sweave_document_TB-forestreg}
+\caption{Forest plot of a random effects meta regression model. The study and its respectice effect size (ES) [+- 95\% CI] are shown. The weight given to the study (\%) (the inverse to the study variance) is depicted as well.}
+\label{fig:forestplotreg}
+\end{figure}
 
 
 
-% 
-% <<xtable2, results = tex, echo=FALSE>>=
-% 
-% print(xtable(mytable, caption = paste("Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing."),align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
-% @
-% 
-
-
-To assess possible publication bias, funnel plots can be used for visualization purposes.When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size, should increase with sample size (smaller standard error). 
-
-
+%Funnelplot of meta-analysis to assess publication bias. 
 <<label=funnelplot, echo=FALSE, fig=TRUE, pdf=TRUE, include=FALSE>>=
 funnel(rma.RE)
 @
 
-\begin{figure} [ht]
+\begin{figure} [h!]
 \captionsetup{width=0.6\textwidth}
 \centering
 \includegraphics[width=0.7\textwidth]{sweave_document_TB-funnelplot}
-\caption{Funnel plot of random effects model displaying possible publication bias. The true ES is displayed by the solid verical line.}
+\caption{Funnel plot of a random effects model displaying possible publication bias. The true ES is displayed by the solid verical line.}
 \end{figure}
 
-To assess possible publication bias, funnel plots can be used for visualization purposes.When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size, should increase with sample size (smaller standard error). If many studies lie outside of this funnel shaped space, then the studies used might need to be reviewed and checked for  
+To assess possible publication bias, funnel plots can be used for visualization purposes.When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size should increase with sample size (smaller standard error). If many studies lie outside of this funnel shaped space, then the studies used might need to be reviewed and checked for  
+\bigskip
 
-
-
+%Plot of the diagnostics
 <<label=diagnostics, eval=TRUE, pdf=TRUE, fig=TRUE, echo=FALSE, include=FALSE>>=
 #Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
 par (mfrow= c(2,2), mar = c(4,4,1,2))
@@ -224,56 +191,42 @@ baujat(rma.RE, main = "Baujat Heterogenity Plot", mgp=c(2,1,0))
 
 
 par(mar = c(0,0,0,0))
-radial(rma.RE, zlab="ES/SE", xlab = "Inverse standard error", cex=1, mgp=c(2,1,0), main = "Galbraith's Radial Plot")
+radial(rma.RE, zlab="", xlab = "Inverse standard error", cex=1, mgp=c(2,1,0), main = "Galbraith's Radial Plot")
 #title("Galbraith's adial plot", line = -6)
-mtext("Standardized residuals", side = 2, line = -1, at = 0, cex=0.8)
+mtext("ES/SE", side = 2, line = -1, at = 0, cex=0.8)
 
 par(mfrow=c(1,1), mar = c(4,4,1,2))
 @
 
-\begin{figure} [htbp]
+\begin{figure} [h!]
 \captionsetup{width=0.6\textwidth}
 \centering
-\includegraphics[width=1\textwidth]{sweave_document_TB-diagnostics}
+\includegraphics[width=0.9\textwidth]{sweave_document_TB-diagnostics}
 \caption{Diagnostic plots for diagnostics of meta analysis. Standardized residual plot, normal Q-Q plot, Baujat heterogeneity plot and Galbrath's radial plot are shown.}
 \label{fig:diagnostics}
 \end{figure}
 
-The Baujat plot detects sources of heterogeneity. Studies which are aggregated to the far left of the plot contribute to more heterogeneity in the analysis. Plots which have hight a high contribution to the overall heterogeneity and have a high influence on the overall result, should be looked at more critically and compare these studies to the results obtained in the sensitivity analysis table REF!!!!!.  
+The Baujat plot detects sources of heterogeneity. Studies which are aggregated to the far left of the plot contribute to more heterogeneity in the analysis. Plots which have a high contribution to the overall heterogeneity and have a high influence on the overall result, should be looked at more critically. These studies should be compared to the results obtained in the sensitivity analysis table~\ref{xtable3}.  
 
 
 The Galbraith plot provides visual information on the heterogeneity of the meta-analysis. Values which are closer to the origin have a higher SE and are therefore less precise than values aggregated away from the origin. The curved axis indicates the individual observed effect sizes or outcomes and the line coming from (0,0) indicates the individual effect size or outcome for that specific point. 
 
-
-
-
-
-\SweaveSyntax{SweaveSyntaxNoweb}
-%<<>>=
-%Sweave("sweave_document_TB.Rnw", syntax="SweaveSyntaxNoweb")
-%#options(SweaveSyntax="SweaveSyntaxNoweb")
-%@
+\bigskip
 \bigskip
 
-\Sexpr
-{
- if (rma.RE$pval < 0.05) {
-  if (length(which(sens.RE$pval > 0.05) > 0)) { 
-  paste0("The leave-one out analysis shows that the effect size of the meta-analysis 
-is not significant anymore when following study(ies) is left out:", which(sens.RE$pval > 0.05)) 
-  } else {
-    paste0("The leave-one out analysis shows that no left-out studies yield non-significance. This means that the meta-analysis is robust.")}
-} else {
-  if (length(which(sens.RE$pval < 0.05) > 0)) { 
-  paste0("The leave-one out analysis shows that significance is yielded by leaving out the following study(ies):", which(sens.RE$pval < 0.05))  
-  } else {
-    paste0("The leave-one out analysis shows that no left-out studies yield significance of the original meta analysis.")}
-  }
-}
+%<< echo=FALSE, eval=TRUE >>=
+%sens.RE = leave1out(rma.RE)
+%if ((length(which(sens.RE$I2 < 25))) > 0) {
+%  (which(sens.RE$I2 < 25))
+%} else {
+%      (which((rma.RE$I2 - sens.RE$I2) > 4))}
+%@
 
 
-
-
+%Sensitivity analysis
+<< eval=TRUE, echo=FALSE>>=
+sens.RE = leave1out(rma.RE)
+@
   
 <<echo = FALSE, eval = TRUE>>=
 
@@ -297,20 +250,40 @@ matrix.RE.sens = matrix.RE.sens[-c(11)]
 
 rownames(matrix.RE.sens) <- matrix.RE.sens$slab  
 
-colnames(matrix.RE.sens) <- c("\\parbox{1.05cm}{left-out study}", "{ES}", "ES change", "\\parbox{1cm}{SE of ES}","CI (lb)", "CI (ub)", "P(ES)", "Q", "P(Q)", "I^2")
+colnames(matrix.RE.sens) <- c("\\parbox{1.05cm}{Left-out study}", "{ES}", "ES change", "\\parbox{1cm}{SE of ES}","CI (lb)", "CI (ub)", "P(ES)", "Q", "P(Q)", "I^2")
 
 require(xtable)
 mytable3 = matrix.RE.sens
 
 @
 
-
-
-<<xtable3, results = tex, echo=FALSE>>=
-print(xtable(mytable3, caption = paste("This output of the sensitivity analysis (leave1out analysis) shows the results of the meta analysis when a study is left out. This table reports the top most influential studies on the effect size, sorted by absolute change in effect size. The Left-out study indicates which study is left out to produce the results. ES = effectsize, SE = Standard error, CI =  95 percent confidence interval, P(ES) = p-value of estimate, Q = Test for residual heterogeneity, P(Q) = p-value of heterogenity value, $I^2$ = residual heterogeneity."), align = "rcccccccccc",  digits=3, display= c(rep("fg",11))), caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force, include.rownames = getOption("xtable.include.rownames", F)) #, display=c("s", rep("fg", 12)))
+<<label = xtable3, results = tex, echo=FALSE>>=
+print(xtable(mytable3, caption = paste("Output of the sensitivity analysis (leave1out analysis) with the results of the meta analysis, leaving out 1 study at a time. The top most influential studies, in relation to effect size, sorted by absolute change in effect size is shown. The Left-out study indicates which study is left out to produce the results. ES = Effect size, SE = Standard error, CI =  95 percent confidence interval, P(ES) = p-value of estimate, Q = Test for residual heterogeneity, P(Q) = p-value of heterogenity value, $I^2$ = residual heterogeneity."), 
+             align = "rcccccccccc",  digits=3, display= c(rep("fg",11)),label = "xtable3"), caption.placement = "top", size ="footnotesize", scalebox = 1, sanitize.text = force, include.rownames = getOption("xtable.include.rownames", F)) #, display=c("s", rep("fg", 12)))
 @
 
 
+\SweaveSyntax{SweaveSyntaxNoweb}
+%<<>>=
+%Sweave("sweave_document_TB.Rnw", syntax="SweaveSyntaxNoweb")
+%#options(SweaveSyntax="SweaveSyntaxNoweb")
+%@
+
+\Sexpr
+{
+ if (rma.RE$pval < 0.05) {
+  if (length(which(sens.RE$pval > 0.05) > 0)) { 
+  paste0("The leave-one out analysis shows that the effect size of the meta-analysis 
+is not significant anymore when following study(ies) is left out:", which(sens.RE$pval > 0.05)) 
+  } else {
+    paste0("The leave-one out analysis shows that no left-out studies yield non-significance. This means that the meta-analysis is robust.")}
+} else {
+  if (length(which(sens.RE$pval < 0.05) > 0)) { 
+  paste0("The leave-one out analysis shows that significance is yielded by leaving out the following study(ies):", which(sens.RE$pval < 0.05))  
+  } else {
+    paste0("The leave-one out analysis shows that no left-out studies yield significance of the original meta analysis.")}
+  }
+}
 
 
 \end{document}
