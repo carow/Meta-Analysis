@@ -81,6 +81,8 @@ We created an appendix of meta-analysis paper. To be able to visualize the outpu
 
 
 
+% latex table generated in R 3.1.1 by xtable 1.7-4 package
+% Tue Nov 25 09:54:13 2014
 \begin{table}[ht]
 \centering
 \caption{Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing.} 
@@ -102,6 +104,8 @@ Meta-Analysis & -0.28 & 0.12 & -0.52 & -0.04 & 0.02 & 47.05 & 0.12 & 27.22 & -0.
 %Table of the meta-regression. In this case only for one moderator. 
 
 
+% latex table generated in R 3.1.1 by xtable 1.7-4 package
+% Tue Nov 25 09:54:13 2014
 \begin{table}[ht]
 \centering
 \caption{Results of the meta-regression (mixed-effects model). The model results are shown taking a moderator into account and displaying the coefficients. Results for the whole model are displayed as Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity and QM = Test of Moderators.} 
@@ -126,6 +130,29 @@ Intercept (Africa) & 0.14 & 0.32 & -0.48 & 0.76 & 0.66 & 40.60 & 0.20 & 21.75 & 
 
 To do:
 
+\begin{Schunk}
+\begin{Soutput}
+[1]  7 11 12 15 21 35
+\end{Soutput}
+\end{Schunk}
+
+% latex table generated in R 3.1.1 by xtable 1.7-4 package
+% Tue Nov 25 09:54:13 2014
+\begin{table}[ht]
+\centering
+\caption{Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing.} 
+{\footnotesize
+\scalebox{0.9}{
+\begin{tabular}{rccccccccccc}
+  \hline
+ & {ES} & \parbox{1cm}{SE of ES} & CI (lb) & CI (ub) & P(ES) & Q & P(Q) & I^2 & Egger & P(Egger) & FSN \\ 
+  \hline
+Meta-Analysis & -0.28 & 0.12 & -0.52 & -0.04 & 0.02 & 47.05 & 0.12 & 27.22 & -0.44 & 0.66 & 77.00 \\ 
+   \hline
+\end{tabular}
+}
+}
+\end{table}
 A table for the sensitivity analysis. \\
 
 Notes:
@@ -155,5 +182,13 @@ To assess possible publication bias, funnel plots can be used for visualization 
 \label{fig:diagnostics}
 \end{figure}
 
+
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{sweave_document_TB-forestreg}
+\caption{Forest plot of a random effects regression model. The column on the left represents the study. The weighted percentage is shown as well as the effect size (ES) [+- 95\% CI]}
+\label{fig:forestplotreg}
+\end{figure}
 
 \end{document}

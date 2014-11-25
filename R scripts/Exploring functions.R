@@ -111,7 +111,7 @@ which(sens.RE$I2 == min(sens.RE$I2))
 sum(sens.RE$I2 < 25)
 which(sens.RE$I2 < 25)
 hist(sens.RE$I2)
-cbind(exp(sens.RE$estimate), sens.RE$pval, sens.RE$pval < 0.05)
+cbind(sens.RE$estimate, sens.RE$pval, sens.RE$pval < 0.05)
 sens.RE$I2
 rma
 which((rma.RE$I2 - sens.RE$I2) > 4)
@@ -122,6 +122,41 @@ if ((length(which(sens.RE$I2 < 25))) > 0) {
   (which(sens.RE$I2 < 25))
 } else {
       (which((rma.RE$I2 - sens.RE$I2) > 4))}
+
+## If function for selection of important studies bla
+
+if (rma.RE$pval < 0.05) {
+  if (length(which(sens.RE$pval > 0.05)>0)) 
+    {(which(sens.RE$pval > 0.05)) 
+  } else {
+    paste("No left-out studies yielding non-significance")
+  }
+} else {
+  if length(which((sens.RE$pval < 0.05)>0)) { which(sens.RE$pval < 0.05) 
+  } else {
+    paste("No left-out studies yielding significance")
+  }
+}
+
+
+if (rma.RE$pval < 0.05) {(length(which(sens.RE$pval > 0.05)>0)) 
+  {(which(sens.RE$pval > 0.05)) 
+  } else {
+    paste("No left-out studies yielding non-significance")
+  }
+} else {
+  if length(which((sens.RE$pval < 0.05)>0)) { which(sens.RE$pval < 0.05) 
+  } else {
+    paste("No left-out studies yielding significance")
+  }
+}
+
+sens.RE$pval
+
+if ((length(which(sens.RE$pval > 0.05))) > 0) {
+  (which(sens.RE$pval > 0.05))
+} else {
+  (which(sens.RE$pval < 0.05))}
 
 hist(sens.RE.str)
 
