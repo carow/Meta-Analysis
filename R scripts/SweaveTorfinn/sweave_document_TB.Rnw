@@ -150,21 +150,31 @@ print(xtable(mytable2, caption = paste("Results of the meta-regression (mixed-ef
 
 
 
-
+<< eval=TRUE, echo=FALSE>>=
+sens.RE = leave1out(rma.RE)
+@
 
 To do:
 
-
 %<< echo=FALSE, eval=TRUE >>=
-sens.RE = leave1out(rma.RE)
-if ((length(which(sens.RE$I2 < 25))) > 0) {
-  (which(sens.RE$I2 < 25))
-} else {
-      (which((rma.RE$I2 - sens.RE$I2) > 4))}
+%sens.RE = leave1out(rma.RE)
+%if ((length(which(sens.RE$I2 < 25))) > 0) {
+%  (which(sens.RE$I2 < 25))
+%} else {
+%      (which((rma.RE$I2 - sens.RE$I2) > 4))}
 %@
 
-
-
+\Sexpr{if (rma.RE$pval < 0.05) {
+  if (length(which(sens.RE$pval > 0.05) > 0)) 
+    { paste0("The leave-one out analysis shows that the following study(ies) lead to insignificance of the meta analysis:", (which(sens.RE$pval > 0.05))) 
+  } else {
+    paste0("The leave-one out analysis shows that no left-out studies yielding non-significance. This means that the studies ")
+  }
+} else {
+  if (length(which((sens.RE$pval < 0.05) > 0))) { paste0(The leave-one out analysis shows that study ", which(sens.RE$pval < 0.05))  
+  } else {
+    paste("The leave-one out analysis shows that no left-out studies yield significance of the original meta analysis.")
+  }}}
 
 % 
 % <<xtable2, results = tex, echo=FALSE>>=

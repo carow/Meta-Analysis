@@ -86,6 +86,7 @@ We created an appendix of meta-analysis paper. To be able to visualize the outpu
 % Tue Nov 25 11:26:56 2014
 =======
 % latex table generated in R 3.1.1 by xtable 1.7-4 package
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 <<<<<<< HEAD
 % Tue Nov 25 11:36:19 2014
@@ -96,6 +97,9 @@ We created an appendix of meta-analysis paper. To be able to visualize the outpu
 =======
 % Tue Nov 25 12:22:47 2014
 >>>>>>> origin/master
+=======
+% Tue Nov 25 13:00:27 2014
+>>>>>>> Stashed changes
 \begin{table}[ht]
 \centering
 \caption{Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing.} 
@@ -122,6 +126,7 @@ Meta-Analysis & -0.28 & 0.12 & -0.52 & -0.04 & 0.02 & 47.05 & 0.12 & 27.22 & -0.
 % Tue Nov 25 11:26:56 2014
 =======
 % latex table generated in R 3.1.1 by xtable 1.7-4 package
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 <<<<<<< HEAD
 % Tue Nov 25 11:36:19 2014
@@ -132,6 +137,9 @@ Meta-Analysis & -0.28 & 0.12 & -0.52 & -0.04 & 0.02 & 47.05 & 0.12 & 27.22 & -0.
 =======
 % Tue Nov 25 12:22:47 2014
 >>>>>>> origin/master
+=======
+% Tue Nov 25 13:00:27 2014
+>>>>>>> Stashed changes
 \begin{table}[ht]
 \centering
 \caption{Results of the meta-regression (mixed-effects model). The model results are shown taking a moderator into account and displaying the coefficients. Results for the whole model are displayed as Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity and QM = Test of Moderators.} 
@@ -163,8 +171,8 @@ intrcpt & -0.353 & 0.766 & -1.85 & 1.15 & 0.645 & 22.7 & 0.54 & 0.000493 & 24.4 
 
 
 
-
 To do:
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 
 %<< echo=FALSE, eval=TRUE >>=
@@ -178,6 +186,21 @@ if ((length(which(sens.RE$I2 < 25))) > 0) {
 
 
 =======
+=======
+
+\Sexpr{if (rma.RE$pval < 0.05) {
+  if (length(which(sens.RE$pval > 0.05) > 0)) 
+    { paste0("The leave-one out analysis shows that the following study(ies) lead to insignificance of the meta analysis:", (which(sens.RE$pval > 0.05))) 
+  } else {
+    paste0("The leave-one out analysis shows that no left-out studies yielding non-significance. This means that the studies ")
+  }
+} else {
+  if (length(which((sens.RE$pval < 0.05) > 0))) { paste0(The leave-one out analysis shows that study ", which(sens.RE$pval < 0.05))  
+  } else {
+    paste("The leave-one out analysis shows that no left-out studies yield significance of the original meta analysis.")
+  }}}
+
+>>>>>>> Stashed changes
 % 
 % <<xtable2, results = tex, echo=FALSE>>=
 % 

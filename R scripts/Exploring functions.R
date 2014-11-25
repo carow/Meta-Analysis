@@ -126,13 +126,13 @@ if ((length(which(sens.RE$I2 < 25))) > 0) {
 ## If function for selection of important studies bla
 
 if (rma.RE$pval < 0.05) {
-  if (length(which(sens.RE$pval > 0.05)>0)) 
+  if (length(which(sens.RE$pval > 0.05) > 0)) 
     {(which(sens.RE$pval > 0.05)) 
   } else {
-    paste("No left-out studies yielding non-significance")
+    paste0("No left-out studies yielding non-significance")
   }
 } else {
-  if (length(which((sens.RE$pval < 0.05)>0))) { which(sens.RE$pval < 0.05) 
+  if (length(which((sens.RE$pval < 0.05) > 0))) { which(sens.RE$pval < 0.05) 
   } else {
     paste("No left-out studies yielding significance")
   }
