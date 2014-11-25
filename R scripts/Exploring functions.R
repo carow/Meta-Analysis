@@ -99,8 +99,8 @@ detach(birdsnew)
 #sensitivity analysis/robustness testing
 #-- with the leaveout function
 
-ordered = sort(sens.RE)
-ordered[1:3]
+ordered = sort.list(sens.RE, partial=sens.RE$I2)
+top3 = ordered[1:3]
 
 sens.RE$I2
 
@@ -115,6 +115,7 @@ cbind(exp(sens.RE$estimate), sens.RE$pval, sens.RE$pval < 0.05)
 sens.RE$I2
 rma
 which((rma.RE$I2 - sens.RE$I2) > 4)
+
 
 
 if ((length(which(sens.RE$I2 < 25))) > 0) {
