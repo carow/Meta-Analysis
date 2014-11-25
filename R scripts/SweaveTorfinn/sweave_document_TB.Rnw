@@ -113,7 +113,7 @@ mytable = matrix.RE
 @
 
 <<xtable1, results = tex, echo=FALSE>>=
-print(xtable(mytable, caption = paste("Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing."),align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
+print(xtable(mytable, caption = paste("Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing."), align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force, display="fg")
 @
 
 
@@ -122,18 +122,20 @@ print(xtable(mytable, caption = paste("Results of the meta-analysis.ES = Effect 
 %Table of the meta-regression. In this case only for one moderator. 
 
 <<echo = FALSE, eval = TRUE>>=
-matrix.RE.meta = data.frame("ES" = c(rma.RE.meta$b[1],rma.RE.meta$b[2], rma.RE.meta$b[3],rma.RE.meta$b[4]),
-                            "SEES"=c(rma.RE.meta$se[1],rma.RE.meta$se[2],rma.RE.meta$se[3],rma.RE.meta$se[4]),
-                            "CI1"= c(rma.RE.meta$ci.lb[1],rma.RE.meta$ci.lb[2],rma.RE.meta$ci.lb[3],rma.RE.meta$ci.lb[4]), 
-                            "CI2" = c(rma.RE.meta$ci.ub[1],rma.RE.meta$ci.ub[2],rma.RE.meta$ci.ub[3],rma.RE.meta$ci.ub[4]), 
-                            "pES" = c(rma.RE.meta$pval[1],rma.RE.meta$pval[2],rma.RE.meta$pval[3],rma.RE.meta$pval[4]),
-                            "Q" = c(rma.RE.meta$QE[1],rma.RE.meta$QE[2],rma.RE.meta$QE[3],rma.RE.meta$QE[4]), 
-                            "P(Q)" = c(rma.RE.meta$QEp[1],rma.RE.meta$QEp[2],rma.RE.meta$QEp[3],rma.RE.meta$QEp[4]),
-                            "I^2" = c(rma.RE.meta$I2[1],rma.RE.meta$I2[2],rma.RE.meta$I2[3],rma.RE.meta$I2[4]),
-                            "Mods" = c(rma.RE.meta$QM[1],rma.RE.meta$QM[2],rma.RE.meta$QM[3],rma.RE.meta$QM[4]),
-                            "P(Mods)" = c(rma.RE.meta$QMp[1],rma.RE.meta$QMp[2],rma.RE.meta$QMp[3],rma.RE.meta$QMp[4]))
+matrix.RE.meta = data.frame("ES" = as.vector(rma.RE.meta$b),
+                            "SEES"=as.vector(rma.RE.meta$se),
+                            "CI1"= as.vector(rma.RE.meta$ci.lb), 
+                            "CI2" = as.vector(rma.RE.meta$ci.ub), 
+                            "pES" = as.vector(rma.RE.meta$pval),
+                            "Q" = rma.RE.meta$QE,
+                            "P(Q)" = rma.RE.meta$QEp,
+                            "I^2" = rma.RE.meta$I2,
+                            "Mods" = rma.RE.meta$QM,
+                            "P(Mods)" = rma.RE.meta$QMp )
+matrix.RE.meta[2:NROW(matrix.RE.meta), 6:10] <- NA
+
                             
-rownames(matrix.RE.meta) <- c("Intercept (Africa)","Asia", "Central America", "South America")
+rownames(matrix.RE.meta) <- attr(rma.RE.meta$b, "dimnames")[[1]] #c("Intercept (Africa)","Asia", "Central America", "South America")
 
 colnames(matrix.RE.meta) <- c("{ES}","\\parbox{1cm}{SE of ES}","CI (lb)", "CI (ub)", "P(ES)", "Q", "P(Q)", "I^2", "QM", "P(QM)")
 
@@ -143,7 +145,7 @@ mytable2 = matrix.RE.meta
 @
 
 <<xtable2, results = tex, echo=FALSE>>=
-print(xtable(mytable2, caption = paste("Results of the meta-regression (mixed-effects model). The model results are shown taking a moderator into account and displaying the coefficients. Results for the whole model are displayed as Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity and QM = Test of Moderators."), align = "rccccc|ccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
+print(xtable(mytable2, caption = paste("Results of the meta-regression (mixed-effects model). The model results are shown taking a moderator into account and displaying the coefficients. Results for the whole model are displayed as Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity and QM = Test of Moderators."), align = "rccccc|ccccc",  digits=3, display=c("s", rep("fg", 10))), caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
 @
 
 
