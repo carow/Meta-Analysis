@@ -58,7 +58,7 @@
 
 We created an appendix of meta-analysis paper. To be able to visualize the output, we used an example dataset taken from Gibson et al. 2011.
 
-The dataset to be working with should be named ``data.sub''. The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' and an rma of a fixed effects model should be named ``rma.FE'' in order for the automatisation to work. IF a meta-regression has been conducted, it should be called ``rma.RE.meta'' or ``rma.FE.meta'' respectively. Other than that, the metafor package in R needs to be installed.  
+%The dataset to be working with should be named ``data.sub''. The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' and an rma of a fixed effects model should be named ``rma.FE'' in order for the automatisation to work. IF a meta-regression has been conducted, it should be called ``rma.RE.meta'' or ``rma.FE.meta'' respectively. Other than that, the metafor package in R needs to be installed.  
 
 
 
@@ -72,6 +72,8 @@ The dataset to be working with should be named ``data.sub''. The conducted analy
 \label{fig:forestplot}
 \end{figure}
 
+
+
 %Table with values for ES, SE (ES),pES, CI, I2, Egger value and fasil-sage number. If various rma analysis are run, they can be loaded into this table as well. 
 ?? How can a an automised table be created for rows from e.g. different rma objects? In our case, we just have one rma object so one row is produced. If the people conduct different rmas for different data subsets, it would be nice to have this in the same table as well!\\
 \bigskip
@@ -79,58 +81,57 @@ The dataset to be working with should be named ``data.sub''. The conducted analy
 
 
 
-% latex table generated in R 3.1.1 by xtable 1.7-4 package
-% Tue Nov 25 09:16:23 2014
 \begin{table}[ht]
 \centering
-\caption{Results of the meta-analysis. Includes the the egger's test and the fails-safe number for publication bias testing.} 
+\caption{Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing.} 
 {\footnotesize
 \scalebox{0.9}{
-\begin{tabular}{rrrrrrrrrrrr}
+\begin{tabular}{rccccccccccc}
   \hline
- & Effect.Size & SE.of.Effect.Size & CI..lb. & CI.ub. & P.ES. & Q & P.Q. & I.2 & Egger & P.Egger. & FSN \\ 
+ & {ES} & \parbox{1cm}{SE of ES} & CI (lb) & CI (ub) & P(ES) & Q & P(Q) & I^2 & Egger & P(Egger) & FSN \\ 
   \hline
-Value & -0.28 & 0.12 & -0.52 & -0.04 & 0.02 & 47.05 & 0.12 & 27.22 & -0.44 & 0.66 & 77.00 \\ 
-   \hline
-\end{tabular}
-}
-}
-\end{table}\bigskip
-
-
-
-This table should work once you have saved the rma.RE.meta and loaded it at the top of the document!!! Take it out of the \%.
-
-
-% latex table generated in R 3.1.1 by xtable 1.7-4 package
-% Tue Nov 25 09:16:24 2014
-\begin{table}[ht]
-\centering
-\caption{Results of the meta-regression. Test for heterogeneity taking all four continents into account} 
-{\footnotesize
-\scalebox{0.9}{
-\begin{tabular}{rrrrrrrrrrrrrrrrrrrrrrrrrr}
-  \hline
- & Effect.Size1 & Effect.Size2 & Effect.Size3 & Effect.Size4 & SE.of.Effect.Size1 & SE.of.Effect.Size2 & SE.of.Effect.Size3 & SE.of.Effect.Size4 & CI..lb.1 & CI..lb.2 & CI..lb.3 & CI..lb.4 & CI.ub.1 & CI.ub.2 & CI.ub.3 & CI.ub.4 & P.ES.1 & P.ES.2 & P.ES.3 & P.ES.4 & Q & P.Q. & I.2 & Test.of.Moderators & P.Moderator.Test. \\ 
-  \hline
-Africa & 0.14 & -0.39 & -0.39 & -0.59 & 0.32 & 0.39 & 0.43 & 0.36 & -0.48 & -1.16 & -1.24 & -1.29 & 0.76 & 0.38 & 0.47 & 0.12 & 0.66 & 0.32 & 0.37 & 0.10 & 40.60 & 0.20 & 21.75 & 2.69 & 0.44 \\ 
+Meta-Analysis & -0.28 & 0.12 & -0.52 & -0.04 & 0.02 & 47.05 & 0.12 & 27.22 & -0.44 & 0.66 & 77.00 \\ 
    \hline
 \end{tabular}
 }
 }
 \end{table}
+
+\bigskip
+
+%Table of the meta-regression. In this case only for one moderator. 
+
+
+\begin{table}[ht]
+\centering
+\caption{Results of the meta-regression (mixed-effects model). The model results are shown taking a moderator into account and displaying the coefficients. Results for the whole model are displayed as Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity and QM = Test of Moderators.} 
+{\footnotesize
+\scalebox{0.9}{
+\begin{tabular}{rccccc|ccccc}
+  \hline
+ & {ES} & \parbox{1cm}{SE of ES} & CI (lb) & CI (ub) & P(ES) & Q & P(Q) & I^2 & QM & P(QM) \\ 
+  \hline
+Intercept (Africa) & 0.14 & 0.32 & -0.48 & 0.76 & 0.66 & 40.60 & 0.20 & 21.75 & 2.69 & 0.44 \\ 
+  Asia & -0.39 & 0.39 & -1.16 & 0.38 & 0.32 &  &  &  &  &  \\ 
+  Central America & -0.39 & 0.43 & -1.24 & 0.47 & 0.37 &  &  &  &  &  \\ 
+  South America & -0.59 & 0.36 & -1.29 & 0.12 & 0.10 &  &  &  &  &  \\ 
+   \hline
+\end{tabular}
+}
+}
+\end{table}
+
+
+
+
 To do:
 
-Add a table with the results from the meta regression + add a bubble plot. Add the 4 figures as well and a table for the sensitivity analysis. 
-
-!!! I tried saving the rma.meta.RE as an object but I encountered problems with saving it, as it said it cannot open the compressed file. Haven't found a solution till now. Maybe you can save the object? :)
-
-Do the same for the meta package or use the forest plot from the meta package\\
+A table for the sensitivity analysis. \\
 
 Notes:
 
-Are we going to make two scripts? One for meta and one for metafor or are we going to do a combination? Plus write a function for this script? 
-Don't know if this such a good idea as the appendix is not that good. Especially the table. Till now it would only work with one rma.RE object with one row and not many. Is is possible to combine specific single values of various rma objects? Can we do this?
+Are we going to make two scripts? One for meta and one for metafor or are we going to do a combination? 
+Till now it would only work with one rma.RE object with one row and not many. Is is possible to combine specific single values of various rma objects? Can we do this?
 
 
 
@@ -140,7 +141,7 @@ To assess possible publication bias, funnel plots can be used for visualization 
 \begin{figure}
 \captionsetup{width=0.6\textwidth}
 \centering
-\includegraphics[width=0.7\textwidth]{funnelplot}
+\includegraphics[width=0.7\textwidth]{sweave_document_TB-funnelplot}
 \caption{Funnel plot of random effects model displaying possible publication bias. The true ES is displayed by the solid verical line.}
 \end{figure}
 
@@ -150,7 +151,7 @@ To assess possible publication bias, funnel plots can be used for visualization 
 \captionsetup{width=0.6\textwidth}
 \centering
 \includegraphics[width=1\textwidth]{sweave_document_TB-diagnostics}
-\caption{diagnostic plots for diagnostics of meta analysis}
+\caption{Diagnostic plots for diagnostics of meta analysis. Standardized residual plot, normal Q-Q plot, Baujat heterogeneity plot and Galbrath's radial plot are shown.}
 \label{fig:diagnostics}
 \end{figure}
 
