@@ -135,7 +135,7 @@ matrix.RE.meta = data.frame("ES" = as.vector(rma.RE.meta$b),
 matrix.RE.meta[2:NROW(matrix.RE.meta), 6:10] <- NA
 
                             
-rownames(matrix.RE.meta) <- attr(rma.RE.meta$b, "dimnames")[[1]] #c("Intercept (Africa)","Asia", "Central America", "South America")
+rownames(matrix.RE.meta) <- attr(rma.RE.meta$b, "dimnames")[[1]] 
 
 colnames(matrix.RE.meta) <- c("{ES}","\\parbox{1cm}{SE of ES}","CI (lb)", "CI (ub)", "P(ES)", "Q", "P(Q)", "I^2", "QM", "P(QM)")
 
