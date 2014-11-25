@@ -1,4 +1,4 @@
-\documentclass[11pt, a4paper]{article} %or article has only section and below, book and report also have chapter: http://texblog.org/2007/07/09/documentclassbook-report-article-or-letter/
+\documentclass[11pt, a4paper]{article} 
 
 \usepackage[utf8]{inputenc}  
 
@@ -13,25 +13,10 @@
 \usepackage{euler}     
 \usepackage[margin=1in]{geometry}
 
-%------------------------------------------------------------------------------------------------------
-%------- text size settings --------------
-%\setlength{\textwidth}{16cm}% 
-%\setlength{\textheight}{25cm} %23 
-%(these values were used to fill the page more fully and thus reduce the number of pages!)
-%\setlength{\topmargin}{-1.5cm} %0
-%\setlength{\footskip}{1cm} %
-%\setlength{\hoffset}{0cm} %
-%\setlength{\oddsidemargin}{1cm}%
-%\setlength{\evensidemargin}{-.5cm}%
-%\setlength{\parskip}{0cm} % Abstand zwischen Absätzen
-% ----------------------------------------------------------------
-%\renewcommand{\textfraction}{0.1} % allows more space to graphics in float
-%\renewcommand{\topfraction}{0.85}
-%\renewcommand{\bottomfraction}{0.65}
-%\renewcommand{\floatpagefraction}{0.70}
+\usepackage{Sweave}
+%\usepackage{C:/Program Files/R/R-3.1.2/share/texmf/tex/latex/Sweave.sty}
 
-
-\frenchspacing %http://texwelt.de/wissen/fragen/1154/was-ist-french-spacing-was-macht-frenchspacing
+\frenchspacing 
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
 
@@ -81,7 +66,7 @@ par (mar = c(5,4,4,2))
 @
 
 
-\begin{figure}
+\begin{figure}[htbp]
 \captionsetup{width=0.6\textwidth}
 \centering
 \includegraphics[width=1\textwidth]{sweave_document_TB-forest}
@@ -89,9 +74,29 @@ par (mar = c(5,4,4,2))
 \label{fig:forestplot}
 \end{figure}
 
-The forest plot shows 
+If the effect sizes in the forest plot vary too  much, then heterogeneity should be explored in more depth. This is done by taking the explanatory variabales into account in a meta-regression. When taking various explanatory variables (moderators) into account, the resulting forest plot shows the way in which the effect size varies when looking at the particular moderator. 
 
-%Table with values for ES, SE (ES),pES, CI, I2, Egger value and fasil-sage number. An rma with various moderators can be loaded into this table as well. 
+
+<<forestreg, echo=FALSE, fig=TRUE, include=FALSE, pdf=TRUE>>=
+par(mar = c(3,4,1,2))
+forest.rma(rma.RE.meta, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim=c(-10, 14))
+text(-10, rma.RE$k+2, "Study",    pos=4, cex=.68, font=2)
+text(0, rma.RE$k+2, "Standardized Mean Difference", cex=.68, font=2)
+text(14, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos=2, cex=.68, font=2)
+par (mar = c(5,4,4,2))
+@
+
+\begin{figure}[htbp]
+\captionsetup{width=0.6\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{sweave_document_TB-forestreg}
+\caption{Forest plot of a random effects meta regression model. The column on the left represents the study. The weight given to the study (\%) as well as the effect size (ES) [+- 95\% CI] are shown.}
+\label{fig:forestplotreg}
+\end{figure}
+
+
+
+%Table with values for ES, SE (ES),pES, CI, I2, Egger value and fasil-sage number. An rma object with various moderators can be loaded into this table as well. 
 
 
 \bigskip
@@ -114,13 +119,13 @@ mytable = matrix.RE
 @
 
 <<xtable1, results = tex, echo=FALSE>>=
-print(xtable(mytable, caption = paste("Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing."), align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force, display="fg")
+print(xtable(mytable, caption = paste("Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test (SE used as the predictor) and the fails-safe number for publication bias testing."), align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force, display="fg")
 @
 
 
 \bigskip
 
-%Table of the meta-regression. In this case only for one moderator. 
+%Table of the meta-regression, in this case with various moderators. 
 
 <<echo = FALSE, eval = TRUE>>=
 matrix.RE.meta = data.frame("ES" = as.vector(rma.RE.meta$b),
@@ -164,17 +169,6 @@ sens.RE = leave1out(rma.RE)
 %      (which((rma.RE$I2 - sens.RE$I2) > 4))}
 %@
 
-\Sexpr{if (rma.RE$pval < 0.05) {
-  if (length(which(sens.RE$pval > 0.05) > 0)) 
-    { paste0("The leave-one out analysis shows that the following study(ies) lead to insignificance of the meta analysis:", (which(sens.RE$pval > 0.05))) 
-  } else {
-    paste0("The leave-one out analysis shows that no left-out studies yielding non-significance. This means that the studies ")
-  }
-} else {
-  if (length(which((sens.RE$pval < 0.05) > 0))) { paste0(The leave-one out analysis shows that study ", which(sens.RE$pval < 0.05))  
-  } else {
-    paste("The leave-one out analysis shows that no left-out studies yield significance of the original meta analysis.")
-  }}}
 
 % 
 % <<xtable2, results = tex, echo=FALSE>>=
@@ -184,18 +178,19 @@ sens.RE = leave1out(rma.RE)
 % 
 
 
-To assess possible publication bias, funnel plots can be used for visualization purposes.When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size, should increase with sample size (smaller standard error). 
-
 <<label=funnelplot, echo=FALSE, fig=TRUE, pdf=TRUE, include=FALSE>>=
 funnel(rma.RE)
 @
 
-\begin{figure}
+\begin{figure} [ht]
 \captionsetup{width=0.6\textwidth}
 \centering
 \includegraphics[width=0.7\textwidth]{sweave_document_TB-funnelplot}
 \caption{Funnel plot of random effects model displaying possible publication bias. The true ES is displayed by the solid verical line.}
 \end{figure}
+
+To assess possible publication bias, funnel plots can be used for visualization purposes.When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size, should increase with sample size (smaller standard error). If many studies lie outside of this funnel shaped space, then the studies used might need to be reviewed and checked for  
+
 
 
 <<label=diagnostics, eval=TRUE, pdf=TRUE, fig=TRUE, echo=FALSE, include=FALSE>>=
@@ -220,14 +215,14 @@ baujat(rma.RE, main = "Baujat Heterogenity Plot", mgp=c(2,1,0))
 
 
 par(mar = c(0,0,0,0))
-radial(rma.RE, zlab="", xlab = "Inverse standard deviation", cex=1, mgp=c(2,1,0), main = "Galbraith's Radial Plot")
+radial(rma.RE, zlab="ES/SE", xlab = "Inverse standard error", cex=1, mgp=c(2,1,0), main = "Galbraith's Radial Plot")
 #title("Galbraith's adial plot", line = -6)
 mtext("Standardized residuals", side = 2, line = -1, at = 0, cex=0.8)
 
 par(mfrow=c(1,1), mar = c(4,4,1,2))
 @
 
-\begin{figure}
+\begin{figure} [htbp]
 \captionsetup{width=0.6\textwidth}
 \centering
 \includegraphics[width=1\textwidth]{sweave_document_TB-diagnostics}
@@ -235,21 +230,38 @@ par(mfrow=c(1,1), mar = c(4,4,1,2))
 \label{fig:diagnostics}
 \end{figure}
 
-<<forestreg, echo=FALSE, fig=TRUE, include=FALSE, pdf=TRUE>>=
-par(mar = c(3,4,1,2))
-forest.rma(rma.RE.meta, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim=c(-10, 14))
-text(-10, rma.RE$k+2, "Study",    pos=4, cex=.68, font=2)
-text(0, rma.RE$k+2, "Standardized Mean Difference", cex=.68, font=2)
-text(14, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos=2, cex=.68, font=2)
-par (mar = c(5,4,4,2))
-@
+The Baujat plot detects sources of heterogeneity. Studies which are aggregated to the far left of the plot contribute to more heterogeneity in the analysis. Plots which have hight a high contribution to the overall heterogeneity and have a high influence on the overall result, should be looked at more critically and compare these studies to the results obtained in the sensitivity analysis table REF!!!!!.  
 
-\begin{figure}
-\captionsetup{width=0.6\textwidth}
-\centering
-\includegraphics[width=1\textwidth]{sweave_document_TB-forestreg}
-\caption{Forest plot of a random effects regression model. The column on the left represents the study. The weighted percentage is shown as well as the effect size (ES) [+- 95\% CI]}
-\label{fig:forestplotreg}
-\end{figure}
+
+The Galbraith plot provides visual information on the heterogeneity of the meta-analysis. Values which are closer to the origin have a higher SE and are therefore less precise than values aggregated away from the origin. The curved axis indicates the individual observed effect sizes or outcomes and the line coming from (0,0) indicates the individual effect size or outcome for that specific point. 
+
+
+
+
+
+\SweaveSyntax{SweaveSyntaxNoweb}
+%<<>>=
+%Sweave("sweave_document_TB.Rnw", syntax="SweaveSyntaxNoweb")
+%#options(SweaveSyntax="SweaveSyntaxNoweb")
+%@
+\bigskip
+
+\Sexpr
+{
+ if (rma.RE$pval < 0.05) {
+  if (length(which(sens.RE$pval > 0.05) > 0)) { 
+  paste0("The leave-one out analysis shows that the effect size of the meta-analysis 
+is not significant anymore when following study(ies) is left out:", which(sens.RE$pval > 0.05)) 
+  } else {
+    paste0("The leave-one out analysis shows that no left-out studies yield non-significance. This means that the meta-analysis is robust.")}
+} else {
+  if (length(which(sens.RE$pval < 0.05) > 0)) { 
+  paste0("The leave-one out analysis shows that significance is yielded by leaving out the following study(ies):", which(sens.RE$pval < 0.05))  
+  } else {
+    paste0("The leave-one out analysis shows that no left-out studies yield significance of the original meta analysis.")}
+  }
+}
+
+
 
 \end{document}
