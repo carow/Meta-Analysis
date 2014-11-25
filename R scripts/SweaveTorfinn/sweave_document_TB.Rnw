@@ -45,12 +45,17 @@ The appendix includes forest plots, funnel plots and tables visualizing the resu
 
 
 <<echo = FALSE>>=
-load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
 
-load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+
+# Number of studies that should be reported in the sensitivity analysis:
+
+n.sens = as.integer(rma.RE$k*0.1+1)
+
 library(metafor)
 library(xtable)
 @
@@ -170,12 +175,16 @@ sens.RE = leave1out(rma.RE)
 %@
 
 
+
 % 
 % <<xtable2, results = tex, echo=FALSE>>=
 % 
 % print(xtable(mytable, caption = paste("Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing."),align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
 % @
 % 
+
+
+To assess possible publication bias, funnel plots can be used for visualization purposes.When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size, should increase with sample size (smaller standard error). 
 
 
 <<label=funnelplot, echo=FALSE, fig=TRUE, pdf=TRUE, include=FALSE>>=
@@ -261,6 +270,46 @@ is not significant anymore when following study(ies) is left out:", which(sens.R
     paste0("The leave-one out analysis shows that no left-out studies yield significance of the original meta analysis.")}
   }
 }
+
+
+
+
+  
+<<echo = FALSE, eval = TRUE>>=
+
+matrix.RE.sens = data.frame("Study" = as.vector(sens.RE$slab) ,
+                            "ES" = as.vector(sens.RE$estimate),                            
+                            "ESchg" = as.vector(sens.RE$estimate-rma.RE$b),
+                            "SEES"=as.vector(sens.RE$se),
+                            "CI1"= as.vector(sens.RE$ci.lb), 
+                            "CI2" = as.vector(sens.RE$ci.ub), 
+                            "pES" = as.vector(sens.RE$pval),
+                            "Q" = as.vector(sens.RE$Q),
+                            "pQ" = as.vector(sens.RE$Qp),
+                            "I^2" = as.vector(sens.RE$I2),
+                            "ESchgabs"=as.vector(abs(sens.RE$estimate-rma.RE$b)))#
+                            
+matrix.RE.sens = matrix.RE.sens[order(matrix.RE.sens$ESchgabs, decreasing=T),]
+matrix.RE.sens = matrix.RE.sens[1:n.sens,]
+matrix.RE.sens = matrix.RE.sens[-c(11)]
+
+
+
+rownames(matrix.RE.sens) <- matrix.RE.sens$slab  
+
+colnames(matrix.RE.sens) <- c("\\parbox{1.05cm}{left-out study}", "{ES}", "ES change", "\\parbox{1cm}{SE of ES}","CI (lb)", "CI (ub)", "P(ES)", "Q", "P(Q)", "I^2")
+
+require(xtable)
+mytable3 = matrix.RE.sens
+
+@
+
+
+
+<<xtable3, results = tex, echo=FALSE>>=
+print(xtable(mytable3, caption = paste("This output of the sensitivity analysis (leave1out analysis) shows the results of the meta analysis when a study is left out. This table reports the top most influential studies on the effect size, sorted by absolute change in effect size. The Left-out study indicates which study is left out to produce the results. ES = effectsize, SE = Standard error, CI =  95 percent confidence interval, P(ES) = p-value of estimate, Q = Test for residual heterogeneity, P(Q) = p-value of heterogenity value, $I^2$ = residual heterogeneity."), align = "rcccccccccc",  digits=3, display= c(rep("fg",11))), caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force, include.rownames = getOption("xtable.include.rownames", F)) #, display=c("s", rep("fg", 12)))
+@
+
 
 
 
