@@ -58,8 +58,8 @@ rma.FE.meta
 #Random Effects Model
 
 # New tests! Adding more moderators to the model: metric of how the biodiversity is measured, type of disturbance.
-rma.RE.meta2 = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent + metric + disturbance )
-rma.RE.meta2
+rma.RE.meta = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent + metric + disturbance )
+save(rma.RE.meta, file="rma.RE.meta")
 
 rma.RE.meta = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent)
 rma.RE.meta
