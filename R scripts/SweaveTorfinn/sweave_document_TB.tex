@@ -81,8 +81,13 @@ We created an appendix of meta-analysis paper. To be able to visualize the outpu
 
 
 
+<<<<<<< HEAD
 % latex table generated in R 3.1.2 by xtable 1.7-4 package
 % Tue Nov 25 11:26:56 2014
+=======
+% latex table generated in R 3.1.1 by xtable 1.7-4 package
+% Tue Nov 25 11:36:19 2014
+>>>>>>> origin/master
 \begin{table}[ht]
 \centering
 \caption{Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing.} 
@@ -104,8 +109,13 @@ Meta-Analysis & -0.28 & 0.12 & -0.52 & -0.04 & 0.02 & 47.05 & 0.12 & 27.22 & -0.
 %Table of the meta-regression. In this case only for one moderator. 
 
 
+<<<<<<< HEAD
 % latex table generated in R 3.1.2 by xtable 1.7-4 package
 % Tue Nov 25 11:26:56 2014
+=======
+% latex table generated in R 3.1.1 by xtable 1.7-4 package
+% Tue Nov 25 11:36:19 2014
+>>>>>>> origin/master
 \begin{table}[ht]
 \centering
 \caption{Results of the meta-regression (mixed-effects model). The model results are shown taking a moderator into account and displaying the coefficients. Results for the whole model are displayed as Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity and QM = Test of Moderators.} 
@@ -129,6 +139,7 @@ Intercept (Africa) & 0.14 & 0.32 & -0.48 & 0.76 & 0.66 & 40.60 & 0.20 & 21.75 & 
 
 
 To do:
+<<<<<<< HEAD
 
 %<< echo=FALSE, eval=TRUE >>=
 sens.RE = leave1out(rma.RE)
@@ -140,6 +151,15 @@ if ((length(which(sens.RE$I2 < 25))) > 0) {
 
 
 
+=======
+% 
+% <<xtable2, results = tex, echo=FALSE>>=
+% 
+% print(xtable(mytable, caption = paste("Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing."),align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
+% @
+% 
+A table for the sensitivity analysis. \\
+>>>>>>> origin/master
 
 Notes:
 

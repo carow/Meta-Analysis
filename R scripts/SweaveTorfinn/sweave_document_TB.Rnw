@@ -152,6 +152,7 @@ print(xtable(mytable2, caption = paste("Results of the meta-regression (mixed-ef
 
 To do:
 
+
 %<< echo=FALSE, eval=TRUE >>=
 sens.RE = leave1out(rma.RE)
 if ((length(which(sens.RE$I2 < 25))) > 0) {
@@ -161,6 +162,15 @@ if ((length(which(sens.RE$I2 < 25))) > 0) {
 %@
 
 
+
+
+% 
+% <<xtable2, results = tex, echo=FALSE>>=
+% 
+% print(xtable(mytable, caption = paste("Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing."),align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
+% @
+% 
+A table for the sensitivity analysis. \\
 
 
 Notes:
