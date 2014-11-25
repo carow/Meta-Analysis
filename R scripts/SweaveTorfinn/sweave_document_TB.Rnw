@@ -60,12 +60,12 @@ We created an appendix of meta-analysis paper. To be able to visualize the outpu
 %The dataset to be working with should be named ``data.sub''. The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' and an rma of a fixed effects model should be named ``rma.FE'' in order for the automatisation to work. IF a meta-regression has been conducted, it should be called ``rma.RE.meta'' or ``rma.FE.meta'' respectively. Other than that, the metafor package in R needs to be installed.  
 
 <<echo = FALSE>>=
-load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn/rma.RE")
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn/rma.RE")
 
-load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 library(metafor)
 library(xtable)
 @
@@ -152,6 +152,19 @@ print(xtable(mytable2, caption = paste("Results of the meta-regression (mixed-ef
 
 To do:
 
+<< echo=FALSE, eval=TRUE >>=
+sens.RE = leave1out(rma.RE)
+if ((length(which(sens.RE$I2 < 25))) > 0) {
+  (which(sens.RE$I2 < 25))
+} else {
+      (which((rma.RE$I2 - sens.RE$I2) > 4))}
+@
+
+<<xtable1, results = tex, echo=FALSE>>=
+
+print(xtable(mytable, caption = paste("Results of the meta-analysis.ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity, Egger's test and the fails-safe number for publication bias testing."),align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
+@
+
 A table for the sensitivity analysis. \\
 
 Notes:
@@ -212,5 +225,21 @@ par(mfrow=c(1,1), mar = c(4,4,1,2))
 \label{fig:diagnostics}
 \end{figure}
 
+<<forestreg, echo=FALSE, fig=TRUE, include=FALSE, pdf=TRUE>>=
+par(mar = c(3,4,1,2))
+forest.rma(rma.RE.meta, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim=c(-10, 14))
+text(-10, rma.RE$k+2, "Study",    pos=4, cex=.68, font=2)
+text(0, rma.RE$k+2, "Standardized Mean Difference", cex=.68, font=2)
+text(14, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos=2, cex=.68, font=2)
+par (mar = c(5,4,4,2))
+@
+
+\begin{figure}
+\captionsetup{width=0.6\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{sweave_document_TB-forestreg}
+\caption{Forest plot of a random effects regression model. The column on the left represents the study. The weighted percentage is shown as well as the effect size (ES) [+- 95\% CI]}
+\label{fig:forestplotreg}
+\end{figure}
 
 \end{document}

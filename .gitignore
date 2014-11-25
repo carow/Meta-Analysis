@@ -15,3 +15,7 @@ R scripts/SweaveTorfinn/newsweave.log
 *.pdf
 
 *.gz
+
+*.pdf
+
+*.log
