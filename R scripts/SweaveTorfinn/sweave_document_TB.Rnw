@@ -39,12 +39,12 @@ The appendix includes forest plots, funnel plots and tables visualizing the resu
 
 
 <<echo = FALSE>>=
-load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
 
-load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
 # Number of studies that should be reported in the sensitivity analysis:
 n.sens = as.integer(rma.RE$k*0.1+1)
@@ -54,7 +54,7 @@ library(xtable)
 @
 
 
-%Creates a table for the results of the meta-analysis.Values for ES, SE (ES),pES, CI, I2, Egger value and fasil-sage number. 
+%Creates a table for the results of the meta-analysis.Values for ES, SE (ES),pES, CI, I2, Egger value and fail-safe number. 
 
 <<echo = FALSE>>=
 egger.RE = regtest(rma.RE, model = "rma", predictor = "sei")
