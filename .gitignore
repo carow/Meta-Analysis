@@ -33,3 +33,17 @@ R scripts/SweaveTorfinn/sweave_document_TB.aux
 R scripts/SweaveTorfinn/sweave_document_TB-funnelplot.pdf
 
 R scripts/SweaveTorfinn/sweave_document_TB-Diagnostics.pdf
+
+R scripts/SweaveTorfinn/sweave_document_TB-concordance.tex
+
+R scripts/SweaveTorfinn/sweave_document_TB.log
+
+R scripts/SweaveTorfinn/sweave_document_TB.pdf
+
+R scripts/SweaveTorfinn/sweave_document_TB-1.synctex
+
+R scripts/SweaveTorfinn/sweave_document_TB.synctex
+
+R scripts/SweaveTorfinn/sweave_document_TB.synctex.gz
+
+R scripts/SweaveTorfinn/sweave_document_TB.tex
