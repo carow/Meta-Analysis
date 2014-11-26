@@ -4,6 +4,7 @@
 
 \usepackage{caption}    		
 
+\usepackage{color}
 \usepackage{etoolbox}    
 \usepackage[bottom]{footmisc}  
 \usepackage{graphicx}       
@@ -31,7 +32,15 @@
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
 
-The appendix includes forest plots, funnel plots and tables visualizing the results created in the meta-analysis.
+
+
+
+
+
+
+
+
+
 \bigskip
 
 
@@ -39,19 +48,26 @@ The appendix includes forest plots, funnel plots and tables visualizing the resu
 
 
 <<echo = FALSE>>=
-#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
 
-#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
-load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
 # Number of studies that should be reported in the sensitivity analysis:
 n.sens = as.integer(rma.RE$k*0.1+1)
+n.studies = rma.RE$k
 
 library(metafor)
 library(xtable)
 @
+
+
+The method used in the rma object for the meta-analysis is \Sexpr{rma.RE$method} and the measure used is \Sexpr{rma.RE$measure}.
+
+
+
 
 
 %Creates a table for the results of the meta-analysis.Values for ES, SE (ES),pES, CI, I2, Egger value and fail-safe number. 
@@ -77,9 +93,31 @@ mytable = matrix.RE
 print(xtable(mytable, caption = paste("Results of the meta-analysis. ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = Residual heterogeneity, Egger's test (SE used as the predictor) and the fails-safe number (FSN) for publication bias testing according to 'Rosenberg'."), align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force, display="fg")
 @
 
-%!!!!!! Rosenberg method used as its consistent with how mean effect sizes are calculated. FSN assumes that the mean effect size of missing studies is that predicted by the null hypothesis. This will inflate N if there is, in fact, a publication bias agains results in the opposite direction to the current mean effect. 
-%Eggers test, the slope will indicate the size and direction of the effect size and the intercept will be 0. The deviation of the intercept from zero provides and index of degree of assymetry.Tests for a relationship between observed outcomes and sei. If a relationship is present, implies asymmetry. In our case, pval not significant, so no asymmetry--> no publication bias. 
-% Sexpr.. if egger.RE$pval >0.05 then paste(probable publication bias) else paste(no publication bias)
+
+<<echo = FALSE>>=
+if (fsn.RE$fsnum > ((5*(n.studies)) + 10)){
+out = paste0("The fail-safe number suggests that the meta-analysis is robust against publication bias")
+} else {
+out = paste0("The fail-safe number suggests that the meta-analysis is not robust against publication bias")}
+@
+%Rosenberg method used as its consistent with how mean effect sizes are calculated. FSN assumes that the mean effect size of missing studies is that predicted by the null hypothesis. This will inflate N if there is, in fact, a publication bias agains results in the opposite direction to the current mean effect. 
+
+{\Sexpr{out}.} This is done by checking if the fail-safe number is greater than (5*(number of studies) +5). 
+
+
+<<echo = FALSE>>=
+if (egger.RE$pval < 0.05){
+  out = paste0("The Eggers test for testing funnel plot asymmetry suggests that there is a probable publication bias present because there is a relationship between the effect size and the sample size. Asymmetry exists in the funnel plot")
+} else {
+  out = paste0("The Eggers test for testing funnel plot asymmetry suggests that there is no publication bias because there is no relationship between the effect size and the sample size. The funnel plot is symmetrical")
+}
+@
+
+\noindent
+\Sexpr{out}
+
+%Eggers test, the slope will indicate the size and direction of the effect size and the intercept will be 0. The deviation of the intercept from zero provides and index of degree of asymmetry.Tests for a relationship between observed outcomes and sei. If a relationship is present, implies asymmetry. In our case, pval not significant, so no asymmetry--> no publication bias. 
+
 
 %Creates a forest plot of the meta-analysis.
 <<forest, echo=FALSE, fig=TRUE, include=FALSE, pdf=TRUE>>=
@@ -168,7 +206,7 @@ funnel(rma.RE)
 \caption{Funnel plot of a random effects model displaying possible publication bias. The true ES is displayed by the solid verical line.}
 \end{figure}
 
-To assess possible publication bias, funnel plots can be used for visualization purposes.When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size should increase with sample size (smaller standard error). If many studies lie outside of this funnel shaped space, then the studies used might need to be reviewed and checked for  
+To assess possible publication bias, funnel plots can be used for visualization purposes.When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size should increase with sample size (smaller standard error). If many studies lie outside of this funnel shaped space, then the studies used might need to be reviewed and checked for...  
 \bigskip
 
 %Plot of the diagnostics

@@ -4,6 +4,7 @@
 
 \usepackage{caption}    		
 
+\usepackage{color}
 \usepackage{etoolbox}    
 \usepackage[bottom]{footmisc}  
 \usepackage{graphicx}       
@@ -31,7 +32,15 @@
 %------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------
 
-The appendix includes forest plots, funnel plots and tables visualizing the results created in the meta-analysis.
+
+
+
+
+
+
+
+
+
 \bigskip
 
 
@@ -40,27 +49,45 @@ The appendix includes forest plots, funnel plots and tables visualizing the resu
 
 
 
-%Creates a table for the results of the meta-analysis.Values for ES, SE (ES),pES, CI, I2, Egger value and fasil-sage number. 
+The method used in the rma object for the meta-analysis is REML and the measure used is SMD.
 
 
 
-% latex table generated in R 3.1.1 by xtable 1.7-4 package
-% Tue Nov 25 22:32:22 2014
+
+
+%Creates a table for the results of the meta-analysis.Values for ES, SE (ES),pES, CI, I2, Egger value and fail-safe number. 
+
+
+
+
+% latex table generated in R 3.1.2 by xtable 1.7-4 package
+% Wed Nov 26 12:18:31 2014
 \begin{table}[ht]
 \centering
-\caption{Results of the meta-analysis. ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = Residual heterogeneity, Egger's test (SE used as the predictor) and the fails-safe number (FSN) for publication bias testing.} 
+\caption{Results of the meta-analysis. ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = Residual heterogeneity, Egger's test (SE used as the predictor) and the fails-safe number (FSN) for publication bias testing according to 'Rosenberg'.} 
 {\footnotesize
 \scalebox{0.9}{
 \begin{tabular}{rccccccccccc}
   \hline
- & {ES} & \parbox{1cm}{SE of ES} & CI (lb) & CI (ub) & P(ES) & Q & P(Q) & I^2 & Egger & P(Egger) & FSN \\ 
+ & {ES} & \parbox{1cm}{SE of ES} & CI (lb) & CI (ub) & P(ES) & Q & P(Q) & $I^2$ & Egger & P(Egger) & FSN \\ 
   \hline
-Meta-Analysis & -0.28 & 0.12 & -0.52 & -0.04 & 0.02 & 47.05 & 0.12 & 27.22 & -0.44 & 0.66 & 77.00 \\ 
+Meta-Analysis & -0.28 & 0.12 & -0.52 & -0.04 & 0.02 & 47.05 & 0.12 & 27.22 & -0.44 & 0.66 & 68.00 \\ 
    \hline
 \end{tabular}
 }
 }
 \end{table}
+
+%Rosenberg method used as its consistent with how mean effect sizes are calculated. FSN assumes that the mean effect size of missing studies is that predicted by the null hypothesis. This will inflate N if there is, in fact, a publication bias agains results in the opposite direction to the current mean effect. 
+
+{The fail-safe number suggests that the meta-analysis is not robust against publication bias.} This is done by checking if the fail-safe number is greater than (5*(number of studies) +5). 
+
+
+
+\noindent
+The Eggers test for testing funnel plot asymmetry suggests that there is no publication bias because there is no relationship between the effect size and the sample size. The funnel plot is symmetrical
+
+%Eggers test, the slope will indicate the size and direction of the effect size and the intercept will be 0. The deviation of the intercept from zero provides and index of degree of asymmetry.Tests for a relationship between observed outcomes and sei. If a relationship is present, implies asymmetry. In our case, pval not significant, so no asymmetry--> no publication bias. 
 
 
 %Creates a forest plot of the meta-analysis.
@@ -83,8 +110,8 @@ If the effect sizes in the forest plot vary too  much, then heterogeneity should
 %Table of the meta-regression, in this case with various moderators. 
 
 
-% latex table generated in R 3.1.1 by xtable 1.7-4 package
-% Tue Nov 25 22:32:22 2014
+% latex table generated in R 3.1.2 by xtable 1.7-4 package
+% Wed Nov 26 12:18:31 2014
 \begin{table}[ht]
 \centering
 \caption{Results of the meta-regression (mixed-effects model). The model results are shown taking a moderator or various moderators into account and displaying their coefficients. Results for the whole model are displayed as Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity and QM = Test of Moderators.} 
@@ -135,7 +162,7 @@ intrcpt & -0.353 & 0.766 & -1.85 & 1.15 & 0.645 & 22.7 & 0.54 & 0.000493 & 24.4 
 \caption{Funnel plot of a random effects model displaying possible publication bias. The true ES is displayed by the solid verical line.}
 \end{figure}
 
-To assess possible publication bias, funnel plots can be used for visualization purposes.When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size should increase with sample size (smaller standard error). If many studies lie outside of this funnel shaped space, then the studies used might need to be reviewed and checked for  
+To assess possible publication bias, funnel plots can be used for visualization purposes.When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size should increase with sample size (smaller standard error). If many studies lie outside of this funnel shaped space, then the studies used might need to be reviewed and checked for...  
 \bigskip
 
 %Plot of the diagnostics
@@ -168,8 +195,8 @@ The Galbraith plot provides visual information on the heterogeneity of the meta-
 %Sensitivity analysis
   
 
-% latex table generated in R 3.1.1 by xtable 1.7-4 package
-% Tue Nov 25 22:32:24 2014
+% latex table generated in R 3.1.2 by xtable 1.7-4 package
+% Wed Nov 26 12:18:33 2014
 \begin{table}[ht]
 \centering
 \caption{Output of the sensitivity analysis (leave1out analysis) with the results of the meta analysis, leaving out 1 study at a time. The top most influential studies, in relation to effect size, sorted by absolute change in effect size is shown. The Left-out study indicates which study is left out to produce the results. ES = Effect size, SE = Standard error, CI =  95 percent confidence interval, P(ES) = p-value of estimate, Q = Test for residual heterogeneity, P(Q) = p-value of heterogenity value, $I^2$ = residual heterogeneity.} 
