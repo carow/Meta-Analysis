@@ -19,3 +19,17 @@ R scripts/SweaveTorfinn/newsweave.log
 *.pdf
 
 *.log
+
+*.out
+
+*.log
+
+*.tex
+
+R scripts/SweaveTorfinn/sweave_document_TB.out
+
+R scripts/SweaveTorfinn/sweave_document_TB.aux
+
+R scripts/SweaveTorfinn/sweave_document_TB-funnelplot.pdf
+
+R scripts/SweaveTorfinn/sweave_document_TB-Diagnostics.pdf

@@ -56,9 +56,10 @@ library(xtable)
 
 %Creates a table for the results of the meta-analysis.Values for ES, SE (ES),pES, CI, I2, Egger value and fail-safe number. 
 
+
 <<echo = FALSE>>=
 egger.RE = regtest(rma.RE, model = "rma", predictor = "sei")
-fsn.RE = fsn(yi = rma.RE$yi, vi = rma.RE$vi)
+fsn.RE = fsn(yi = rma.RE$yi, vi = rma.RE$vi, type = "Rosenberg")
 @
 
 <<echo = FALSE, eval = TRUE>>=
@@ -66,17 +67,19 @@ matrix.RE = data.frame(t(c("Effect Size"=rma.RE$b, "SE of Effect Size"=rma.RE$se
 
 rownames(matrix.RE) <- c("Meta-Analysis")
 
-colnames(matrix.RE) <- c("{ES}","\\parbox{1cm}{SE of ES}", "CI (lb)", "CI (ub)", "P(ES)", "Q", "P(Q)", "I^2", "Egger", "P(Egger)","FSN")
+colnames(matrix.RE) <- c("{ES}","\\parbox{1cm}{SE of ES}", "CI (lb)", "CI (ub)", "P(ES)", "Q", "P(Q)", "$I^2$", "Egger", "P(Egger)","FSN")
 
 require(xtable)
 mytable = matrix.RE
 @
 
 <<label = xtable1, results = tex, echo=FALSE>>=
-print(xtable(mytable, caption = paste("Results of the meta-analysis. ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = Residual heterogeneity, Egger's test (SE used as the predictor) and the fails-safe number (FSN) for publication bias testing."), align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force, display="fg")
+print(xtable(mytable, caption = paste("Results of the meta-analysis. ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = Residual heterogeneity, Egger's test (SE used as the predictor) and the fails-safe number (FSN) for publication bias testing according to 'Rosenberg'."), align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force, display="fg")
 @
 
-
+%!!!!!! Rosenberg method used as its consistent with how mean effect sizes are calculated. FSN assumes that the mean effect size of missing studies is that predicted by the null hypothesis. This will inflate N if there is, in fact, a publication bias agains results in the opposite direction to the current mean effect. 
+%Eggers test, the slope will indicate the size and direction of the effect size and the intercept will be 0. The deviation of the intercept from zero provides and index of degree of assymetry.Tests for a relationship between observed outcomes and sei. If a relationship is present, implies asymmetry. In our case, pval not significant, so no asymmetry--> no publication bias. 
+% Sexpr.. if egger.RE$pval >0.05 then paste(probable publication bias) else paste(no publication bias)
 
 %Creates a forest plot of the meta-analysis.
 <<forest, echo=FALSE, fig=TRUE, include=FALSE, pdf=TRUE>>=
