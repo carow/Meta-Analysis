@@ -250,15 +250,15 @@ matrix.RE.sens = matrix.RE.sens[1:n.sens,]
 matrix.RE.sens = matrix.RE.sens[-c(11)]
 
 
-
 rownames(matrix.RE.sens) <- matrix.RE.sens$slab  
 
 colnames(matrix.RE.sens) <- c("\\parbox{1.05cm}{Left-out study}", "{ES}", "ES change", "\\parbox{1cm}{SE of ES}","CI (lb)", "CI (ub)", "P(ES)", "Q", "P(Q)", "I^2")
 
 require(xtable)
 mytable3 = matrix.RE.sens
-
 @
+
+A sensitivity analysis should be conducted to see how sensitive the meta analysis is. One good way of exploring the sensitivity is to conduct a leave-one-out analysis. This computes the pooled effect size, variance, heterogenity measures leaving out one study at the time. The results can be compared to the original meta analysis output to assess how each study influences the meta analysis. Table \ref{xtable3} shows the most influential studies on the effect size and what the resulting effect size would be if these studies were left out (one study at the time), and several other parameters.
 
 <<label = xtable3, results = tex, echo=FALSE>>=
 print(xtable(mytable3, caption = paste("Output of the sensitivity analysis (leave1out analysis) with the results of the meta analysis, leaving out 1 study at a time. The top most influential studies, in relation to effect size, sorted by absolute change in effect size is shown. The Left-out study indicates which study is left out to produce the results. ES = Effect size, SE = Standard error, CI =  95 percent confidence interval, P(ES) = p-value of estimate, Q = Test for residual heterogeneity, P(Q) = p-value of heterogenity value, $I^2$ = residual heterogeneity."), 
@@ -266,27 +266,29 @@ print(xtable(mytable3, caption = paste("Output of the sensitivity analysis (leav
 @
 
 
-\SweaveSyntax{SweaveSyntaxNoweb}
-%<<>>=
-%Sweave("sweave_document_TB.Rnw", syntax="SweaveSyntaxNoweb")
-%#options(SweaveSyntax="SweaveSyntaxNoweb")
-%@
+<<echo=FALSE>>=
+if(rma.RE$pval < 0.05) {
+  out1 = paste("The effect size found in this meta-analysis is significant with a p-value of")
+} else {
+  out1 = paste ("The effect size found in this meta-analysis is non-significant with a p-value of")
+}
 
-\Sexpr
-{
  if (rma.RE$pval < 0.05) {
   if (length(which(sens.RE$pval > 0.05) > 0)) { 
-  paste0("The leave-one out analysis shows that the effect size of the meta-analysis 
-is not significant anymore when following study(ies) is left out:", which(sens.RE$pval > 0.05)) 
+  out2 <- paste("The leave-one out analysis shows that the effect size of the meta-analysis is not significant anymore if", if (sum(sens.RE$pval > 0.05)>1) {"studies"} else {"study"}, paste(which(sens.RE$pval > 0.05), collapse=", "), 
+(if (sum(sens.RE$pval > 0.05)>1) {"are"} else {"is"}), "left out. If there are many left-out studies yielding non-significance relative to the total number of studies in the meta analysis, it is a sign of a fragile analysis") 
   } else {
-    paste0("The leave-one out analysis shows that no left-out studies yield non-significance. This means that the meta-analysis is robust.")}
+    out2 <- paste("The leave-one out analysis shows that no left-out studies yield non-significance. This means that the finding of significance in effect size of meta-analysis is robust")}
 } else {
   if (length(which(sens.RE$pval < 0.05) > 0)) { 
-  paste0("The leave-one out analysis shows that significance is yielded by leaving out the following study(ies):", which(sens.RE$pval < 0.05))  
+  out2 <- paste("The leave-one out analysis shows that significance is yielded by leaving out", if (sum(sens.RE$pval > 0.05)>1) {"studies"} else {"study"}, paste(which(sens.RE$pval < 0.05), collapse=","), ". If there are many left-out studies yielding significance relative to the total number of studies in the meta analysis, it is a sign that the analysis is close to significance. One should, however, be cautious if one leaves out a study to make the analysis significant. A significant effect size does not necessarily mean a robust analysis.")  
   } else {
-    paste0("The leave-one out analysis shows that no left-out studies yield significance of the original meta analysis.")}
+    out2 <- paste("The leave-one out analysis shows that no left-out studies yield significance of the original meta analysis. This is a sign that the finding of non-significance in effect size is robust")}
   }
-}
+@
+
+\noindent 
+The significance of the effect size is important. \Sexpr{out1} \Sexpr{signif(rma.RE$pval, 3)}. \Sexpr{out2}.
 
 
 \end{document}
