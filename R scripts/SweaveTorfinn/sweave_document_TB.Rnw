@@ -57,9 +57,9 @@ The method used in the rma object for the meta-analysis is \Sexpr{rma.RE$method}
 
 The Q-value (see Table \ref{xtable1}) is the weighted sum of squares for the effect sizes of the studies in the meta-analysis. It is a standardized measure of the variation of the effect sizes of the studies analysed.
 
-The p-value for the Q (see P(Q) in Table \ref{xtable1}) is the likelihood of null-hypothesis that all studies share a common effect size. A p-value $\< 0.05$ thus means we can reject the null-hypothesis.
+The p-value for the Q (see P(Q) in Table \ref{xtable1}) is the likelihood of the null-hypothesis that all studies share a common effect size. A p-value $\< 0.05$ means we can reject the null-hypothesis, indicating that the studies in the analysis do not share a common effect size. A p-value $\> 0.05$ means we can retain the null-hypothesis. This should, however, not be taken as an evidence that the effect sizes are consistent. It can also be due to low statistical power (Borenstein et. al. 2009, p. 112). 
 
-The \$I^2$ indicates the overall heterogenity in percent. For this analysis the \$I^2$ is \sexpr{signif(rma.RE$I2, digits = 3)}. The rule of thumb is that a \$I^2$ around 25 \% indicates low heterogenity, 50 \% indicates moderate heterogenity and 75 \% indicates high heterogenity. 
+The \$I^2$ indicates the overall heterogenity on a relative scale (percent). "It should be viewed as a measure of inconsistency across the findings of the study, and not as a measure of the real vatiation across the underlyiing true effects" (Borenstein et. al. 2009, p. 118). For this analysis the \$I^2$ is \sexpr{signif(rma.RE$I2, digits = 3)}. The rule of thumb is that a \$I^2$ around 25 \% indicates low heterogenity, 50 \% indicates moderate heterogenity and 75 \% indicates high heterogenity. 
 
 %Creates a table for the results of the meta-analysis.Values for ES, SE (ES),pES, CI, I2, Egger value and fail-safe number. 
 <<echo = FALSE>>=
@@ -298,32 +298,27 @@ if(rma.RE$pval < 0.05) {
 
 # If function for the leave1out analysis.  
 
- if (rma.RE$pval < 0.05) {
+if (rma.RE$pval < 0.05) {
   if (length(which(sens.RE$pval > 0.05) > 0)) { 
-  out2 = paste("The leave-one out analysis shows that the effect size of the meta-analysis is not significant anymore if", 
-               if (sum(sens.RE$pval > 0.05)>1) {"studies"} 
-               else {"study"}, 
-               paste(which(sens.RE$pval > 0.05), collapse=", "),
-               
-               (if (sum(sens.RE$pval > 0.05)>1) {"are"} 
-                else {"is"}), 
-               "left out. If there are many left-out studies yielding non-significance relative to the total number of studies in the meta-analysis, it is a sign of a fragile analysis") 
-  
-  } else {
-    out2 = paste("The leave-one out analysis shows that no left-out studies yield non-significance. This means that the finding of significance in effect size of meta-analysis is robust")}
-  
+    out2 <- paste("The leave-one out analysis shows that the effect size of the meta-analysis is not significant anymore if", 
+                  if (sum(sens.RE$pval > 0.05)>1) {"studies"} 
+                  else {"study"}, paste(which(sens.RE$pval > 0.05), collapse=", "), 
+                  (if (sum(sens.RE$pval > 0.05)>1) {"are"} 
+                   else {"is"}), "left out. If there are many left-out studies yielding non-significance relative to the total number of studies in the meta analysis, it is a sign of a fragile analysis")   
+    } else {
+                    out2 <- paste("The leave-one out analysis shows that no left-out studies yield non-significance. This means that the finding of significance in effect size of meta-analysis is robust")
+    }
+} else {  
+  if (length(which(sens.RE$pval < 0.05) > 0)) {   
+    out2 = paste("The leave-one out analysis shows that significance 
+                 is yielded by leaving out", 
+                 if (sum(sens.RE$pval > 0.05)>1) {"studies"} 
+                 else {"study"}, paste(which(sens.RE$pval < 0.05), collapse=","),". 
+                If there are many left-out studies yielding significance, relative to the total number of studies in the meta-analysis, it is a sign that the p-value of the meta-analysis is nearly significant. One should, however, be cautious if one leaves out a study to make the  analysis significant. A significant effect size does not necessarily mean a robust analysis.")  
 } 
 else {
-  if (length(which(sens.RE$pval < 0.05) > 0)) { 
-  out2 = paste("The leave-one out analysis shows that significance is yielded by leaving out", 
-               if (sum(sens.RE$pval > 0.05)>1) {"studies"} 
-               else {"study"}, 
-               paste(which(sens.RE$pval < 0.05), collapse=","),". 
-                If there are many left-out studies yielding significance, relative to the total number of studies in the meta-analysis, it is a sign that the p-value of the meta-analysis is nearly significant. One should, however, be cautious if one leaves out a study to make the analysis significant. A significant effect size does not necessarily mean a robust analysis.")  
-  } 
-  else {
-    out2 = paste("The leave-one out analysis shows that no left-out studies yield significance of the original meta-analysis. This is a sign that the finding of non-significance in effect size is robust")}
-  }
+  out2 = paste("The leave-one out analysis shows that no left-out studies yield significance of the original meta-analysis. This is a sign that the finding of non-significance in effect size is robust")}
+}
 @
 
 \noindent 
