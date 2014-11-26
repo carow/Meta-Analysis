@@ -103,7 +103,7 @@ if (egger.RE$pval < 0.05){
 @
 
 \noindent
-\Sexpr{out}. (see Figure ~ \ref{funnelplot}) 
+\Sexpr{out} (see Figure~\ref{funnelplot}). 
 
 
 %Creates a forest plot of the meta-analysis.
