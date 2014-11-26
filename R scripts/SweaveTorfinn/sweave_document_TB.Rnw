@@ -48,12 +48,11 @@
 
 
 <<echo = FALSE>>=
-load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
-load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
-
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
 # Number of studies that should be reported in the sensitivity analysis:
 n.sens = as.integer(rma.RE$k*0.1+1)
@@ -66,7 +65,11 @@ library(xtable)
 
 The method used in the rma object for the meta-analysis is \Sexpr{rma.RE$method} and the measure used is \Sexpr{rma.RE$measure}.
 
+The Q-value (see Table \ref{xtable1}) is the weighted sum of squares for the effect sizes of the studies in the meta-analysis. It is a standardized measure of the variation of the effect sizes of the studies analysed.
 
+The p-value for the Q (see P(Q) in Table \ref{xtable1}) is the likelihood of null-hypothesis that all studies share a common effect size. A p-value $\< 0.05$ thus means we can reject the null-hypothesis.
+
+The \$I^2$ indicates the overall heterogenity in percent. For this analysis the \$I^2$ is \sexpr{signif(rma.RE$I2, digits = 3)}. The rule of thumb is that a \$I^2$ around 25 \% indicates low heterogenity, 50 \% indicates moderate heterogenity and 75 \% indicates high heterogenity. 
 
 
 
