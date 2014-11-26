@@ -15,7 +15,6 @@
 \usepackage[margin=1in]{geometry}
 
 \usepackage{Sweave}
-%\usepackage{C:/Program Files/R/R-3.1.2/share/texmf/tex/latex/Sweave.sty}
 
 \frenchspacing 
 %------------------------------------------------------------------------------------------------------
@@ -33,7 +32,6 @@
 %------------------------------------------------------------------------------------------------------
 
 %The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' in order for the automatisation to work. If a meta-regression has been conducted, it should be called ``rma.RE.meta''. Other than that, the metafor package in R needs to be installed as well as the xtable package.  
-
 
 <<echo = FALSE>>=
 load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
@@ -55,6 +53,8 @@ n.sens = as.integer(rma.RE$k*0.1+1)
 
 The method used in the rma object for the meta-analysis is \Sexpr{rma.RE$method} and the measure used is \Sexpr{rma.RE$measure}.
 
+\bigskip
+
 %Creates a table for the results of the meta-analysis.Values for ES, SE (ES),pES, CI, I2, Egger value and fail-safe number. 
 <<echo = FALSE>>=
 egger.RE = regtest(rma.RE, model = "rma", predictor = "sei")
@@ -74,12 +74,13 @@ mytable = matrix.RE
 <<label = xtable1, results = tex, echo=FALSE>>=
 print(xtable(mytable, caption = paste("Results of the meta-analysis. ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = Residual heterogeneity, Egger's test (SE used as the predictor) and the fails-safe number (FSN) for publication bias testing according to 'Rosenberg'."), align = "rccccccccccc", label = "xtable1"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force, display = "fg")
 @
+\bigskip
 
-The Q-value (see Table~\ref{xtable1}) is the weighted sum of squares for the effect sizes of the studies in the meta-analysis. It is a standardized measure of the variation of the effect sizes of the studies analysed.
+The Q-value (see Table~\ref{xtable1}) is the weighted sum of squares for the effect sizes of the studies in the meta-analysis. It is a standardized measure of the variation of the effect sizes across the studies analyzed.\\
 
-The p-value for the Q (see P(Q) in Table \ref{xtable1}) is the likelihood of the null-hypothesis that all studies share a common effect size. A p-value $\<$ 0.05 means we can reject the null-hypothesis, indicating that the studies in the analysis do not share a common effect size. A p-value $\>$ 0.05 means we can retain the null-hypothesis. This should, however, not be taken as an evidence that the effect sizes are consistent. It can also be due to low statistical power (Borenstein et. al. 2009, p. 112). 
+The p-value for Q (see P(Q) in Table \ref{xtable1}) is the likelihood of the null-hypothesis that all studies share a common effect size. A p-value < 0.05 means we can reject the null-hypothesis, indicating that the studies in the analysis do not share a common effect size. A p-value > 0.05 means we can retain the null-hypothesis. This should, however, not be taken as an evidence that the effect sizes are consistent. It can also be due to low statistical power (Borenstein et. al. 2009, p. 112).\\ 
 
-The \$I^2$ indicates the overall heterogenity on a relative scale (percent). "It should be viewed as a measure of inconsistency across the findings of the study, and not as a measure of the real vatiation across the underlyiing true effects" (Borenstein et. al. 2009, p. 118). For this analysis the \$I^2$ is \sexpr{signif(rma.RE$I2, digits = 3)}. The rule of thumb is that a \$I^2$ around 25 \% indicates low heterogenity, 50 \% indicates moderate heterogenity and 75 \% indicates high heterogenity. 
+The $I^2$ indicates the overall heterogenity on a relative scale (percent). "It should be viewed as a measure of inconsistency across the findings of the study, and not as a measure of the real vatiation across the underlying true effects" (Borenstein et. al. 2009, p. 118). For this analysis the $I^2$ is \Sexpr{signif(rma.RE$I2,3)}. The rule of thumb is that an $I^2$ around 25 \% indicates low heterogenity, 50 \% indicates moderate heterogenity and 75 \% indicates high heterogenity.\\ 
 
 %Rosenberg's method was used as its consistent with how mean effect sizes are calculated. FSN assumes that the mean effect size of missing studies is that predicted by the null hypothesis. This will inflate N if there is, in fact, a publication bias agains results in the opposite direction to the current mean effect. 
 <<echo = FALSE>>=
@@ -89,7 +90,7 @@ out = paste0("The fail-safe number suggests that the meta-analysis is robust aga
 out = paste0("The fail-safe number suggests that the meta-analysis is not robust against publication bias")}
 @
 
-{\Sexpr{out}.} This is done by checking if the fail-safe number is greater than (5*(number of studies) +5). 
+{\Sexpr{out}.} This is done by checking if the fail-safe number is greater than (5*(number of studies) +5).\\ 
 
 
 %Eggers test, the slope will indicate the size and direction of the effect size and the intercept will be 0. The deviation of the intercept from zero provides and index of degree of asymmetry.Tests for a relationship between observed outcomes(sample size, SE...) and effect size. If a relationship is present, implies asymmetry. 
@@ -102,9 +103,8 @@ if (egger.RE$pval < 0.05){
 }
 @
 
-\noindent
-\Sexpr{out} (see Figure~\ref{funnelplot}). 
-
+\Sexpr{out} (see Figure~\ref{funnelplot}).
+\newpage
 
 %Creates a forest plot of the meta-analysis.
 <<forest, echo = FALSE, fig = TRUE, include = FALSE, pdf = TRUE>>=
@@ -125,11 +125,10 @@ par (mar = c(5,4,4,2))
 \label{fig:forestplot}
 \end{figure}
 
+
 If the effect sizes in the forest plot vary too much, then heterogeneity should be explored in more depth. This is done by taking \emph{explanatory variabales} into account in a meta-regression. When taking various explanatory variables (moderators) into account, the resulting forest plot shows the way in which the effect size varies when looking at the particular moderator. 
 
 
-\bigskip
-\bigskip
 
 %Table of the meta-regression, in this case with various moderators. 
 
@@ -181,6 +180,9 @@ par (mar = c(5,4,4,2))
 \label{fig:forestplotreg}
 \end{figure}
 
+\clearpage
+
+To assess possible publication bias, funnel plots can be used for visualization purposes.When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size should increase with sample size (smaller standard error). If many studies lie outside of this funnel shaped space, then the studies used might need to be reviewed and checked for..
 
 
 %Funnelplot of meta-analysis to assess publication bias. 
@@ -196,8 +198,8 @@ funnel(rma.RE)
 \label{funnelplot}
 \end{figure}
 
-To assess possible publication bias, funnel plots can be used for visualization purposes.When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size should increase with sample size (smaller standard error). If many studies lie outside of this funnel shaped space, then the studies used might need to be reviewed and checked for...  
-\bigskip
+  
+\newpage
 
 %Plot of the diagnostics
 
@@ -244,9 +246,6 @@ The Baujat plot detects sources of heterogeneity. Studies which are aggregated t
 
 The Galbraith plot provides visual information on the heterogeneity of the meta-analysis. Values which are closer to the origin have a higher SE and are therefore less precise than values aggregated away from the origin. The curved axis indicates the individual observed effect sizes or outcomes and the line coming from (0,0) indicates the individual effect size or outcome for that specific point. 
 
-\bigskip
-\bigskip
-
 
 %Sensitivity analysis
 << eval = TRUE, echo = FALSE>>=
@@ -278,13 +277,15 @@ require(xtable)
 mytable3 = matrix.RE.sens
 @
 
-A sensitivity analysis should be conducted to see how sensitive the meta analysis is. One good way of exploring the sensitivity is to conduct a leave-one-out analysis. This computes the pooled effect size, variance, heterogenity measures leaving out one study at the time. The results can be compared to the original meta analysis output to assess how each study influences the meta analysis. Table \ref{xtable3} shows the most influential studies on the effect size and what the resulting effect size would be if these studies were left out (one study at the time), and several other parameters.
-
+\newpage
 <<label = xtable3, results = tex, echo=FALSE>>=
 print(xtable(mytable3, 
              caption = paste("Output of the sensitivity analysis (leave1out analysis) with the results of the meta analysis, leaving out 1 study at a time. The top most influential studies, in relation to effect size, sorted by absolute change in effect size is shown. The Left-out study indicates which study is left out to produce the results. ES = Effect size, SE = Standard error, CI =  95 percent confidence interval, P(ES) = p-value of estimate, Q = Test for residual heterogeneity, P(Q) = p-value of heterogenity value, $I^2$ = residual heterogeneity."),  align = "rcccccccccc",  digits=3, display= c(rep("fg",11)),label = "xtable3"), 
       caption.placement = "top", size ="footnotesize", scalebox = 1, sanitize.text = force, include.rownames = getOption("xtable.include.rownames", F))
 @
+
+\bigskip
+A sensitivity analysis should be conducted to see how sensitive the meta analysis is. One good way of exploring the sensitivity is to conduct a leave-one-out analysis. This computes the pooled effect size, variance, heterogenity measures leaving out one study at the time. The results can be compared to the original meta analysis output to assess how each study influences the meta analysis. Table \ref{xtable3} shows the most influential studies on the effect size and what the resulting effect size would be if these studies were left out (one study at the time), and several other parameters.
 
 
 <<echo = FALSE>>=
@@ -321,7 +322,7 @@ else {
 @
 
 \noindent 
-The significance of the effect size is important. \Sexpr{out1} \Sexpr{signif(rma.RE$pval, 3)}. \Sexpr{out2}.
+The significance of the effect size is important. \Sexpr{out1} \Sexpr{signif(rma.RE$pval, 3)}.\\ \Sexpr{out2}.
 
 
 \end{document}
