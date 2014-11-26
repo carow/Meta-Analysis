@@ -55,12 +55,6 @@ n.sens = as.integer(rma.RE$k*0.1+1)
 
 The method used in the rma object for the meta-analysis is \Sexpr{rma.RE$method} and the measure used is \Sexpr{rma.RE$measure}.
 
-The Q-value (see Table \ref{xtable1}) is the weighted sum of squares for the effect sizes of the studies in the meta-analysis. It is a standardized measure of the variation of the effect sizes of the studies analysed.
-
-The p-value for the Q (see P(Q) in Table \ref{xtable1}) is the likelihood of the null-hypothesis that all studies share a common effect size. A p-value $\< 0.05$ means we can reject the null-hypothesis, indicating that the studies in the analysis do not share a common effect size. A p-value $\> 0.05$ means we can retain the null-hypothesis. This should, however, not be taken as an evidence that the effect sizes are consistent. It can also be due to low statistical power (Borenstein et. al. 2009, p. 112). 
-
-The \$I^2$ indicates the overall heterogenity on a relative scale (percent). "It should be viewed as a measure of inconsistency across the findings of the study, and not as a measure of the real vatiation across the underlyiing true effects" (Borenstein et. al. 2009, p. 118). For this analysis the \$I^2$ is \sexpr{signif(rma.RE$I2, digits = 3)}. The rule of thumb is that a \$I^2$ around 25 \% indicates low heterogenity, 50 \% indicates moderate heterogenity and 75 \% indicates high heterogenity. 
-
 %Creates a table for the results of the meta-analysis.Values for ES, SE (ES),pES, CI, I2, Egger value and fail-safe number. 
 <<echo = FALSE>>=
 egger.RE = regtest(rma.RE, model = "rma", predictor = "sei")
@@ -78,9 +72,14 @@ mytable = matrix.RE
 @
 
 <<label = xtable1, results = tex, echo=FALSE>>=
-print(xtable(mytable, caption = paste("Results of the meta-analysis. ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = Residual heterogeneity, Egger's test (SE used as the predictor) and the fails-safe number (FSN) for publication bias testing according to 'Rosenberg'."), align = "rccccccccccc"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force, display = "fg")
+print(xtable(mytable, caption = paste("Results of the meta-analysis. ES = Effect Size, Q = Test for residual heterogeneity, $I^2$ = Residual heterogeneity, Egger's test (SE used as the predictor) and the fails-safe number (FSN) for publication bias testing according to 'Rosenberg'."), align = "rccccccccccc", label = "xtable1"),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force, display = "fg")
 @
 
+The Q-value (see Table~\ref{xtable1}) is the weighted sum of squares for the effect sizes of the studies in the meta-analysis. It is a standardized measure of the variation of the effect sizes of the studies analysed.
+
+The p-value for the Q (see P(Q) in Table \ref{xtable1}) is the likelihood of the null-hypothesis that all studies share a common effect size. A p-value $\<$ 0.05 means we can reject the null-hypothesis, indicating that the studies in the analysis do not share a common effect size. A p-value $\>$ 0.05 means we can retain the null-hypothesis. This should, however, not be taken as an evidence that the effect sizes are consistent. It can also be due to low statistical power (Borenstein et. al. 2009, p. 112). 
+
+The \$I^2$ indicates the overall heterogenity on a relative scale (percent). "It should be viewed as a measure of inconsistency across the findings of the study, and not as a measure of the real vatiation across the underlyiing true effects" (Borenstein et. al. 2009, p. 118). For this analysis the \$I^2$ is \sexpr{signif(rma.RE$I2, digits = 3)}. The rule of thumb is that a \$I^2$ around 25 \% indicates low heterogenity, 50 \% indicates moderate heterogenity and 75 \% indicates high heterogenity. 
 
 %Rosenberg's method was used as its consistent with how mean effect sizes are calculated. FSN assumes that the mean effect size of missing studies is that predicted by the null hypothesis. This will inflate N if there is, in fact, a publication bias agains results in the opposite direction to the current mean effect. 
 <<echo = FALSE>>=
@@ -160,7 +159,7 @@ mytable2 = matrix.RE.meta
 <<label = xtable2, results = tex, echo = FALSE>>=
 print(xtable(mytable2, 
              caption = paste("Results of the meta-regression (mixed-effects model). The model results are shown taking a moderator or various moderators into account and displaying their coefficients. Results for the whole model are displayed as Q = Test for residual heterogeneity, $I^2$ = residual heterogeneity and QM = Test of Moderators."), 
-             align = "rccccc|ccccc",  digits=3, display=c("s", rep("fg", 10))), caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
+             align = "rccccc|ccccc",  digits=3, display=c("s", rep("fg", 10)), , label = "xtable2"), caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
 @
 \bigskip
 
