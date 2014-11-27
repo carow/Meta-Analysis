@@ -4,21 +4,18 @@ library(metafor)
 setwd("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts")
 #setwd("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts")
 
+# Load the table through the "import dataset" drop-down menu.
 
-table1 <- read.csv2("Gibson.csv")
-str(table1)
-summary(table1) 
+table1 = Gibson
 
-table1$d.mean=as.numeric(table1$d.mean)
-table1$p.mean=as.numeric(table1$p.mean)
-table1$p.sd=as.numeric(table1$p.sd)
-table1$d.sd=as.numeric(table1$d.sd)
-table1$hedges.g.=as.numeric(table1$hedges.g)
-
+table1=table1[-c(5,6,7,8,10,12,13)]
 
 attach(table1)
-birds=table1[taxon=="b",-c(5,6,7,8,9,10,11,12,13)]
+birds=table1[taxon=="b",]
 detach(table1)
+
+str(table1)
+summary(table1) 
 
 
 # To select randomly one row per study to narrow down the metaanalysis.

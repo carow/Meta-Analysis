@@ -1,9 +1,9 @@
+% Set documentclass
 \documentclass[11pt, a4paper]{article} 
 
+% Load necessary packages for this automated document
 \usepackage[utf8]{inputenc}  
-
 \usepackage{caption}    		
-
 \usepackage{color}
 \usepackage{etoolbox}    
 \usepackage[bottom]{footmisc}  
@@ -13,7 +13,6 @@
 \usepackage{lscape}
 \usepackage{euler}     
 \usepackage[margin=1in]{geometry}
-
 \usepackage{Sweave}
 
 \frenchspacing 
