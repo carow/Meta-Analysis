@@ -27,17 +27,18 @@
 
 \maketitle
 
-%--------------------------------------------------------------------------------
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Info for the author %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' in order for the automatisation to work. If a meta-regression has been conducted, it should be called ``rma.RE.meta''. Other than that, the metafor package in R needs to be installed as well as the xtable package.  
 
 <<echo = FALSE>>=
-#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
-load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
 library(metafor)
 library(xtable)
@@ -50,7 +51,12 @@ n.studies = rma.RE$k
 n.sens = as.integer(rma.RE$k*0.1+1)
 @
 
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Document start %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+
 This is an automated appendix which displays important diagnostics to spot possible shortcomings of a meta analysis, or for example causes for heterogenity across studies. The document is intended both to print relevant information about the findings in the meta analysis, as well as guiding the reader through important factors to look at when assessing a meta analysis. 
+
 
 The method used in the rma object for the meta-analysis is \Sexpr{rma.RE$method} and the measure used is \Sexpr{rma.RE$measure}.
 
@@ -110,6 +116,9 @@ out = paste0("The fail-safe number suggests that the meta-analysis is not robust
 
 
 \newpage
+%%%%%%%%%%%%%%%%%%%%%
+%%%% Forest plot %%%%
+%%%%%%%%%%%%%%%%%%%%%
 
 %Creates a forest plot of the meta-analysis.
 <<forest, echo = FALSE, fig = TRUE, include = FALSE, pdf = TRUE>>=
@@ -137,6 +146,9 @@ par (mar = c(5,4,4,2))
 If the effect sizes in the forest plot vary too much, then heterogeneity should be explored in more depth. This is done by taking \emph{explanatory variabales} into account in a meta-regression. When taking various explanatory variables (moderators) into account, the resulting forest plot shows the way in which the effect size varies when looking at the particular moderator. 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Meta-regression %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Table of the meta-regression, in this case with various moderators. 
 
@@ -202,6 +214,9 @@ When publication bias is absent, the plot should have a symmetrical shape of a f
 If publication bias is present, the studeis would lie symmetrically at the top, a few studies would be missing in the middle and more studies would be missing at the bottom, near the mouth of the funnel. 
 
 
+%%%%%%%%%%%%%%%%%%%
+%%% Funnel-Plot %%%
+%%%%%%%%%%%%%%%%%%%
 
 %Funnelplot of meta-analysis to assess publication bias. 
 <<label = funnelplot, echo = FALSE, fig = TRUE, pdf = TRUE, include = FALSE>>=
@@ -219,7 +234,9 @@ funnel(rma.RE)
   
 \newpage
 
-%Plot of the diagnostics
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Diagnostic plots %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 <<label = diagnostics, eval = TRUE, pdf = TRUE, fig = TRUE, echo = FALSE, include = FALSE>>=
 #Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
@@ -264,16 +281,19 @@ The Baujat plot detects sources of heterogeneity. Studies which are aggregated t
 
 The Galbraith plot provides visual information on the heterogeneity of the meta-analysis. Values which are closer to the origin have a higher SE and are therefore less precise than values aggregated away from the origin. The curved axis indicates the individual observed effect sizes or outcomes and the line coming from (0,0) indicates the individual effect size or outcome for that specific point. 
 
+
+
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Sensitivity Analysis %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %Shows the weights used in the rma object
 <<echo=FALSE, eval = TRUE>>=
 weight.RE = weights(rma.RE)
 @
 
+%Table for sensitivity analysis
 << eval = TRUE, echo = FALSE>>=
 sens.RE = leave1out(rma.RE)
 
@@ -304,7 +324,7 @@ require(xtable)
 mytable3 = matrix.RE.sens
 @
 
-\newpage
+
 
 
 <<label = xtable3, results = tex, echo=FALSE>>=
