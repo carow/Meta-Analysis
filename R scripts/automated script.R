@@ -7,14 +7,15 @@ setwd("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/M
 # Load the table through the "import dataset" drop-down menu.
 
 table1 = Gibson
+str(table1) # NB! Check if numerical values are recognized as numerical! 
 
 table1=table1[-c(5,6,7,8,10,12,13)]
 
 attach(table1)
-birds=table1[taxon=="b",]
+birds = table1[taxon=="b",]
 detach(table1)
-
 str(table1)
+
 summary(table1) 
 
 
@@ -37,7 +38,7 @@ rma.FE
 #Random Effects Model
 rma.RE = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB")# maybe change vtype and method
 rma.RE
-
+save(rma.RE, file="rma.RE")
 #http://www.google.de/url?sa=t&rct=j&q=&esrc=s&source=web&cd=5&cad=rja&uact=8&ved=0CEIQFjAE&url=http%3A%2F%2Fwww.researchgate.net%2Fprofile%2FEdward_Purssell%2Fpublication%2F262923251_Meta-analysis_using_metafor_in_R%2Flinks%2F00b7d5395634a8cf6f000000&ei=RWxsVIutCI2tPIHBgZgM&usg=AFQjCNHp1LAEr_ZSwhc9v7Vou-6LdFBlmQ&bvm=bv.80120444,d.ZWU
 #
 
@@ -92,10 +93,11 @@ rma.FE.meta
 
 
 #Random Effects Model
-rma.RE.meta = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent)
+rma.RE.meta = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent + metric + disturbance)
+rma.RE.meta = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent + metric + disturbance )
 rma.RE.meta
 
-save(rma.RE.meta, file = "SweaveTorfinn")
+save(rma.RE.meta, file = "rma.RE.meta")
 
 
 detach(data.sub)
