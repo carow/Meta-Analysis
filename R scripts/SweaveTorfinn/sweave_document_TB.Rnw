@@ -50,6 +50,8 @@ n.studies = rma.RE$k
 n.sens = as.integer(rma.RE$k*0.1+1)
 @
 
+This is an automated appendix which displays important diagnostics to spot possible shortcomings of a meta analysis, or for example causes for heterogenity across studies. The document is intended both to print relevant information about the findings in the meta analysis, as well as guiding the reader through important factors to look at when assessing a meta analysis. 
+
 The method used in the rma object for the meta-analysis is \Sexpr{rma.RE$method} and the measure used is \Sexpr{rma.RE$measure}.
 
 \bigskip

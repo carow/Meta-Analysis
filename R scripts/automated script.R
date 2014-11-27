@@ -12,7 +12,7 @@ str(table1) # NB! Check if numerical values are recognized as numerical!
 table1=table1[-c(5,6,7,8,10,12,13)]
 
 attach(table1)
-birds = table1[taxon=="b",]
+birds = table1[taxon=="a",]
 detach(table1)
 str(table1)
 
@@ -65,13 +65,17 @@ detach(data.sub)
 #Create the forest plot as a figure. If FE used, then only FE plot. If RE,
 #then only RE plot, if both, then both plots shown, maybe next to each other.
 
-par(mar=c(5,3,2,2)) # for changing the size of the plot
-#Forest plot for the FE model
-forest.rma (rma.FE, cex = 0.5, showweight = TRUE) 
-
 #Forest plot for the RE model
-forest.rma(rma.RE, annotate = TRUE, cex = 0.5, showweight = TRUE) #RE model
-par(mar=c(5,4,4,2)) # back to default
+par(mar = c(3,4,1,2))
+
+ci.ub = max(rma.RE$yi + qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))
+ci.lb = min(rma.RE$yi - qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))
+
+forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim = c((4*ci.lb), (3*ci.ub))) #  c(-ci.lb, ci.ub)
+text(0, rma.RE$k+2, "Standardized Mean Difference", cex = .68, font = 2)
+text(4*ci.lb, rma.RE$k+2, "Study",    pos = 4, cex = .68, font = 2)
+text(3*ci.ub, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos = 2, cex = .68, font = 2)
+par (mar = c(5,4,4,2))
 
 
 # check at ?par
@@ -146,3 +150,4 @@ hist(sens.RE$I2)
 cbind(exp(sens.RE$estimate), sens.RE$pval < 0.05)
 
 sens.RE$I2
+
