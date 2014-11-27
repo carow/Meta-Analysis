@@ -115,12 +115,10 @@ par(mar = c(3,4,1,2))
 ci.ub = max(rma.RE$yi + qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))
 ci.lb = min(rma.RE$yi - qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))
 
-width = max(rma.RE$yi + qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi)) - min(rma.RE$yi - qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))
-
-forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "")#, xlim = c((-(width))+(0.2*width), (width)+(0.5*width))
+forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim = c((4*ci.lb), (3*ci.ub))) #  c(-ci.lb, ci.ub)
 text(0, rma.RE$k+2, "Standardized Mean Difference", cex = .68, font = 2)
-text( (-(width)+(0.2*width))/2, rma.RE$k+2, "Study",    pos = 4, cex = .68, font = 2)
-text(width + 2, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos = 2, cex = .68, font = 2)
+text(4*ci.lb, rma.RE$k+2, "Study",    pos = 4, cex = .68, font = 2)
+text(3*ci.ub, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos = 2, cex = .68, font = 2)
 par (mar = c(5,4,4,2))
 @
 
@@ -173,10 +171,13 @@ print(xtable(mytable2,
 %Forest plot of the meta-regression model
 <<forestreg, echo = FALSE, fig = TRUE, include = FALSE, pdf = TRUE>>=
 par(mar = c(3,4,1,2))
-forest.rma(rma.RE.meta, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "")#, xlim=c(-10, 14)
-text(-10, rma.RE$k+2, "Study",    pos = 4, cex = .68, font = 2)
+ci.ub = max(rma.RE$yi + qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))
+ci.lb = min(rma.RE$yi - qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))
+
+forest.rma(rma.RE.meta, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim = c((4*ci.lb), (3*ci.ub))) #  c(-ci.lb, ci.ub)
 text(0, rma.RE$k+2, "Standardized Mean Difference", cex = .68, font = 2)
-text(14, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos = 2, cex = .68, font = 2)
+text(4*ci.lb, rma.RE$k+2, "Study",    pos = 4, cex = .68, font = 2)
+text(3*ci.ub, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos = 2, cex = .68, font = 2)
 par (mar = c(5,4,4,2))
 @
 
