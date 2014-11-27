@@ -33,11 +33,11 @@
 %The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' in order for the automatisation to work. If a meta-regression has been conducted, it should be called ``rma.RE.meta''. Other than that, the metafor package in R needs to be installed as well as the xtable package.  
 
 <<echo = FALSE>>=
-load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
 library(metafor)
 library(xtable)
@@ -112,10 +112,14 @@ out = paste0("The fail-safe number suggests that the meta-analysis is not robust
 %Creates a forest plot of the meta-analysis.
 <<forest, echo = FALSE, fig = TRUE, include = FALSE, pdf = TRUE>>=
 par(mar = c(3,4,1,2))
-forest.RE = forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim = c(-10, 14))
-text(-10, rma.RE$k+2, "Study",    pos = 4, cex = .68, font = 2)
+
+ci.ub = max(rma.RE$yi + qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))
+ci.lb = min(rma.RE$yi - qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))
+
+forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim = c((4*ci.lb), (3*ci.ub)))
 text(0, rma.RE$k+2, "Standardized Mean Difference", cex = .68, font = 2)
-text(14, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos = 2, cex = .68, font = 2)
+text(4*ci.lb, rma.RE$k+2, "Study",    pos = 4, cex = .68, font = 2)
+text(3*ci.ub, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos = 2, cex = .68, font = 2)
 par (mar = c(5,4,4,2))
 @
 
@@ -169,10 +173,13 @@ print(xtable(mytable2,
 %Forest plot of the meta-regression model
 <<forestreg, echo = FALSE, fig = TRUE, include = FALSE, pdf = TRUE>>=
 par(mar = c(3,4,1,2))
-forest.rma(rma.RE.meta, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim=c(-10, 14))
-text(-10, rma.RE$k+2, "Study",    pos = 4, cex = .68, font = 2)
+ci.ub = max(rma.RE$yi + qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))
+ci.lb = min(rma.RE$yi - qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))
+
+forest.rma(rma.RE.meta, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim = c((4*ci.lb), (3*ci.ub))) #  c(-ci.lb, ci.ub)
 text(0, rma.RE$k+2, "Standardized Mean Difference", cex = .68, font = 2)
-text(14, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos = 2, cex = .68, font = 2)
+text(4*ci.lb, rma.RE$k+2, "Study",    pos = 4, cex = .68, font = 2)
+text(3*ci.ub, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos = 2, cex = .68, font = 2)
 par (mar = c(5,4,4,2))
 @
 

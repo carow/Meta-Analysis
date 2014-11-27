@@ -1,13 +1,17 @@
 library(metafor)
 library(meta)
-library
 
 #setwd("C:/Users/ICI/Desktop/MetaAnalysisD")
 setwd("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts")
 table1 <- read.csv2("Gibson.csv")
+table2 <- read.csv2("Gibson2.csv")
+table1 = Gibson
 str(table1)
 summary(table1) 
 
+str(table2)
+
+table1=table1[-c(6,7,8,10,12,13)]
 table1$d.mean=as.numeric(table1$d.mean)
 table1$p.mean=as.numeric(table1$p.mean)
 table1$p.sd=as.numeric(table1$p.sd)
@@ -15,8 +19,9 @@ table1$d.sd=as.numeric(table1$d.sd)
 table1$hedges.g.=as.numeric(table1$hedges.g)
 
 
+
 attach(table1)
-birds=table1[taxon=="b",-c(6,7,8,10,12,13)]
+birds=table1[taxon=="a",-c(6,7,8,10,12,13)]
 detach(table1)
 
 
@@ -38,6 +43,9 @@ rma.FE
 
 #Random Effects Model
 rma.RE = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB")# maybe change vtype and method
+rma.RE
+
+rma.RE = rma(method = "HE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB")# maybe change vtype and method
 rma.RE
 
 detach(birdsnew)
