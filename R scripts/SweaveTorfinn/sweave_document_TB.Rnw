@@ -33,11 +33,11 @@
 %The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' in order for the automatisation to work. If a meta-regression has been conducted, it should be called ``rma.RE.meta''. Other than that, the metafor package in R needs to be installed as well as the xtable package.  
 
 <<echo = FALSE>>=
-#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
-load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
 library(metafor)
 library(xtable)
@@ -184,7 +184,9 @@ par (mar = c(5,4,4,2))
 
 \clearpage
 
-To assess possible publication bias, funnel plots can be used for visualization purposes.When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size should increase with sample size (smaller standard error). If many studies lie outside of this funnel shaped space, then the studies used might need to be reviewed and checked for..
+To assess possible publication bias, funnel plots can be used for visualization purposes. Larger studies appear towards the top of the funnel and tend to cluster around the mean effect size and smaller studies appear towards the mouth of the funnel. 
+
+When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size should increase with sample size (smaller standard error). If many studies lie outside of this funnel shaped space, then the studies used might need to be reviewed and checked for..
 
 
 %Funnelplot of meta-analysis to assess publication bias. 
