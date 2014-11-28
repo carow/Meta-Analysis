@@ -38,12 +38,12 @@
 
 <<echo = FALSE>>=
 
-# Load the metafor-objects from the working directory for R to read when writing this document.
-#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+#Load the metafor-objects from the working directory for R to read when writing this document.
+load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
-load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
 library(metafor)
 library(xtable)
@@ -60,6 +60,7 @@ n.sens = as.integer(rma.RE$k*0.1+1)
 %%%% Document start %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 
+\noindent
 This is an automated appendix which displays important diagnostics to spot possible shortcomings of a meta analysis, or causes of heterogenity across studies. The document is intended both, to give relevant information about the findings in the meta analysis, as well as guide the reader through important factors to take into consideration when assessing a meta analysis. Please, note that this report is intended for meta analyses within environmental sciences dealing with continuos variables.\\
 
 The method used in the rma object for the meta-analysis is \Sexpr{rma.RE$method} and the measure used is \Sexpr{rma.RE$measure}. Please read more about methods and measures in the metafor-package helpfile.
@@ -85,7 +86,7 @@ mytable = matrix.RE
 @
 
 <<label = xtable1, results = tex, echo=FALSE>>=
-print(xtable(mytable, caption = paste("Results of the meta-analysis. K = number of studies, ES = Effect Size, ES = Standard error, CI = 95 \\% confidenc interval, P(ES) = p-value of ES, Q = Test for residual heterogeneity, $I^2$ = Residual heterogeneity, Egger's test (SE used as the predictor) and the fails-safe number (FSN) for publication bias testing according to 'Rosenberg'."), align = "rcccccccccccc", label = "xtable1", display = c("s", "d", rep("g", 10), "d"), digits = 3),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
+print(xtable(mytable, caption = paste("Results of the meta-analysis. K = number of studies, ES = Effect Size, ES = Standard error, CI = 95 \\% confidenc interval, P(ES) = p-value of ES, Q = Test for residual heterogeneity, $I^2$ = Residual heterogeneity, Egger's test (SE used as the predictor) and the fail-safe number (FSN) for publication bias testing according to 'Rosenberg'."), align = "rcccccccccccc", label = "xtable1", display = c("s", "d", rep("g", 10), "d"), digits = 3),caption.placement = "top", size ="footnotesize", scalebox = 0.9, sanitize.text = force)
 @
 
 <<echo=FALSE>>=
@@ -132,7 +133,7 @@ out = paste0("The fail-safe number suggests that this meta-analysis is not robus
 @
 
 
-The fail safe number is a type of sensitivity analysis. It provides the number of additional studies with an effect size of 0, that would need to exist in order to negate the significance of the observed effect size. {\Sexpr{out}} as it is \Sexpr{fsn.RE$fsnum}. Any meta-analysis is robust against publication bias according to Rosenthal, when the fail-safe number is greater than (5*(number of studies) +10). In this case, the fail safe number would have to be \geq \Sexpr{5*(rma.RE$k)+10}.  
+The fail-safe number is a type of sensitivity analysis. It provides the number of additional studies with an effect size of 0, that would need to exist in order to negate the significance of the observed effect size. Any meta-analysis is robust against publication bias according to Rosenthal, when the fail-safe number is greater than (5*(number of studies) +10). {\Sexpr{out}} as it is \Sexpr{fsn.RE$fsnum}.  For this meta-analysis to be robust, the fail safe number would have to be \geq \Sexpr{5*(rma.RE$k)+10}.  
 
 
 
@@ -162,12 +163,12 @@ par (mar = c(5,4,4,2))
 \captionsetup{width = 0.6\textwidth}
 \centering
 \includegraphics[width = 0.7\textwidth]{sweave_document_TB-forest}
-\caption{Forest plot of a random effects model. The study ID is on the left.  The plot itself shows the position of each study's effect size in relation to the other studies indicated by a square. The size of the square indicates the weight (the inverse variance of the effect size) assigned to the study to the pooled effect size. The lines indicate the length of the confidence interval. At the bottom of the plot, the pooled effect size with its confidence interval is plotted. The study weights, effect sizes and 95\% confidence intervals are also shown as text.}
+\caption{Forest plot of a random effects model. The study ID is on the left.  The plot itself shows the position of each study's effect size in relation to the other studies indicated by a square. The size of the square indicates the weight (the inverse variance of the effect size) assigned to the study to the pooled effect size. The lines indicate the length of the confidence interval. At the bottom of the plot, the pooled effect size with its confidence interval is plotted. The study weights, effect sizes and 95\% confidence intervals are also shown.}
 \label{fig:forestplot}
 \end{figure}
 
 \noindent
-The forest plot visualizes the effect sizes and confidence intervals as well as the overall mean effect size and the weight assigned to each study in the meta-analysis.This can be helpful to spot studies with effect sizes far away from the rest, studies with large confidence intervals and studies that are the most influental for the pooled effectsize. 
+The forest plot visualizes the effect sizes and confidence intervals as well as the overall mean effect size and the weight assigned to each study in the meta-analysis. This can be helpful to spot studies with effect sizes far away from the rest, studies with large confidence intervals and studies that are the most influental for the pooled effectsize. 
 \\
 If the effect sizes in the forest plot vary too much, then heterogeneity should be explored in more depth. This is done by taking \emph{moderators} (explanatory variables/covariates) into account in a meta-regression (see Figure ~\ref{fig:forestplotreg}).  
 
@@ -179,8 +180,10 @@ If the effect sizes in the forest plot vary too much, then heterogeneity should 
 
 
 \noindent
-To assess possible publication bias, funnel plots can be used for visualization purposes. Larger studies appear towards the top of the funnel and tend to cluster around the mean effect size and smaller studies appear towards the mouth of the funnel.\\ 
-When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size should increase with sample size (smaller standard error).\\
+To assess possible publication bias, funnel plots can be used for visualization purposes. Larger studies appear towards the top of the funnel and tend to cluster around the mean effect size and smaller studies appear towards the mouth of the funnel.
+
+When publication bias is absent, the plot should have a symmetrical shape of a funnel around the mean effect size. This is because the precision of the estimation of effect size should increase with sample size (smaller standard error).
+
 If publication bias is present, the studeis would lie symmetrically at the top, a few studies would be missing in the middle and more studies would be missing at the bottom, near the mouth of the funnel. 
 
 
@@ -323,7 +326,9 @@ par (mar = c(5,4,4,2))
 \noindent
 When taking moderators into account, the resulting forest plot shows the way in which the effect size of each study varies in accordance with the combination of variables for each moderator.\\
 
-Each fitted effect size is represented by a grey polygon, the width of each polygon representing the fitted confidence intervals. Table~\ref{xtable2} shows the results of the meta-regression; the fitted effect sizes with their respective standard error, confidence intervals and p-values. There are two extra values which are added in the meta-regression. The QM and the P(QM) (Table~\ref{xtable2}). QM is the test of moderators. It tests if all variables, except the intercept, are simultaneously equal to zero and therefore represents the dispersion of studies explained by the moderators. As with the Q statistic, when P(QM) is < 0.05, the null-hypothesis is rejected. In this case, the relationship between the moderators and the effect size is stronger than expected, so some of the heterogeneity in the meta-analysis can be explained for by some of the moderators.   
+Table~\ref{xtable2} shows the results of the meta-regression; the fitted effect sizes with their respective standard error, confidence intervals and p-values. There are two extra values which are added in the meta-regression. The QM and the P(QM) (Table~\ref{xtable2}). QM is the test of moderators. It tests if all variables, except the intercept, are simultaneously equal to zero and therefore represents the dispersion of studies explained by the moderators. As with the Q statistic, when P(QM) is < 0.05, the null-hypothesis is rejected. In this case, the relationship between the moderators and the effect size is stronger than expected, so some of the heterogeneity in the meta-analysis can be explained for by some of the moderators.   
+
+In the forest plot, each fitted effect size is represented by a grey polygon, the width of each polygon representing the fitted confidence intervals. 
 
 
 
@@ -378,7 +383,8 @@ print(xtable(mytable3,
 @
 
 \bigskip
-A sensitivity analysis should be conducted to see how sensitive the meta analysis is. One good way of exploring the sensitivity is to conduct a leave-one-out analysis. This computes the pooled effect size, variance, heterogenity measures leaving out one study at the time. The results can be compared to the original meta analysis output to assess how each study influences the meta analysis. Table \ref{xtable3} shows the most influential studies on the effect size and what the resulting effect size would be if these studies were left out (one study at the time), and several other parameters.
+\noindent
+A sensitivity analysis should be conducted to see how sensitive the meta analysis is. One good way of exploring the sensitivity is to conduct a leave-one-out analysis. This computes the pooled effect size, variance and heterogenity measures leaving out one study at the time. The results can be compared to the original meta analysis output to assess how each study influences the meta analysis. Table \ref{xtable3} shows the most influential studies on the effect size and what the resulting effect size would be if these studies were left out (one study at the time), and several other parameters.\\
 
 
 <<echo = FALSE>>=
@@ -414,8 +420,8 @@ else {
 }
 @
 
-\noindent 
 The significance of the effect size is important. \Sexpr{out1} \Sexpr{signif(rma.RE$pval, 3)}.\\ \Sexpr{out2}.
+
 
 
 \end{document}
