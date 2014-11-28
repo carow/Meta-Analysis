@@ -1,4 +1,4 @@
-# This script shows how we blabla
+# This script summarizes the steps in R that we did to produce the appendix
 
 
 # Load the two objects, rma.RE & rma.RE.meta
