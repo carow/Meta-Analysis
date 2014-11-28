@@ -39,11 +39,11 @@
 <<echo = FALSE>>=
 
 # Load the metafor-objects from the working directory for R to read when writing this document.
-load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
 library(metafor)
 library(xtable)
@@ -162,12 +162,13 @@ par (mar = c(5,4,4,2))
 \captionsetup{width = 0.6\textwidth}
 \centering
 \includegraphics[width = 0.7\textwidth]{sweave_document_TB-forest}
-\caption{Forest plot of a random effects model. The study and its respectice effect size (ES) [+- 95\% CI] are shown. The weight given to the study (\%) (the inverse to the study variance) is depicted as well.}
+\caption{Forest plot of a random effects model. The study ID is on the left.  The plot itself shows the position of each study's effect size in relation to the other studies indicated by a square. The size of the square indicates the weight (the inverse variance of the effect size) assigned to the study to the pooled effect size. The lines indicate the length of the confidence interval. At the bottom of the plot, the pooled effect size with its confidence interval is plotted. The study weights, effect sizes and 95\% confidence intervals are also shown as text.}
 \label{fig:forestplot}
 \end{figure}
 
 \noindent
-The forest plot visualizes the effect sizes and confidence intervals as well as the overall mean effect size and the weight assigned to each study in the meta-analysis.\\
+The forest plot visualizes the effect sizes and confidence intervals as well as the overall mean effect size and the weight assigned to each study in the meta-analysis.This can be helpful to spot studies with effect sizes far away from the rest, studies with large confidence intervals and studies that are the most influental for the pooled effectsize. 
+\\
 If the effect sizes in the forest plot vary too much, then heterogeneity should be explored in more depth. This is done by taking \emph{moderators} (explanatory variables/covariates) into account in a meta-regression (see Figure ~\ref{fig:forestplotreg}).  
 
 \newpage
