@@ -148,7 +148,7 @@ The fail-safe number is a type of sensitivity analysis. It provides the number o
 
 
 %Creates a forest plot of the meta-analysis.
-<<label = fig:forestplot, echo = FALSE, fig = TRUE, include = FALSE, pdf = TRUE>>=
+<<label = forestplot, echo = FALSE, fig = TRUE, include = FALSE, pdf = TRUE>>=
 ci.ub = abs(max(rma.RE$yi + qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))) 
 ci.lb = abs(min(rma.RE$yi - qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi)))
 
@@ -166,7 +166,7 @@ The forest plot visualizes the main results of the meta analysis. It shows the e
 \begin{figure}[!ht]
 \captionsetup{width = 0.6\textwidth}
 \centering
-\includegraphics[width = 0.7\textwidth]{appendix-forest}
+\includegraphics[width = 0.7\textwidth]{appendix-forestplot}
 \caption{Forest plot of a random effects model. The plot shows the position of each study's effect size in relation to the other studies indicated by a square. The size of the square indicates the weight (the inverse variance of the effect size) assigned to the study to the pooled effect size. The lines indicate the length of the confidence interval. At the bottom of the plot, the pooled effect size with its confidence interval is plotted. The study weights, effect sizes and 95\% confidence intervals are also shown.}
 \label{fig:forestplot}
 \end{figure}
@@ -180,7 +180,7 @@ The forest plot visualizes the main results of the meta analysis. It shows the e
 %%%%%%%%%%%%%%%%%%%
 
 %Funnelplot of meta-analysis to assess publication bias. 
-<<label = fig:funnelplot, echo = FALSE, fig = TRUE, pdf = TRUE, include = FALSE>>=
+<<label = funnelplot, echo = FALSE, fig = TRUE, pdf = TRUE, include = FALSE>>=
 funnel(rma.RE)
 @
 
@@ -211,7 +211,7 @@ If publication bias is present, the studies would lie symmetrically at the top, 
 %%%% Diagnostic plots %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
-<<label = fig:diagnostics, eval = TRUE, pdf = TRUE, fig = TRUE, echo = FALSE, include = FALSE>>=
+<<label = diagnostics, eval = TRUE, pdf = TRUE, fig = TRUE, echo = FALSE, include = FALSE>>=
 #Standardized residuals plot does not have a ready-made function, and must be coded. Code used is from the plot.rma.uni.
 
 par (mfrow= c(2,2), mar = c(4,4,1,2))
@@ -299,7 +299,7 @@ print(xtable(mytable2,
 @
 
 %Forest plot of the meta-regression model
-<<label = fig:forestreg, echo = FALSE, fig = TRUE, include = FALSE, pdf = TRUE>>=
+<<label = forestreg, echo = FALSE, fig = TRUE, include = FALSE, pdf = TRUE>>=
 
 # The column labels in the forest plots and the width of the x-axis (of the effect sizes and confidence intervals) in relation to the total width does not work properly for all scales of confidence intervals in the effect sizes. The upper and lower limits of the confidence intervals of the effect sizes define the width of the plotting area. This width is used to increase the plot region and to set the position of the labels. (The mtext-function is tried out, but it somehow produces two labels for each label, so it doesn't work). The size of the plotting area and the positioning of the labels is set with the commented functions below:
 
