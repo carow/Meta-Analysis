@@ -349,7 +349,7 @@ mytable3 = matrix.RE.sens
 
 <<label = xtable3, results = tex, echo=FALSE>>=
 print(xtable(mytable3, 
-             caption = paste("Output of the sensitivity analysis (leave1out analysis) with the results of the meta analysis, leaving out 1 study at a time. The top most influential studies, in relation to effect size, sorted by absolute change in effect size is shown. The Left-out study indicates which study is left out to produce the results. ES = Effect size, SE = Standard error, CI =  95 \\% confidence interval, P(ES) = p-value of estimate, Q = Test for residual heterogeneity, P(Q) = p-value of heterogenity value, $I^2$ = residual heterogeneity and weight given in the meta-analysis (\\%)"),  align = "r{1.05cm}ccccccccccc", digits = 3, display= c(rep("g",12)),label = "xtable3"), 
+             caption = paste("Output of the sensitivity analysis (leave1out analysis) with the results of the meta analysis, leaving out 1 study at a time. The top most influential studies, in relation to effect size, sorted by absolute change in effect size is shown. The Left-out study indicates which study is left out to produce the results. ES = Effect size, SE = Standard error, CI =  95 \\% confidence interval, P(ES) = p-value of estimate, Q = Test for residual heterogeneity, P(Q) = p-value of heterogenity value, $I^2$ = residual heterogeneity and weight given in the meta-analysis (\\%)"),  align = "r{1cm}ccccccccccc", digits = 3, display= c(rep("g",12)),label = "xtable3"), 
       caption.placement = "top", size ="footnotesize", scalebox = 1, sanitize.text = force, include.rownames = getOption("xtable.include.rownames", F))
 @
 
