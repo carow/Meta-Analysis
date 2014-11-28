@@ -37,11 +37,11 @@
 <<echo = FALSE>>=
 
 # Load the metafor-objects from the working directory for R to read when writing this document.
-load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+#load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
-#load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
+load("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE.meta")
 
 library(metafor)
 library(xtable)
@@ -136,6 +136,8 @@ The fail safe number is a type of sensitivity analysis. It provides the number o
 %%%%%%%%%%%%%%%%%%%%%
 %%%% Forest plot %%%%
 %%%%%%%%%%%%%%%%%%%%%
+
+% Note to author: The scaling og the forest plots cannot be fully standardised. The column labels in the forest plots and the width of the x-axis (of the effect sizes and confidence intervals) in relation to the total width does not work properly for 
 
 %Creates a forest plot of the meta-analysis.
 <<forest, echo = FALSE, fig = TRUE, include = FALSE, pdf = TRUE>>=
