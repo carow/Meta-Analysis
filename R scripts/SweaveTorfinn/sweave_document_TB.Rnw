@@ -34,6 +34,8 @@
 
 % The conducted analysis using the function rma from the metafor pacakge should be renamed as such: rma of a random effects model should be named ``rma.RE'' in order for the automatisation to work. If a meta-regression has been conducted, it should be called ``rma.RE.meta''. Other than that, the metafor package in R needs to be installed as well as the xtable package.  
 
+% The scaling og the forest plots cannot be fully standardised. If the plot does not look good, please change the plotting area and the label positions. See comments under the forest plot chunk in this script. 
+
 <<echo = FALSE>>=
 
 # Load the metafor-objects from the working directory for R to read when writing this document.
@@ -137,19 +139,19 @@ The fail safe number is a type of sensitivity analysis. It provides the number o
 %%%% Forest plot %%%%
 %%%%%%%%%%%%%%%%%%%%%
 
-% Note to author: The scaling og the forest plots cannot be fully standardised. The column labels in the forest plots and the width of the x-axis (of the effect sizes and confidence intervals) in relation to the total width does not work properly for 
+% The column labels in the forest plots and the width of the x-axis (of the effect sizes and confidence intervals) in relation to the total width does not work properly for all scales of confidence intervals in the effect sizes. The upper and lower limits of the confidence intervals of the effect sizes define the width of the plotting area. This width is used to increase the plot region and to set the position of the labels. (The mtext-function is tried out, but it somehow produces two labels for each label, so it doesn't work). The size of the plotting area and the positioning of the labels is set with the commented functions below:
+
 
 %Creates a forest plot of the meta-analysis.
 <<forest, echo = FALSE, fig = TRUE, include = FALSE, pdf = TRUE>>=
+ci.ub = abs(max(rma.RE$yi + qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))) 
+ci.lb = abs(min(rma.RE$yi - qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi)))
+
 par(mar = c(3,4,1,2))
-
-ci.ub = max(rma.RE$yi + qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))
-ci.lb = min(rma.RE$yi - qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))
-
-forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim = c((4*ci.lb), (3*ci.ub)))
+forest.rma(rma.RE, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim = c((-4*ci.lb), (3*ci.ub))) # To change plotting area: change the values of the xlim
 text(0, rma.RE$k+2, "Standardized Mean Difference", cex = .68, font = 2)
-text(4*ci.lb, rma.RE$k+2, "Study",    pos = 4, cex = .68, font = 2)
-text(3*ci.ub, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos = 2, cex = .68, font = 2)
+text(-4*ci.lb, rma.RE$k+2, "Study",    pos = 4, cex = .68, font = 2) # Change the positioning of this label by changing "4*ci.lb, rma.RE$k+2" to other values
+text(3*ci.ub, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos = 2, cex = .68, font = 2) # Change the positioning of this label by changing "3*ci.ub, rma.RE$k+2" to other values
 par (mar = c(5,4,4,2))
 @
 
@@ -206,16 +208,18 @@ print(xtable(mytable2,
 
 \bigskip
 
+% The column labels in the forest plots and the width of the x-axis (of the effect sizes and confidence intervals) in relation to the total width does not work properly for all scales of confidence intervals in the effect sizes. The upper and lower limits of the confidence intervals of the effect sizes define the width of the plotting area. This width is used to increase the plot region and to set the position of the labels. (The mtext-function is tried out, but it somehow produces two labels for each label, so it doesn't work). The size of the plotting area and the positioning of the labels is set with the commented functions below:
+
 %Forest plot of the meta-regression model
 <<forestreg, echo = FALSE, fig = TRUE, include = FALSE, pdf = TRUE>>=
 par(mar = c(3,4,1,2))
-ci.ub = max(rma.RE$yi + qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))
-ci.lb = min(rma.RE$yi - qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE$vi))
+ci.ub = abs(max(rma.RE.meta$yi + qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE.meta$vi)))
+ci.lb = abs(min(rma.RE.meta$yi - qnorm(0.05/2, lower.tail = FALSE) * sqrt(rma.RE.meta$vi)))
 
-forest.rma(rma.RE.meta, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim = c((4*ci.lb), (3*ci.ub))) #  c(-ci.lb, ci.ub)
-text(0, rma.RE$k+2, "Standardized Mean Difference", cex = .68, font = 2)
-text(4*ci.lb, rma.RE$k+2, "Study",    pos = 4, cex = .68, font = 2)
-text(3*ci.ub, rma.RE$k+2, "Weights   Effect sizes [95% CI]",  pos = 2, cex = .68, font = 2)
+forest.rma(rma.RE.meta, annotate = TRUE, cex = 0.7, showweight = TRUE, addcred = TRUE, xlab = "", xlim = c((-4*ci.lb), (3*ci.ub))) # To change plotting area: change the values of the xlim
+text(0, rma.RE.meta$k+2, "Standardized Mean Difference", cex = .68, font = 2)
+text(-4*ci.lb, rma.RE.meta$k+2, "Study",    pos = 4, cex = .68, font = 2) # Change the positioning of this label by changing "4*ci.lb, rma.RE.meta$k+2" to other values
+text(3*ci.ub, rma.RE.meta$k+2, "Weights   Effect sizes [95% CI]",  pos = 2, cex = .68, font = 2) # Change the positioning of this label by changing "3*ci.ub, rma.RE$k+2" to other values
 par (mar = c(5,4,4,2))
 @
 
