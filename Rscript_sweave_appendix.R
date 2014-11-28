@@ -1,3 +1,5 @@
+# This script shows how we blabla
+
 
 # Load the two objects, rma.RE & rma.RE.meta
 load("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta-Analysis/R scripts/SweaveTorfinn/rma.RE")
