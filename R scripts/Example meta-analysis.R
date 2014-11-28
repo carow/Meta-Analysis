@@ -1,164 +1,114 @@
 library(metafor)
-library(meta)
 
-#setwd("C:/Users/ICI/Desktop/MetaAnalysisD")
-setwd("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts")
-table1 <- read.csv2("Gibson.csv")
-table2 <- read.csv2("Gibson2.csv")
+
+setwd("C:/Users/ICI/Documents/Carolina/Uni/Freiburg/3_Semester/Best practice R/Meta Analysis/R scripts")
+#setwd("/Users/Torfinn/Documents/Uni Freiburg/Best Practice R/Meta-Analysis/R scripts")
+
+# Load the table through the "import dataset" drop-down menu.
+
 table1 = Gibson
-str(table1)
-summary(table1) 
+str(table1) # NB! Check if numerical values are recognized as numerical! 
 
-str(table2)
-
-table1=table1[-c(6,7,8,10,12,13)]
-table1$d.mean=as.numeric(table1$d.mean)
-table1$p.mean=as.numeric(table1$p.mean)
-table1$p.sd=as.numeric(table1$p.sd)
-table1$d.sd=as.numeric(table1$d.sd)
-table1$hedges.g.=as.numeric(table1$hedges.g)
-
-
+table1=table1[-c(5,6,7,8,10,12,13)]
 
 attach(table1)
-birds=table1[taxon=="a",-c(6,7,8,10,12,13)]
+birds = table1[taxon=="b",]
 detach(table1)
+str(table1)
+
+summary(table1) 
 
 
 # To select randomly one row per study to narrow down the metaanalysis.
 library(devtools)
 source_gist("https://gist.github.com/mrdwab/6424112")
 set.seed(100) 
-birdsnew = stratified(birds, "study.ID", 1)
-summary(birdsnew)
+data.sub = stratified(birds, "study.ID", 1)
+summary(data.sub)
 
+#rma of random effects should be called rma.RE, rma of fixed effects should be
+#called rma.FE. IF a meta-regression has been conducted, it should be called
+#rma.RE.meta or rma.FE.meta respectively. 
+#The metafor package needs to be installed
 
-attach(birdsnew)
+attach(data.sub)
 
+# Our rma analysis
 #Fixed Effect Model
 
-rma.FE = rma(method = "FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB")
+rma.FE = rma(method = "FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n)
 rma.FE
-
 
 #Random Effects Model
 rma.RE = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB")# maybe change vtype and method
 rma.RE
+save(rma.RE, file="rma.RE")
+#http://www.google.de/url?sa=t&rct=j&q=&esrc=s&source=web&cd=5&cad=rja&uact=8&ved=0CEIQFjAE&url=http%3A%2F%2Fwww.researchgate.net%2Fprofile%2FEdward_Purssell%2Fpublication%2F262923251_Meta-analysis_using_metafor_in_R%2Flinks%2F00b7d5395634a8cf6f000000&ei=RWxsVIutCI2tPIHBgZgM&usg=AFQjCNHp1LAEr_ZSwhc9v7Vou-6LdFBlmQ&bvm=bv.80120444,d.ZWU
+#
+detach(data.sub)
 
-rma.RE = rma(method = "HE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB")# maybe change vtype and method
-rma.RE
-
-detach(birdsnew)
-
-
-forest.rma (rma.FE, annotate = TRUE, cex = 0.5, showweight = TRUE) #FE model
-
-forest.rma(rma.RE, annotate = TRUE, cex = 0.5, showweight = TRUE) #RE model
 
 
 #Causes of heterogeneity - Meta-regression p. 141
 
-attach(birdsnew)
+attach(data.sub)
 
 rma.FE.meta = rma(method = "FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent)
 rma.FE.meta
 
+
 #Random Effects Model
-
-# New tests! Adding more moderators to the model: metric of how the biodiversity is measured, type of disturbance.
+rma.RE.meta = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent + metric + disturbance)
 rma.RE.meta = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent + metric + disturbance )
-save(rma.RE.meta, file="rma.RE.meta")
-
-rma.RE.meta = rma(method = "REML", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n, vtype = "UB", mods = ~ continent)
 rma.RE.meta
 
-detach(birdsnew)
+save(rma.RE.meta, file = "rma.RE.meta")
+
+detach(data.sub)
 
 
-##publication bias testing
-funnel(rma.FE)
-regtest(rma.FE)#analysing the asymmetry of the funnel plot
-
-funnel(rma.RE)
-regtest(rma.RE, model = "rma", predictor = "sei")
+## Automatisation starts here once the two objects have been saved.
 
 
-#-- Fail safe n method
-fsn(yi = rma.FE$yi, vi = rma.FE$vi)#"file drawer analysis"
 
-fsn(yi = rma.RE$yi, vi = rma.RE$vi)
+
+
+
+
+####################################
+## Extra functions for modelling ###
+####################################
 
 
 # -- Trim fill method
-attach(birdsnew)
-
-#Higgins 'E model
-rma.TF <- rma(method="HE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) 
-trimfill(rma.TF) # Only applicable for FE or RE objects
-funnel(trimfill(rma.TF))
+# Only works with certain methods of the RE model. 
 
 #Fixed effects model
-rma.TF.FE <- rma(method="FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) 
+rma.TF.FE <- rma(method="FE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) # Risk Differences
 trimfill(rma.TF.FE) # Only applicable for FE or RE objects
 funnel(trimfill(rma.TF.FE))
 
-detach(birdsnew)
+#Higgins 'E model
+rma.TF.RE <-  rma(method="HE", measure = "SMD", m1i = p.mean, m2i = d.mean, sd1i = p.sd, sd2i = d.sd, n1i = p.n, n2i = d.n) # Risk Differences
+trimfill(rma.TF.RE) # Only applicable for FE or RE objects
+funnel(trimfill(rma.TF.RE))
+
+
+
 
 #sensitivity analysis/robustness testing
 #-- with the leaveout function
 
-ordered = sort.list(sens.RE, partial=sens.RE$I2)
-top3 = ordered[1:3]
-
-sens.RE$I2
-
 
 sens.RE = leave1out(rma.RE)
-ordersens.RE$I2
 which(sens.RE$I2 == min(sens.RE$I2))
 sum(sens.RE$I2 < 25)
-which(sens.RE$I2 < 25)
 hist(sens.RE$I2)
-cbind(sens.RE$estimate, sens.RE$pval, sens.RE$pval < 0.05)
+cbind(exp(sens.RE$estimate), sens.RE$pval < 0.05)
+
 sens.RE$I2
-rma
-which((rma.RE$I2 - sens.RE$I2) > 4)
 
-
-
-if ((length(which(sens.RE$I2 < 25))) > 0) {
-  (which(sens.RE$I2 < 25))
-} else {
-      (which((rma.RE$I2 - sens.RE$I2) > 4))}
-
-## If function for selection of important studies bla
-
-if (rma.RE$pval < 0.05) {
-  if (length(which(sens.RE$pval > 0.05) > 0)) 
-    {(which(sens.RE$pval > 0.05)) 
-  } else {
-    paste0("No left-out studies yielding non-significance")
-  }
-} else {
-  if (length(which((sens.RE$pval < 0.05) > 0))) { which(sens.RE$pval < 0.05) 
-  } else {
-    paste("No left-out studies yielding significance")
-  }
-}
-
-
-if (rma.RE$pval < 0.05) {(length(which(sens.RE$pval > 0.05)>0)) 
-  {(which(sens.RE$pval > 0.05)) 
-  } else {
-    paste("No left-out studies yielding non-significance")
-  }
-} else {
-  if length(which((sens.RE$pval < 0.05)>0)) { which(sens.RE$pval < 0.05) 
-  } else {
-    paste("No left-out studies yielding significance")
-  }
-}
-
+# If function not used
 sens.RE$pval
 
 if ((length(which(sens.RE$pval > 0.05))) > 0) {
@@ -173,9 +123,11 @@ if(AIC(m2) < AIC(m1)){
 } else {
   bestmodel = m1
 }
-#-------------------------------------------------
 
-# Exploring new plots not previously explored
+#-------------------------------------------------
+###############################################
+# Exploring new plots not previously explored##
+##############################################
 
 #radial plot
 
@@ -209,12 +161,12 @@ axis(side = 1, at = seq_len(k), labels = ids)
 abline(h = 0, lty = "dashed")
 abline(h = c(qnorm(0.025), qnorm(0.975)), lty = "dotted")
 
-attach(birdsnew)
+attach(data.sub)
 metacont.REML = metacont(n.e = d.n, mean.e = d.mean, sd.e = d.sd, n.c = p.n, mean.c = p.mean, sd.c = p.sd, method.tau = "REML", label.e = "Disturbed sites", label.c = "Primary forests", sm = "SMD")
 metacont.REML.C = metacont(n.e = d.n, mean.e = d.mean, sd.e = d.sd, n.c = p.n, mean.c = p.mean, sd.c = p.sd, method.tau = "REML", label.e = "Disturbed sites", label.c = "Primary forests", sm = "SMD", )
 
 
-detach(birdsnew)
+detach(data.sub)
 
 funnel(metacont.REML)
 
@@ -270,4 +222,3 @@ qqnorm(rma.RE, label = "all", pch = NA_integer_)
 par (mfrow = c(2, 1), mar=c(5,5,1,1)) #mar=c(5,5,4,1)
 
 ?lscape
-
